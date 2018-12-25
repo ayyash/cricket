@@ -1,0 +1,404 @@
+﻿.shadow() {
+	.box-shadow(~"0 5px 5px 0 rgba(0,0,0,.12),0 1px 1px 0 rgba(0,0,0,.24)");
+}
+
+.scroll() {
+	&::-webkit-scrollbar {
+		width: 9px;
+		height: 9px;
+	}
+	&::-webkit-scrollbar-button:start:decrement, &::-webkit-scrollbar-button:end:increment {
+		display: block;
+		height: 0;
+		background-color: transparent;
+	}
+	&::-webkit-scrollbar-track-piece {
+		background-color: @grey;
+		-webkit-border-radius: 0;
+		-webkit-border-bottom-right-radius: 8px;
+		-webkit-border-bottom-left-radius: 8px;
+	}
+	&::-webkit-scrollbar-thumb:vertical {
+		height: 50px;
+		background-color: @greynormal;
+		-webkit-border-radius: 8px;
+	}
+	&::-webkit-scrollbar-thumb:horizontal {
+		width: 50px;
+		background-color: @greynormal;
+		-webkit-border-radius: 8px;
+	}
+}
+
+
+/* inputs */
+
+.input() {
+	/* used to mimic the text input for regular text */
+	outline: none;
+}
+
+
+/* symbol definition */
+
+.symbol {
+	&:before {
+		.symbolDef();
+		vertical-align: middle;
+		/*-1px*/
+		font-size: 200%;
+		/* this is because im padding the icon file with 50% of its width */
+	}
+	&.loadings:before {
+		visibility: hidden;
+	}
+}
+
+.symbolAfter {
+	&:after {
+		.symbolDef();
+		font-size: 200%;
+		vertical-align: middle;
+		/*-1px*/
+	}
+	&.loadings:before {
+		visibility: hidden;
+	}
+}
+
+i {
+	font-size: 150%;
+}
+
+
+/* sitelogo */
+
+h1.sitelogo {
+	margin: 0;
+	.columns(@logocolumns);
+	height: 5vh;
+	a {
+		background: transparent url("@{image-url}ilogo.png") no-repeat left center;
+		background-size: contain;
+	}
+}
+
+
+/* stacks */
+
+.overview fieldset {
+	margin-bottom: @extraSpace;
+}
+
+.overview legend {
+	padding-bottom: @extraSpace * 2;
+}
+
+.overview dt {
+	color: @blue;
+}
+
+.invstack dt {
+	color: @color;
+}
+
+.detailed fieldset {
+	margin-bottom: 20px;
+}
+
+.detailed dl {
+	// margin-bottom: 20px;
+}
+
+.detailed dd, .detailed fieldset > .stack, .detailed > .stack {
+	padding-left: 30%;
+	margin-bottom: @space;
+}
+
+
+/* STACKS: could be listings or div items, define how multiple field-name-value elements appear together */
+
+.stack {
+	margin-bottom: 10px;
+}
+
+.stack .stackitem, ol.stacklist > li {
+	margin-bottom: 30px;
+	.tight & {
+		margin-bottom: 10px;
+	}
+}
+
+.stack label, ol.stacklist > li label, .stack .label, ol.stacklist > li .label {
+	display: block;
+	padding-bottom: 5px;
+}
+
+
+/* detailed extension: ingredients */
+
+.ingredients {
+	dt {
+		color: @greynormal;
+	}
+	dd {
+		min-height: 15px;
+	}
+	&.tight dd {
+		.txtr;
+	}
+	&.xlarge dd {
+		.large;
+		.lightfont;
+	}
+}
+
+
+/***** active list */
+
+ul.activelist > li {
+	display: block;
+	margin-right: 2px;
+	margin-bottom: 1px;
+}
+
+ul.activelist > li a {
+	display: block;
+	background-color: @grey;
+	padding: 2px 5px;
+	color: @color;
+}
+
+ul.activelist li a:hover {
+	background-color: @linkcolor;
+	color: @inversecolor;
+}
+
+
+/****** filter list or expand list */
+
+.filterlist {
+	position: relative;
+	.h {
+		.a;
+	}
+	&.toggle {
+		.h {}
+	}
+	.guts {
+		display: none;
+		background-color: @inversecolor;
+		left: 0;
+		top: 30px;
+		z-index: 1000;
+		border: 3px solid @greynormal;
+		padding: 3px;
+		position: absolute;
+		&:after {
+			border-color: @greydark;
+		}
+	}
+	.guts li {
+		/* default width can be overwritten with the right up1,2,3... */
+		a {
+			display: block;
+			padding: 3px;
+		}
+		&:hover {
+			background-color: @lightyellow;
+		}
+		&.selected {
+			background-color: @grey;
+		}
+		&.selected a {
+			color: @color;
+		}
+	}
+}
+
+
+/* bordred */
+
+.bthin, .bthick {
+	border-color: @greynormal;
+}
+
+
+/* TABULATED */
+
+table.tabulated th {
+	font-weight: bold;
+	border-bottom-color: @greynormal;
+	padding-top: @extraSpace;
+}
+
+table.striped {
+	tbody tr:nth-child(odd) {
+		background-color: @grey;
+	}
+}
+
+table.rich {
+	th, td {
+		border: 1px solid @grey;
+		padding: 5px;
+	}
+	th {
+		font-weight: bold;
+		background-color: @grey;
+		border: 1px solid @greynormal;
+		border-bottom: 2px solid @greydark;
+	}
+}
+
+
+/* forms */
+
+
+/*redefine input */
+
+.input() {
+	padding: 9px 0 9px 5px;
+	&:focus {
+		outline: none;
+	}
+	// &:placeholder-shown {
+	// 	background-color: @inversecolor;
+	// }
+}
+
+input[readonly], input[disabled] {
+	border: 1px solid @grey;
+	color: @textlight;
+}
+
+.mimictextinput[data-readonly="readonly"] {
+	border: 1px solid @grey;
+	color: @textlight;
+}
+
+.mimictext[data-readonly="readonly"] {
+	border: 1px solid @grey;
+	color: @textlight;
+}
+
+span.req {
+	right: 10px;
+}
+
+
+/* typography */
+
+// .hsub {
+// 	color: @greynormal;
+// }
+
+/*Basic Badge */
+
+// .abadge {
+// 	position: relative;
+// 	/*overflow: hidden;*/
+// 	.box-sizing(border-box);
+// 	.tail {
+// 		position: absolute;
+// 		right: 0;
+// 		top: 0;
+// 	}
+// }
+// .pbadge {
+// 	position: relative;
+// 	.box-sizing(border-box);
+// 	padding: @boxpadding;
+// 	.tail {
+// 		position: absolute;
+// 		top: @boxpadding;
+// 		right: @boxpadding;
+// 	}
+// }
+
+/*Basic list*/
+
+// .thelist() {
+// 	> li {
+// 		padding-bottom: @boxpadding;
+// 		margin-bottom: @boxpadding;
+// 	}
+// }
+// /* the infamous rowlist, keep in project */
+// .alist {
+// 	.thelist();
+// }
+// .blist {
+// 	> li {
+// 		border-bottom: 1px solid @grey;
+// 	}
+// }
+// .rowlist {
+// 	> li {
+// 		border-bottom: 1px solid darken(@grey,20%);
+// 		padding-bottom: @extraSpace/2;
+// 		margin-bottom: @extraSpace/2;
+// 	}
+// }
+
+/* poplist */
+
+// .poplist {
+// 	.guts {
+// 		background-color: @inversecolor;
+// 		border: 3px solid @greydark;
+// 		.basicballoon;
+// 		position: absolute;
+// 		&:after {
+// 			border-color: @inversecolor;
+// 			#arrow > .above(8px);
+// 		}
+// 	}
+// 	li {
+// 		&:hover {
+// 			background-color: @lightyellow;
+// 		}
+// 	}
+// }
+
+/* keep these last */
+
+.loading, .loadings {
+	background-position: left top;
+	background-repeat: no-repeat;
+	background-image: url("@{image-url}iloading.gif");
+	/*min-height: 20px;*/
+}
+
+.loading {
+	min-height: 52px;
+}
+
+.loadings {
+	background-image: url("@{image-url}iloadings.gif");
+}
+
+
+/* controls */
+
+.radio {
+	& + label:before {
+		border: 1px solid @greynormal;
+	}
+	&:checked + label:before {
+		border: 4px solid @diff;
+	}
+}
+
+.checkbox {
+	& + label:before {
+		border: 3px solid @greynormal;
+	}
+	&:checked + label:before {
+		border: 3px solid @diff;
+		background-color: @diff;
+		.displaySymbol(@icon-tick);
+		color: @inversecolor;
+	}
+}
+

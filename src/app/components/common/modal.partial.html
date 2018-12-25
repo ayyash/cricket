@@ -1,0 +1,22 @@
+<div class="modal modalwindow" role="dialog" aria-labelledby="modaltitle" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content modalcontent">
+            <div class="modal-header">
+                <h6 class="modal-title modaltitle" id="modaltitle"></h6>
+                <button type="button" class="close closeoverlay" aria-label="Close">
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+                <ng-content select="[modalcontent]"></ng-content>
+            </div>
+
+            <div class="modal-footer" *ngIf="withFooter">
+                <!-- <button type="button" class="btn btn-secondary closeoverlay">Close</button> -->
+                <ng-content select="[modalfooter]"></ng-content>
+            </div>
+
+        </div>
+    </div>
+</div>

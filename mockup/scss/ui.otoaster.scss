@@ -1,0 +1,62 @@
+
+.closelabel {
+    display: inline-block;
+    position: absolute;
+    right: 10px;
+    top: 30%;
+    overflow: hidden;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.toaster {
+    padding: $spacer;
+    padding-right: 30px;
+    background-color: $gray-900;
+    color: $white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    z-index: 5100;
+    .closelabel {
+        color: $white;
+       @include getIcon($icon-x);
+       width: 30px;
+       overflow: hidden;
+     
+    }
+    animation: gbox-in 0.2s ease-in-out;
+    &.nonsticky {
+        animation: gbox-in 0.2s ease-in-out, gbox-out 1s ease-in-out 4.9s; // accomodate delay in IToasterOptions
+    }
+
+    &.error {
+        background-color: $danger;
+    }
+    &.success {
+        background-color: $success;
+    }
+}
+
+
+
+@keyframes gbox-in {
+    0% {
+        top: -100%;
+    }
+    100% {
+        top: 0;
+    }
+}
+
+@keyframes gbox-out {
+    0% {
+        top: 0;
+    }
+    90% {
+        top: -100%;
+    }
+}

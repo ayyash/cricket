@@ -1,0 +1,15 @@
+{
+  "name": "cricket",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve  --port 5000 --watch --sourcemap --extract-css --live-reload false",
+    "build": "ng build --extract-css --prod --sourcemaps false",
+    "assets": "gulp default",
+    "rtl:assets": "gulp rtl:default",
+    "install": "npm install --save @angular/common @angular/compiler @angular/core @angular/forms @angular/platform-browser @angular/platform-browser-dynamic @angular/router core-js rxjs zone.js jquery",
+    "install:dev": "npm install --save-dev @angular-devkit/build-angular @angular/cli @angular/compiler-cli @angular/language-service @types/jquery @types/node  codelyzer gulp gulp-concat gulp-cssmin gulp-if gulp-inject minimist gulp-rename gulp-replace require-dir rxjs-lint"
+  },
+  "private": true
+}

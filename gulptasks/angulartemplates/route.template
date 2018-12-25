@@ -1,0 +1,6 @@
+ {
+    path: '_name_', component: CoreComponents.MainLayoutComponent, 
+    loadChildren: Config.Basic.moduleRoot + '_name_.module#_Name_Module'
+  },
+
+  

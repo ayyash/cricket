@@ -1,0 +1,87 @@
+import { throwError, Observable, pipe } from 'rxjs';
+import { IUiError } from '../core/services';
+import { HttpResponse, HttpErrorResponse, HttpEventType } from '@angular/common/http';
+import { tap, catchError } from 'rxjs/operators';
+
+//  upgrade to rxjs by implementing a custom pipe
+declare module 'rxjs/internal/Observable' {
+    interface Observable<T> {
+        debug: (...any) => Observable<T>;
+        catchProjectError: (...any) => Observable<T>;
+    }
+}
+
+Observable.prototype.debug = function(message: string, methodName: string) {
+    // _debug(this.operator.project);
+    return this.pipe(
+        tap(nextValue => {
+            let value = nextValue;
+
+            if (nextValue instanceof HttpResponse) {
+                value = nextValue.body;
+            }
+            if (nextValue && (<any>nextValue).type !== HttpEventType.Sent) {
+                _debug(value, `${methodName} ${message}`);
+            }
+        })
+    );
+};
+
+Observable.prototype.catchProjectError = function(message: string, methodName: string) {
+    return this.pipe(
+        catchError((error: HttpErrorResponse) => {
+            // let code: any = 'Unknown';
+
+            const uiError: IUiError = {
+                code: 'Unknown',
+                internalMessage: '',
+                serverMessage: '',
+                status: 0
+            };
+            let m = error.message;
+            if (error instanceof HttpErrorResponse) {
+                m = error.status + ' ' + error.message;
+                uiError.status = error.status;
+                switch (error.status) {
+                    case 404:
+                        uiError.code = 'PAGE_NOT_FOUND';
+
+                        break;
+                    case 401: // this is invalid access token, retry this one ony
+                    case 403: // this is invalid authorization, this is a deadend
+                        uiError.code = 'UNAUTHORIZED';
+                        break;
+                    case 499:
+                        uiError.code = 'INVALID_SERVER_FORM';
+                        break;
+                    default:
+                        // case 400: // this is bad requet, let the code return the right string
+                        uiError.code = 'Unknown';
+
+                        // take note of bad error format from server! bleh!
+                        if (error.error) {
+                            if (error.error.code) {
+                                uiError.code = error.error.code;
+                            }
+                            if (error.error.internalMessage) {
+                                uiError.internalMessage = error.error.internalMessage;
+                                m += ' Server says:' + uiError.internalMessage;
+                            }
+                            if (error.error.serverMessage) {
+                                uiError.serverMessage = error.error.serverMessage;
+                                uiError.code = '-1'; // force server message
+                            }
+                        }
+                }
+            } else {
+                // just throw error as is
+                m = error;
+                uiError.internalMessage = error;
+            }
+            if (window['_indebug']) {
+                window.console.log(`%c ${methodName} ${message} ${m}`, 'background: red; color: #fff');
+            }
+            return throwError(uiError);
+        })
+    );
+};

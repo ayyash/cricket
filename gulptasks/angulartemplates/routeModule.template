@@ -1,0 +1,17 @@
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import * as CoreComponents from '../../core/components';
+
+const routes: Routes = [
+   
+    {
+        path: '',
+        component: CoreComponents._Name_ListComponent
+    },
+];
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
+export class _Name_RoutingModule { }
+

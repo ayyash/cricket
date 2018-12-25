@@ -1,0 +1,12 @@
+import { NgModule } from '@angular/core';
+import { _Name_RoutingModule} from './_name_.route';
+import { SharedModule } from '../../common/shared.module';
+import * as CoreComponents from '../../../core/components';
+ 
+@NgModule({
+  imports: [SharedModule, _Name_RoutingModule],
+  declarations: [
+    CoreComponents._Name_ListComponent
+  ]
+})
+export class _Name_Module { }
