@@ -4,8 +4,8 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve  --port 5000 --watch --sourcemap --extract-css --live-reload false",
-    "build": "ng build --extract-css --prod --sourcemaps false",
+    "start": "ng serve  --port 5000 --watch --source-map  --live-reload false",
+    "build": "ng build  --prod ",
     "assets": "gulp default",
     "rtl:assets": "gulp rtl:default",
     "install": "npm install --save @angular/common @angular/compiler @angular/core @angular/forms @angular/platform-browser @angular/platform-browser-dynamic @angular/router core-js rxjs zone.js jquery",
