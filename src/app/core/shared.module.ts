@@ -3,7 +3,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import {
-
+    LoaderComponent,
+    ModalPartialComponent,
+    DataPartialComponent
 } from './components';
 import { MdInputModule } from '../lib/mdinput/mdinput.module';
 import { LibModule } from './lib.module';
@@ -12,9 +14,15 @@ import { LibModule } from './lib.module';
 @NgModule({
     imports: [CommonModule, MdInputModule, LibModule],
     declarations: [
-
+        LoaderComponent,
+        ModalPartialComponent,
+        DataPartialComponent
     ],
-    exports: [CommonModule,
+    exports: [
+        LoaderComponent,
+        ModalPartialComponent,
+        DataPartialComponent,
+        CommonModule,
         FormsModule,
         MdInputModule,
         LibModule,

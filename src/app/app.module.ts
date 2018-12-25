@@ -8,13 +8,17 @@ import {
     MainLayoutComponent,
     SingleLayoutComponent,
     NotFoundComponent,
+    ErrorComponent,
+    PublicHomeComponent
   } from './core/components';
-  
+
 @NgModule({
   declarations: [
     AppComponent, MainLayoutComponent,
     NotFoundComponent,
-    SingleLayoutComponent
+    SingleLayoutComponent,
+    ErrorComponent,
+    PublicHomeComponent
   ],
   imports: [
     BrowserModule, SharedModule, AppRoutingModule, CoreModule

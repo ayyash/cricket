@@ -3,11 +3,32 @@ import { RouterModule, Routes, PreloadAllModules } from '@angular/router';
 import * as CoreComponents from './core/components';
 
 const routes: Routes = [
-    { path: '', redirectTo: 'public', pathMatch: 'full' },
-    { path: 'public', component: CoreComponents.MainLayoutComponent,
-        loadChildren: './components/public/public.module#PublicModule' },
+
+    {
+        path: '',
+        component: CoreComponents.MainLayoutComponent,
+        children: [
+            {
+                path: '',
+                component: CoreComponents.PublicHomeComponent
+            }
+        ]
+    },
+    {
+        path: '',
+        component: CoreComponents.MainLayoutComponent,
+        data: {
+            search: true
+        },
+        loadChildren: './routes/public.route#PublicModule'
+    },
 
     // **gulproute**
+    {
+        path: 'error',
+        component: CoreComponents.SingleLayoutComponent,
+        children: [{ path: '', component: CoreComponents.ErrorComponent }]
+    },
     {
         path: '404', component: CoreComponents.SingleLayoutComponent,
         children: [

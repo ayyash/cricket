@@ -7,7 +7,6 @@ window['_indebug'] = true;
 export const environment = {
     production: false,
     apiRoot: $.Cricket.Config.dev.apiRoot,
-    defaultCountryId: $.Cricket.Config.dev.defaultCountryId,
     userAccessKey: 'cricket.user',
     dataCacheDefaultTimeout: 1, // in hours
     dataCacheKey: 'cricket.cache',

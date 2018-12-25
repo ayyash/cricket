@@ -6,8 +6,7 @@ import { PublicHomeComponent } from '../core/components';
 
 const routes: Routes = [
     {
-        path: '',
-        component: PublicHomeComponent
+        path: ''
     }
 ];
 
@@ -16,6 +15,6 @@ const routes: Routes = [
         SharedModule,
         RouterModule.forChild(routes)
     ],
-    declarations: [PublicHomeComponent]
+    declarations: []
 })
 export class PublicModule { }
