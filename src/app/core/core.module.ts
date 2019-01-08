@@ -7,7 +7,6 @@ import { CricketInterceptor } from './http';
 
 import {
     // inject:services
-
     // endinject
 } from './services';
 
@@ -17,7 +16,6 @@ import {
     imports: [CommonModule, HttpClientModule],
     providers: [Title,
         // inject:services
-
         // endinject,
         {
             provide: HTTP_INTERCEPTORS,

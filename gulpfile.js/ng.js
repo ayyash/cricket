@@ -3,6 +3,7 @@
 
 // var gulp = require('gulp-param')(require('gulp'), process.argv);
 var options = require('minimist')(process.argv.slice(2)); // those are params passed by cmd line
+var fs = require('fs');
 
 var gulp = require('gulp');
 var inject = require('gulp-inject');
@@ -18,21 +19,24 @@ var ngConfig = {
         Directives: __dirname + '/angulartemplates/directive.template',
         Pipes: __dirname + '/angulartemplates/pipe.template',
         Route: __dirname + '/angulartemplates/route.template',
-        RouteModule: __dirname + '/angulartemplates/routeModule.template',
+        // RouteModule: __dirname + '/angulartemplates/routeModule.template',
+        Declaration: 'CoreComponents.MajorNamePartialComponent',
         Module: __dirname + '/angulartemplates/module.template',
         Model: __dirname + '/angulartemplates/model.template',
-        Service: __dirname + '/angulartemplates/service.template'
+        Service: __dirname + '/angulartemplates/service.template',
+        ApiConfig: __dirname + '/angulartemplates/config.template'
     },
     Destinations: {
         Components: './src/app/components/',
         Views: './src/app/components/',
         Directives: './src/app/lib/directives/',
         Pipes: './src/app/lib/pipes/',
-        Modules: './src/app/', // root route location
+        // Modules: './src/app/', // root route location
         Routes: './src/app/routes/',
-        RouteFile: 'routing.module.ts',
+        // RouteFile: 'routing.module.ts',
         Models: './src/app/models/',
-        Services: './src/app/services'
+        Services: './src/app/services/',
+        ApiConfig: './src/app/'
     },
     Core: {
         Components: './src/app/core/', // barrel
@@ -41,10 +45,11 @@ var ngConfig = {
         ServicesFile: 'services.ts',
         CoreModule: './src/app/core/', // module
         CoreModuleFile: 'core.module.ts',
-        Libs: './src/app/core/', // barrel
-        LibFile: 'lib.ts',
-        LibModule: './src/app/core/', // module
-        LibModuleFile: 'lib.module.ts'
+        // Libs: './src/app/core/', // barrel
+        // LibFile: 'lib.ts',
+        LibModule: './src/app/lib/', // module
+        LibModuleFile: 'lib.module.ts',
+        ApiConfigFile: './src/app/config.ts'
     }
 };
 
@@ -55,24 +60,34 @@ var tempRoute = ` {
     loadChildren: '_path_.module#_Name_Module'
   },
   `;
-
-function transformCore(filePath, file) {
+function getClassName(file) {
+    var str = file.contents.toString('utf8');
+    var className = str.match(classRe);
+    if (className && className.length > 1) return className[1];
+    else return '';
+}
+function transformClass(filePath, file, isImport) {
     // for every export class /name/ generate export {{name}} from {{path}}
     // if (filePath.indexOf('module') > -1 || filePath.indexOf('_') > -1) return '';
 
-    var str = file.contents.toString('utf8');
-    var className = str.match(classRe);
-    if (className && className.length > 1) className = className[1];
-    else return '';
+    var className = getClassName(file);
+    if (className === '') return '';
 
-    return `export { ${className} } from '${filePath.substring(0, filePath.lastIndexOf('.'))}';`;
+    return `${isImport ? 'import' : 'export'} { ${className} } from '${filePath.substring(
+        0,
+        filePath.lastIndexOf('.')
+    )}';`;
+}
+function transformExport(filePath, file) {
+    return transformClass(filePath, file, false);
+}
+function transformImport(filePath, file) {
+    return transformClass(filePath, file, true);
 }
 
-function transformService(filePath, file) {
-    var str = file.contents.toString('utf8');
-    var className = str.match(classRe);
-    if (className.length > 1) className = className[1];
-    else return '';
+function transformClassName(filePath, file) {
+    var className = getClassName(file);
+    if (className === '') return '';
 
     return className + ',';
 }
@@ -81,7 +96,8 @@ function transformModel(filePath, file) {
     return `export * from '${filePath.substring(0, filePath.lastIndexOf('.'))}';`;
 }
 
-const injectcore = function() {
+// inject components in components.ts
+const _injectComponents = function() {
     // core components
     return gulp
         .src(ngConfig.Core.Components + ngConfig.Core.ComponentsFile)
@@ -90,8 +106,6 @@ const injectcore = function() {
                 gulp.src([
                     ngConfig.Destinations.Components + '**/*.component.ts',
                     ngConfig.Destinations.Components + '**/*.partial.ts',
-                    // ngConfig.Destinations.Components + '**/*.directive.ts',
-                    // ngConfig.Destinations.Components + '**/*.pipe.ts',
                     '!' + ngConfig.Destinations.Components + '**/abstract/*.ts',
                     '!' + ngConfig.Destinations.Components + '**/_*.ts'
                 ]),
@@ -99,21 +113,17 @@ const injectcore = function() {
                     relative: true,
                     starttag: '// inject:components',
                     endtag: '// endinject',
-                    transform: transformCore
+                    transform: transformExport
                 }
             )
         )
-
         .pipe(gulp.dest(ngConfig.Core.Components));
 };
 
-
-const injectlib = function() {
-    // call inject module here, in gulp 4 i will make them serial, oh please go for 4 soon
-    injectlibmodule();
-
+const _injectLibModule = function() {
+    // inject classes into the lib module
     return gulp
-        .src(ngConfig.Core.Libs + ngConfig.Core.LibFile)
+        .src(ngConfig.Core.LibModule + ngConfig.Core.LibModuleFile)
         .pipe(
             inject(
                 gulp.src([
@@ -125,57 +135,45 @@ const injectlib = function() {
                     relative: true,
                     starttag: '// inject:libs',
                     endtag: '// endinject',
-                    transform: transformCore
+                    transform: transformClassName
                 }
             )
         )
-
-        .pipe(gulp.dest(ngConfig.Core.Libs));
-};
-
-const injectlibmodule = function() {
-    // inject classes into the lib module
-    return gulp
-        .src(ngConfig.Core.LibModule + ngConfig.Core.LibModuleFile)
         .pipe(
             inject(
                 gulp.src([
                     ngConfig.Destinations.Directives + '**/*.directive.ts',
                     ngConfig.Destinations.Pipes + '**/*.pipe.ts',
-                    '!' + ngConfig.Destinations.Components + '**/_*.ts'
+                    '!**/_*.ts'
                 ]),
                 {
                     relative: true,
-                    starttag: '// inject:libs',
+                    starttag: '// inject:importlibs',
                     endtag: '// endinject',
-                    transform: transformService
+                    addPrefix: '.',
+                    transform: transformImport
                 }
             )
         )
         .pipe(gulp.dest(ngConfig.Core.LibModule));
 };
 
-const injectmodels = function() {
+const _injectModels = function() {
     return gulp
         .src(ngConfig.Core.Services + ngConfig.Core.ServicesFile)
         .pipe(
-            inject(
-                gulp.src([
-                    ngConfig.Destinations.Models + '**/*.model.ts',
-                    '!' + ngConfig.Destinations.Components + '**/_*.ts'
-                ]),
-                {
-                    relative: true,
-                    starttag: '// inject:models',
-                    endtag: '// endinject',
-                    transform: transformModel
-                }
-            )
+            inject(gulp.src([ngConfig.Destinations.Models + '**/*.model.ts', '!**/_*.ts']), {
+                relative: true,
+                starttag: '// inject:models',
+                endtag: '// endinject',
+                transform: transformModel
+            })
         )
 
         .pipe(gulp.dest(ngConfig.Core.Services));
 };
-const injectservices = function() {
+
+const _injectServices = function() {
     // inect in core.module all services, guards and resolves
     // until u figure o
     return gulp
@@ -191,18 +189,14 @@ const injectservices = function() {
                     relative: true,
                     starttag: '// inject:services',
                     endtag: '// endinject',
-                    transform: transformCore
+                    transform: transformExport
                 }
             )
         )
         .pipe(gulp.dest(ngConfig.Core.Services));
 };
 
-const injectcoremodule = function() {
-    // injsect services content in core.module
-    // first inject in services.ts
-    injectservices();
-
+const _injectCoreModule = function() {
     return gulp
         .src(ngConfig.Core.CoreModule + ngConfig.Core.CoreModuleFile)
         .pipe(
@@ -216,71 +210,83 @@ const injectcoremodule = function() {
                     relative: true,
                     starttag: '// inject:services',
                     endtag: '// endinject',
-                    transform: transformService
+                    transform: transformClassName
                 }
             )
         )
         .pipe(gulp.dest(ngConfig.Core.CoreModule));
 };
 
+const _createModule = function() {
+    let { major, name, ispartial } = options;
 
+    if (!major) {
+        return gulp.src('.');
+    }
 
-gulp.task('addRoute', function() {
-    // still not used
-    const modulePath = options.moduleName;
-    var moduleName = modulePath.substring(modulePath.lastIndexOf('/') + 1);
-
-    var newRoute = tempRoute
-        .replace(/_name_/g, moduleName.toLowerCase())
-        .replace('_path_', ngConfig.Destinations.Components + modulePath.toLowerCase())
-        .replace('_Name_', moduleName);
-
-    //TODO: find out which route file to add this route
-    // add to root routing.module
-    return gulp
-        .src(ngConfig.Destinations.Modules + ngConfig.Destinations.RouteFile)
-        .pipe(replace('// **gulproute**', '// **gulproute**\n' + newRoute))
-        .pipe(gulp.dest(ngConfig.Destinations.Modules));
-});
-
-
-gulp.task('ngroute', function() {
-    const modulePath = options.modulePath;
-    var moduleName = modulePath.substring(modulePath.lastIndexOf('/') + 1);
+    var majorName = major.substring(major.lastIndexOf('/') + 1);
+    // if common or layouts, do not create module
+    if (majorName === 'Common' || majorName === 'Layouts') {
+        return gulp.src('.');
+    }
 
     return gulp
-        .src(ngConfig.Templates.RouteModule)
-        .pipe(replace('_Name_', moduleName))
+        .src(ngConfig.Templates.Module)
+        .pipe(replace('Major', majorName))
         .pipe(
             rename({
-                basename: moduleName.toLowerCase(),
+                basename: majorName.toLowerCase(),
                 suffix: '.route',
                 extname: '.ts'
             })
         )
-        .pipe(gulp.dest(ngConfig.Destinations.Components + modulePath.toLowerCase()));
-});
+        .pipe(gulp.dest(ngConfig.Destinations.Routes, { overwrite: false }));
+};
+// TODO: next version clean up the repepetive parts
 
-gulp.task('ngmodule',  gulp.series('ngroute', function() {
-    const modulePath = options.modulePath;
-    var moduleName = modulePath.substring(modulePath.lastIndexOf('/') + 1);
+// add component to a module or create a new one
+const _addComponentToModule = function() {
+    const { major, name, ispartial } = options;
+    if (!major) {
+        return gulp.src('.');
+    }
 
-    return gulp
-        .src(ngConfig.Templates.Module)
-        .pipe(replace('_Name_', moduleName))
-        .pipe(replace('_name_', moduleName.toLowerCase()))
-        .pipe(
-            rename({
-                basename: moduleName.toLowerCase(),
-                suffix: '.module',
-                extname: '.ts'
-            })
-        )
-        .pipe(gulp.dest(ngConfig.Destinations.Components + modulePath.toLowerCase()));
-}));
+    var majorName = major.substring(major.lastIndexOf('/') + 1);
+    // if common or layouts, do not create module
+    if (majorName === 'Common' || majorName === 'Layouts') {
+        return gulp.src('.');
+    }
+    var route =
+        fs
+            .readFileSync(ngConfig.Templates.Route, 'utf8')
+            .replace('major', majorName.toLowerCase())
+            .replace('name', name.toLowerCase())
+            .replace('Major', majorName)
+            .replace('Name', name);
 
-gulp.task('ngview', function() {
-    const {major, name, ispartial} = options;
+
+    var component =  ngConfig.Templates.Declaration
+            .replace('Major', majorName)
+            .replace('Name', name);
+    if (!ispartial) component = component.replace('Partial', '');
+
+
+    // place it inside the module, if // **gulpcomponent_first exists, replace with // **gulpcomponent and dont add a comma
+
+    return (
+        gulp
+            .src(ngConfig.Destinations.Routes + major.toLowerCase() + '.route.ts')
+            // replace route and component
+            .pipe(gulpif(!ispartial, replace('// **gulproute**', ','+ route + '\n// **gulproute**')))
+            .pipe(gulpif(!ispartial, replace('// **gulproute_first**', route + '\n// **gulproute**')))
+            .pipe(replace('// **gulpcomponent**',  ',' + component + '\n// **gulpcomponent**' ))
+            .pipe(replace('// **gulpcomponent_first**',  component + '\n// **gulpcomponent**' ))
+            .pipe(gulp.dest(ngConfig.Destinations.Routes))
+    );
+};
+
+const _createView = function() {
+    const { major, name, ispartial } = options;
     //major now is Something/Something' place in destinationviews + the path
 
     if (!major) {
@@ -296,12 +302,11 @@ gulp.task('ngview', function() {
                 extname: '.html'
             })
         )
-        .pipe(gulp.dest(ngConfig.Destinations.Views + major.toLowerCase()));
-});
+        .pipe(gulp.dest(ngConfig.Destinations.Views + major.toLowerCase(), { overwrite: false}));
+};
 
-gulp.task('ngcomponent', gulp.series('ngview', function() {
-    // copy template to app/components/folder/name.component.s
-    const {major, name, ispartial} = options;
+const _createComponent = function() {
+    const { major, name, ispartial } = options;
     if (!major) {
         return gulp.src('.');
     }
@@ -330,10 +335,10 @@ gulp.task('ngcomponent', gulp.series('ngview', function() {
                 extname: '.ts'
             })
         )
-        .pipe(gulp.dest(ngConfig.Destinations.Components + major.toLowerCase()));
-}));
+        .pipe(gulp.dest(ngConfig.Destinations.Components + major.toLowerCase(), {overwrite: false}));
+};
 
-gulp.task('ngpipe', function() {
+const _createPipe = function() {
     const name = options.name;
     if (!name) {
         return gulp.src('.');
@@ -351,10 +356,10 @@ gulp.task('ngpipe', function() {
                 extname: '.ts'
             })
         )
-        .pipe(gulp.dest(ngConfig.Destinations.Pipes));
-});
+        .pipe(gulp.dest(ngConfig.Destinations.Pipes, {overwrite: false}));
+};
 
-gulp.task('ngdirective', function() {
+const _createDirective = function() {
     const name = options.name;
     if (!name) {
         return gulp.src('.');
@@ -372,11 +377,10 @@ gulp.task('ngdirective', function() {
                 extname: '.ts'
             })
         )
-        .pipe(gulp.dest(ngConfig.Destinations.Directives));
-});
+        .pipe(gulp.dest(ngConfig.Destinations.Directives, {overwrite: false}));
+};
 
-// create model
-gulp.task('ngmodel', function() {
+const _createModel = function() {
     const name = options.name;
 
     if (!name) {
@@ -394,12 +398,10 @@ gulp.task('ngmodel', function() {
                 extname: '.ts'
             })
         )
-        .pipe(gulp.dest(ngConfig.Destinations.Models));
-});
+        .pipe(gulp.dest(ngConfig.Destinations.Models, {overwrite: false}));
+};
 
-// service, create, inject in barrels, add instnace to core
-
-gulp.task('ngservice', function() {
+const _createService = function(){
     const name = options.name;
     // create service from template and save in services folder with name
     // then inject in services.ts
@@ -416,40 +418,53 @@ gulp.task('ngservice', function() {
                 extname: '.ts'
             })
         )
-        .pipe(gulp.dest(ngConfig.Destinations.Services));
-});
+        .pipe(gulp.dest(ngConfig.Destinations.Services, {overwrite: false}));
+}
 
-// create component
-gulp.task('component', gulp.series('ngcomponent', function() {
-    // inject all components in core, and all services and models in services
-    return injectcore();
-}));
+const _addToConfig = function(){
+    // add a node to config to be used with newly created config
+    const name = options.name;
 
-// create pipe
-gulp.task('pipe', gulp.series('ngpipe', function() {
-    return injectlib();
-}));
-// create directive
-gulp.task('directive', gulp.series('ngdirective', function() {
-    return injectlib();
-}));
+    var apiconfig =
+    fs
+        .readFileSync(ngConfig.Templates.ApiConfig, 'utf8')
+        .replace(/_name_/gim, name.toLowerCase());
 
-// create model
-gulp.task('model', gulp.series('ngmodel', function() {
-    return injectmodels();
-}));
 
-// create service
-gulp.task('service', gulp.series('ngservice', function() {
-    return injectcoremodule();
-}));
+    return (
+        gulp
+            .src(ngConfig.Core.ApiConfigFile)
+            .pipe(replace('// **gulpmodel**',', '+ apiconfig + '\n// **gulpmodel**'))
+            .pipe(gulp.dest(ngConfig.Destinations.ApiConfig))
+    );
+
+}
+
 
 // TODO: create guard and resolve
 
-gulp.task('injectcore', injectcore);
-gulp.task('injectlib', injectlib);
+exports.injectComponents = _injectComponents;
+exports.injectServices = gulp.series(_injectServices, _injectCoreModule);
+exports.injectLibModule = _injectLibModule;
+exports.injectModels = _injectModels;
 
-gulp.task('injectmodels', injectmodels);
-gulp.task('injectcoremodule', injectcoremodule);
+exports.injectAll = gulp.parallel(_injectComponents, _injectServices, _injectModels, _injectLibModule, _injectCoreModule);
 
-gulp.task('injectall', gulp.parallel('injectcore', 'injectlib', 'injectmodels', 'injectcoremodule'));
+exports.createModule = _createModule; // create a module with defualt ListComponent
+
+exports.createComponent = gulp.series(
+    gulp.parallel(
+        _createView,
+        _createComponent,
+        _createModule
+    ),
+    _injectComponents,
+    _addComponentToModule
+);
+
+exports.createPipe = gulp.series(_createPipe, _injectLibModule);
+exports.createDirective = gulp.series(_createDirective, _injectLibModule);
+exports.createModel = gulp.series(_createModel, _injectModels);
+exports.createService = gulp.series(_createService, _injectServices, _injectCoreModule);
+exports.createFullService = gulp.series(gulp.parallel(_createModel, _createService, _addToConfig), _injectModels, _injectServices, _injectCoreModule);
+

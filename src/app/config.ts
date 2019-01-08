@@ -34,6 +34,7 @@ export const Config = {
         data: {
             countries: '/data/countries'
         }
+         // **gulpmodel**
     }
 };
 

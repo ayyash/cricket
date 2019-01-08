@@ -2,7 +2,7 @@ import { DataList, IList } from '../core/services';
 
 export interface I_Name_ {
     id: string;
- 
+
 }
 
 export class _Name_ implements I_Name_ {
@@ -27,5 +27,21 @@ export class _Name_ implements I_Name_ {
 
     }
 
-   
+    // prepare to POST
+    public static PrepCreate(_name_: I_Name_): any {
+        return {
+            id: _name_.id
+        };
+
+    }
+    // prepare to PUT
+    public static PrepSave(_name_: I_Name_): any {
+
+        return {
+           id: _name_.id
+
+        };
+
+    }
+
 }

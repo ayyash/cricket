@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import * as CoreComponents from '../../core/components';
-
+// obsolete
 const routes: Routes = [
-   
+
     {
         path: '',
         component: CoreComponents._Name_ListComponent

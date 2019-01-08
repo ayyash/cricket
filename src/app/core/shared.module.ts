@@ -8,7 +8,7 @@ import {
     DataPartialComponent
 } from './components';
 import { MdInputModule } from '../lib/mdinput/mdinput.module';
-import { LibModule } from './lib.module';
+import { LibModule } from '../lib/lib.module';
 
 
 @NgModule({
