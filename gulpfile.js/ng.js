@@ -53,7 +53,7 @@ var ngConfig = {
     }
 };
 
-var classRe = /export (?:abstract )?class (\w+)/;
+var classRe = /export\s+(?:abstract )?class (\w+)/;
 // TODO: remove this once  u figure out how to do it
 var tempRoute = ` {
     path: '_name_', component: CoreComponents.MainLayoutComponent,
