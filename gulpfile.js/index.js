@@ -1,12 +1,6 @@
 const j = require('./ng');
-
-// function watch(cb) {
-//     // place code for your default task here
-//     gulp.watch('**/less/*.less', ['rawless']);
-
-//     // Watch .js files
-//     cb();
-// }
+const assets = require('./assets');
+const icons = require('./icons');
 
 
 exports.injectComponents = j.injectComponents;
@@ -24,3 +18,7 @@ exports.service = j.createService;
 exports.fullService = j.createFullService;
 
 // exports.default = watch;
+exports.rawless = assets.rawless;
+exports.default = assets.watch;
+
+exports.iconset = icons.iconset;

@@ -11,15 +11,17 @@ var rename = require('gulp-rename');
 var replace = require('gulp-replace');
 var gulpif = require('gulp-if');
 
-var gulpConfig = require(__dirname + '/config.json');
+var gulpConfig = require('./config.json');
 var ngConfig = {
     Templates: {
         Components: __dirname + '/angulartemplates/component.template',
+        FormComponents: __dirname + '/angulartemplates/component.form.template',
         Views: __dirname + '/angulartemplates/view.template',
+        FormViews: __dirname + '/angulartemplates/view.form.template',
         Directives: __dirname + '/angulartemplates/directive.template',
         Pipes: __dirname + '/angulartemplates/pipe.template',
         Route: __dirname + '/angulartemplates/route.template',
-        // RouteModule: __dirname + '/angulartemplates/routeModule.template',
+        // RouteModule: './angulartemplates/routeModule.template',
         Declaration: 'CoreComponents.MajorNamePartialComponent',
         Module: __dirname + '/angulartemplates/module.template',
         Model: __dirname + '/angulartemplates/model.template',
@@ -286,15 +288,18 @@ const _addComponentToModule = function() {
 };
 
 const _createView = function() {
-    const { major, name, ispartial } = options;
+    const { major, name, ispartial, isform } = options;
     //major now is Something/Something' place in destinationviews + the path
 
     if (!major) {
         return gulp.src('.');
     }
+    var majorName = major.substring(major.lastIndexOf('/') + 1);
 
     return gulp
-        .src(ngConfig.Templates.Views)
+        .src(isform ? ngConfig.Templates.FormViews : ngConfig.Templates.Views)
+        .pipe(replace('Major', majorName))
+        .pipe(replace('major', majorName.toLowerCase()))
         .pipe(
             rename({
                 basename: name.toLowerCase(),
@@ -306,7 +311,7 @@ const _createView = function() {
 };
 
 const _createComponent = function() {
-    const { major, name, ispartial } = options;
+    const { major, name, ispartial, isform } = options;
     if (!major) {
         return gulp.src('.');
     }
@@ -319,12 +324,13 @@ const _createComponent = function() {
     }
     if (ispartial) {
         _partialView = '.partial';
-        _selector = `selector: '${gulpConfig.projectName}-${name.toLowerCase()}',`;
+        _selector = `selector: '${gulpConfig.projectName}-${majorName.toLowerCase()}-${name.toLowerCase()}',`;
     }
     return gulp
-        .src(ngConfig.Templates.Components)
+        .src(isform ? ngConfig.Templates.FormComponents : ngConfig.Templates.Components)
         .pipe(replace('Major', majorName))
         .pipe(replace('Name', name))
+        .pipe(replace('major', majorName.toLowerCase()))
         .pipe(gulpif(!ispartial, replace('Partial', '')))
         .pipe(replace('viewpath', name.toLowerCase() + _partialView))
         .pipe(replace('_selector_', _selector))
@@ -448,7 +454,7 @@ exports.injectServices = gulp.series(_injectServices, _injectCoreModule);
 exports.injectLibModule = _injectLibModule;
 exports.injectModels = _injectModels;
 
-exports.injectAll = gulp.parallel(_injectComponents, _injectServices, _injectModels, _injectLibModule, _injectCoreModule);
+exports.injectAll = gulp.parallel(  gulp.series(_injectModels, _injectServices, _injectCoreModule), _injectComponents, _injectLibModule, );
 
 exports.createModule = _createModule; // create a module with defualt ListComponent
 
