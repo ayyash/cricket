@@ -1,16 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-
+import { SeoService } from '../../core/services';
 @Component({
 
     templateUrl: './home.html'
 })
 export class PublicHomeComponent implements OnInit {
 
-    constructor() {
+    constructor( private seoService: SeoService) {
         //
     }
     ngOnInit(): void {
         //
+        // this.seoService.SetHomeSeo();
+        this.seoService.setPageSeo();
     }
 
 }

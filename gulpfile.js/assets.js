@@ -11,6 +11,8 @@ var transform = require('gulp-transform');
 var gulpConfig = require('./config.json');
 
 var rtl = require('./rtl.js');
+var critical = require('./critical.js');
+
 
 // use less/sh.imports.less to create a less file of all ui* and media*, then generate src/css/sh.css
 const rawless = function() {
@@ -42,9 +44,7 @@ const rawless = function() {
             this.emit('end');
         })
         .pipe(
-            autoprefixer({
-                browsers: gulpConfig.browserslist
-            })
+            autoprefixer()
         )
         .pipe(rename({ basename: gulpConfig.projectName }))
         .pipe(gulp.dest(gulpConfig.distUrl + 'css'))
@@ -53,6 +53,7 @@ const rawless = function() {
 
 // use sh.rtl.imports.less, concat to sh.imports.less, the inject rtl.*.less to generate src/css/sh.rtl.css
 const rawlessRtl = function(){
+
     return gulp.src([gulpConfig.srcUrl + 'less/all.less', gulpConfig.srcUrl + 'less/sh.rtl.imports.less'])
         .pipe(concat('all.rtl.less', { newLine: '' }))
         .pipe(
@@ -75,9 +76,7 @@ const rawlessRtl = function(){
             this.emit('end');
         })
         .pipe(
-            autoprefixer({
-                browsers: gulpConfig.browserslist
-            })
+            autoprefixer()
         )
         .pipe(rename({ basename: gulpConfig.projectName, suffix: '.rtl' }))
         .pipe(gulp.dest(gulpConfig.distUrl + 'css'))
@@ -94,6 +93,53 @@ const rawMirror = gulp.series(rawlessRtl, function(){
        .pipe(gulp.dest(gulpConfig.distUrl + 'css/'));
  });
 
+  // remove non critical from sh.css and in sh.general.css
+  const rawNonCritical  = gulp.series(rawless, function() {
+    return gulp.src(`${gulpConfig.distUrl}css/${gulpConfig.projectName}.css`)
+        .pipe(transform(function(contents, file) {
+            return critical.CriticalText(contents, false);
+        }, {encoding: 'utf8'}))
+        // rename to .general
+        .pipe(rename({ basename: gulpConfig.projectName, suffix: '.general' }))
+        .pipe(gulp.dest(gulpConfig.distUrl + 'css/'));
+        // .on('error', console.error.bind(console));
+ });
+
+ const rawCritical = function() {
+    return gulp.src(`${gulpConfig.distUrl}css/${gulpConfig.projectName}.css`)
+        .pipe(transform(function(contents, file) {
+            return critical.CriticalText(contents, true);
+        }, {encoding: 'utf8'}))
+        // rename to .general
+        .pipe(rename({ basename: gulpConfig.projectName, suffix: '.critical' }))
+        .pipe(gulp.dest(gulpConfig.distUrl + 'css/'));
+        // .on('error', console.error.bind(console));
+ };
+
+ const rawNonCriticalRtl = gulp.series(rawMirror, function() {
+    return gulp.src(`${gulpConfig.distUrl}css/${gulpConfig.projectName}.rtl.css`)
+        .pipe(transform(function(contents, file) {
+            return critical.CriticalText(contents, false);
+        }, {encoding: 'utf8'}))
+        // rename to .general
+        .pipe(rename({ basename: gulpConfig.projectName, suffix: '.general.rtl' }))
+        .pipe(gulp.dest(gulpConfig.distUrl + 'css/'));
+        // .on('error', console.error.bind(console));
+ });
+
+ const rawCriticalRtl = function() {
+    return gulp.src(`${gulpConfig.distUrl}css/${gulpConfig.projectName}.rtl.css`)
+        .pipe(transform(function(contents, file) {
+            return critical.CriticalText(contents, true);
+        }, {encoding: 'utf8'}))
+        // rename to .general
+        .pipe(rename({ basename: gulpConfig.projectName, suffix: '.critical.rtl' }))
+        .pipe(gulp.dest(gulpConfig.distUrl + 'css/'))
+        .on('error', console.error.bind(console));
+ };
+
+
+
 if (gulpConfig.isRtl){
     exports.rawless = gulp.series(rawless, rawMirror);
     exports.watch = function() {
@@ -101,6 +147,8 @@ if (gulpConfig.isRtl){
         gulp.watch('**/less/(sh|ui|rtl){1}\.*.less',  { ignoreInitial: false }, gulp.series(rawless, rawMirror));
 
     }
+    exports.critical =  gulp.series(rawNonCritical, rawCritical, rawNonCriticalRtl, rawCriticalRtl);
+
 
 } else {
 
@@ -111,5 +159,7 @@ if (gulpConfig.isRtl){
         gulp.watch('**/less/(sh|ui){1}\.*.less',  { ignoreInitial: false }, rawless);
 
     }
+    exports.critical =  gulp.series(rawNonCritical, rawCritical);
+
 }
 

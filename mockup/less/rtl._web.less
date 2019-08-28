@@ -1,0 +1,51 @@
+// TODO: reflect icons
+// @icon-chevronleft: "\e924";	.icon(icon-chevronleft,@icon-chevronleft);
+// @icon-chevronright: "\e923";	.icon(icon-chevronright,@icon-chevronright);
+
+
+/* RTL BEGIN */
+.stars-inner {
+    left: auto;
+    right: 0;
+}
+.formap {
+    left: auto!important;
+    right: 0!important;
+}
+.mat-datepicker-toggle {
+    right: auto!important;
+    left: 0!important;
+}
+.comment-form .comment-btn {
+    transform: scale(-1);
+}
+.search-switch {
+    transform: translateX(50%);
+}
+
+.ext:after {
+    transform: rotate(225deg);
+}
+/* CRITICAL BEGIN */
+.search-city {
+    background-position: 5px center;
+}
+/* CRITICAL END */
+
+.menulist:before  {
+    left: auto!important;
+    right: -3px!important;
+    border-right: 1px solid @grey-light!important;
+    border-left: 0!important;
+}
+.menulist .active:before {
+    right: -19px!important;
+    left: auto!important;
+}
+.for-list {
+    .getIcon(@icon-chevronright);
+}
+
+
+
+/* RTL END */

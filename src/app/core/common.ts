@@ -33,23 +33,24 @@ String.prototype.toPrettyPrice = function (this: string) {
 export class Helpers {
 
     public static GetParamsAsString(urlParams: any): string {
-        let _url = '';
+        const s = new URLSearchParams();
+        // for every key, if value is undefined, or null, or false, exclude
         Object.keys(urlParams).forEach(n => {
-            // if array, repeat them with same key
-            let p = '';
-            if (urlParams[n] instanceof Array) {
-                p = urlParams[n]
-                    .filter(x => x !== '')
-                    .map(f => n + '=' + f)
-                    .join('&');
-
-                if (p.length) _url += '&' + p;
-            } else {
-                if (urlParams[n]) _url += `&${n}=${urlParams[n]}`;
+            const v = urlParams[n];
+            if (v) {
+                if (v instanceof Array) {
+                    if (v.length) {
+                        // filter out empty strings
+                        // lookout for this, it might need an [] in the key
+                        v.filter(x => x !== '').forEach(f => s.append(n, f));
+                    }
+                } else {
+                    s.append(n, v);
+                }
             }
         });
+       return s.toString();
 
-        return _url.substring(1);
     }
 
     public static makeDate(dateString: string): Date {

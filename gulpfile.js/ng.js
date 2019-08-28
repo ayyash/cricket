@@ -59,7 +59,8 @@ var classRe = /export\s+(?:abstract )?class (\w+)/;
 // TODO: remove this once  u figure out how to do it
 var tempRoute = ` {
     path: '_name_', component: CoreComponents.MainLayoutComponent,
-    loadChildren: '_path_.module#_Name_Module'
+    loadChildren: () => import('_path_.module').then(m => m._Name_Module)
+
   },
   `;
 function getClassName(file) {
@@ -108,6 +109,7 @@ const _injectComponents = function() {
                 gulp.src([
                     ngConfig.Destinations.Components + '**/*.component.ts',
                     ngConfig.Destinations.Components + '**/*.partial.ts',
+                    ngConfig.Destinations.Components + '**/*.dialog.ts',
                     '!' + ngConfig.Destinations.Components + '**/abstract/*.ts',
                     '!' + ngConfig.Destinations.Components + '**/_*.ts'
                 ]),

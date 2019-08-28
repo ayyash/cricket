@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SeoService } from '../../core/services';
 
 @Component({
     templateUrl: './main.component.html'
@@ -6,11 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainLayoutComponent implements OnInit {
 
-    constructor() { }
+    constructor( private seoService: SeoService) { }
 
     ngOnInit() {
     }
+    switchLanguage() {
+        this.seoService.switchLanguage();
+    }
 
- 
 
 }

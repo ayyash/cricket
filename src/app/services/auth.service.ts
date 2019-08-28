@@ -1,8 +1,8 @@
 import { Injectable, Injector } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map, publishLast, refCount } from 'rxjs/operators';
 import { Config } from '../config';
-import { IAuthInfo, AuthInfo, IUser, User, IListOptions } from '../core/services';
+import { IAuthInfo, AuthInfo, IUser, User, IListOptions, localStorageService } from '../core/services';
 
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -18,15 +18,15 @@ export class AuthService {
     private _newUrl = Config.API.user.newpassword;
 
     get redirectUrl(): string {
-        return localStorage.getObject('redirectUrl');
+        return this.localStorage.getObject('redirectUrl');
     }
     set redirectUrl(value: string) {
-        localStorage.setObject('redirectUrl', value);
+        this.localStorage.setObject('redirectUrl', value);
     }
 
     private _http: HttpClient;
 
-    constructor(private router: Router, private injector: Injector) {
+    constructor(private router: Router, private injector: Injector, private localStorage: localStorageService) {
         setTimeout(() => (this._http = injector.get(HttpClient)));
     }
 
@@ -36,7 +36,7 @@ export class AuthService {
             // minutes or seconds multiple by 60
             resUser.expiresAt = JSON.stringify(resUser.expiresIn * 60 * 1000 + new Date().getTime());
 
-            localStorage.setItem(Config.Auth.userAccessKey, JSON.stringify(resUser));
+            this.localStorage.setItem(Config.Auth.userAccessKey, JSON.stringify(resUser));
             // change this to storage, lieh? to configure expiration?!
             // note to self, storage is for cache only
 
@@ -44,7 +44,7 @@ export class AuthService {
 
         } else {
             // remove token from user
-            localStorage.removeItem(Config.Auth.userAccessKey);
+            this.localStorage.removeItem(Config.Auth.userAccessKey);
         }
     }
 
@@ -56,7 +56,7 @@ export class AuthService {
 
     // get localiser
     GetAuthInfo(): IAuthInfo {
-        const _localuser = JSON.parse(localStorage.getItem(Config.Auth.userAccessKey));
+        const _localuser = JSON.parse(this.localStorage.getItem(Config.Auth.userAccessKey));
 
         if (_localuser && _localuser.accessToken) {
             return _localuser;
@@ -75,9 +75,9 @@ export class AuthService {
     }
 
     logout(): void {
-        // Remove tokens and expiry time from localStorage
+        // Remove tokens and expiry time from this.localStorage
 
-        localStorage.removeItem(Config.Auth.userAccessKey);
+        this.localStorage.removeItem(Config.Auth.userAccessKey);
         // this.redirectUrl = Config.Basic.defaultUserRoute;
     }
 
@@ -130,7 +130,7 @@ export class AuthService {
             return true;
         }
         // let refreshtoken be fired next http request, u have to keep the token
-        // localStorage.removeItem(Config.Auth.userAccessKey);
+        // this.localStorage.removeItem(Config.Auth.userAccessKey);
         return false;
     }
 

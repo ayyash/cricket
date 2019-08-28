@@ -1,0 +1,18 @@
+{
+    "Basic": {
+        "defaultUploadSize": 1048576,
+        "defaultUploadFormat": ["gif", "jpg", "jpeg", "png"]
+    },
+    "API": {
+        "apiRoot": "//192.168.43.248:50007/api"
+
+    },
+    "Auth": {
+        "userAccessKey": "cricket.user"
+    },
+    "Cache": {
+        "Timeout": 1,
+        "Key": "cricket.cache",
+        "ResetKey": "cricket.20190208"
+    }
+}

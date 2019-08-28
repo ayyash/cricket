@@ -4,6 +4,7 @@ import { Res } from '../../core/resources';
 import { MdPatterns } from './validators';
 
 @Directive({
+    // tslint:disable-next-line:directive-selector
     selector: '[mdinput]',
     exportAs: 'mdcontrol',
     providers: [
@@ -19,18 +20,17 @@ export class MdInputDirective implements OnInit, Validator {
     @Input('mdtype') type: any;
 
     // note to self, required validation is handled by angular
-    @Input()
-    required = false;
+    @Input() required = false;
 
     // note to self, do no name "pattern" because that is handled by angular
-    @Input('mdpattern')  pattern: string = '';
+    @Input('mdpattern') pattern = '';
 
-    @Input()
-    errorMessage: string;
+    @Input() errorMessage: string;
 
     formControl: FormControl;
     errorText: string;
-    $element: JQuery;
+    // TODO: FIXME: drop jquery
+    $element: HTMLInputElement;
 
     focus = false;
     // i can pollute this with hostlisters
@@ -44,7 +44,8 @@ export class MdInputDirective implements OnInit, Validator {
     }
 
     ngOnInit() {
-        this.$element = $(this.el.nativeElement);
+
+        this.$element = this.el.nativeElement;
     }
 
     customValidate(fn: () => boolean) {
@@ -53,11 +54,10 @@ export class MdInputDirective implements OnInit, Validator {
 
         if (!isvalid) {
             this.errorText = Res.Get(this.errorMessage, this.errorMessage);
-            this.$element.addClass('ng-invalid');
+            this.$element.classList.add('ng-invalid');
         } else {
             this.errorText = '';
-            this.$element.removeClass('ng-invalid');
-
+            this.$element.classList.remove('ng-invalid');
         }
         return isvalid;
     }
@@ -71,7 +71,6 @@ export class MdInputDirective implements OnInit, Validator {
         if (this.required) {
             this.errorText = Res.Get('Required');
         }
-
 
         // custom
         if (this.type === 'custom') {
@@ -126,7 +125,7 @@ export class MdInputDirective implements OnInit, Validator {
             if (this.errorMessage) {
                 _message = Res.Get(this.errorMessage, this.errorMessage);
             }
-            let _v: any = {
+            const _v: any = {
                 range: {
                     valid: false
                 }

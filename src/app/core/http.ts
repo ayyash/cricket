@@ -10,7 +10,7 @@ import {
     HttpErrorResponse
 } from '@angular/common/http';
 import { Config } from '../config';
-import { LoaderService, AuthService } from './services';
+import { ConfigService, LoaderService, AuthService } from './services';
 
 
 @Injectable()
@@ -20,11 +20,12 @@ export class CricketInterceptor implements HttpInterceptor {
 
     constructor(private loaderService: LoaderService, private authService: AuthService) {}
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        let url = Config.API.apiRoot + req.url;
-        // FIXME: TODO: remove this once api is fixed
-        if (req.url.indexOf('http://') > -1) {
-            url = req.url;
+        if (req.url.indexOf('localdata') > -1 ) {
+            // pass through
+           return next.handle(req);
         }
+        const url = ConfigService.Config.API.apiRoot + req.url;
+
 
         const adjustedReq = req.clone({ url: url, setHeaders: this.getHeaders(req.headers) });
         this.loaderService.show();
@@ -51,7 +52,7 @@ export class CricketInterceptor implements HttpInterceptor {
                 })
             )
             .catchProjectError(req.urlWithParams, req.method)
-            .debug(req.urlWithParams, req.method);
+            .debug(req.urlWithParams, req.method, 'p');
         // do catch 401 here
     }
 
@@ -59,17 +60,12 @@ export class CricketInterceptor implements HttpInterceptor {
         //  authorization here
         let headers: any = {};
 
-        // if headers exist, ignore it
-        // if (!reqheaders.get('authorization')) {
-
-        const _auth = this.authService.getToken();
+            const _auth = this.authService.getToken();
 
         if (_auth && _auth !== '') {
             headers['authorization'] = `Bearer ${_auth}`;
         }
-        // }
 
-        // headers['Accept'] = 'application/json';
 
         return headers;
     }

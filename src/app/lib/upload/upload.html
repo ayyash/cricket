@@ -1,0 +1,6 @@
+<div class="upload">
+    <div class="symbol icon-camera"></div>
+    <input type="file" #fileinput (change)="getImage(fileinput)">
+    <img [src]="getSafeUrl(imageUrl)" class="center" *ngIf="imageUrl" />
+    <ng-content></ng-content>
+</div>

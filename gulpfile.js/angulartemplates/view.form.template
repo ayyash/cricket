@@ -12,8 +12,9 @@
                         formControlName="fieldname"
                         [required]="true"
                     />
+                    <div class="md-help-text" helptext>help text</div>
+
                 </md-input>
-                <div class="md-help-text">help text</div>
             </div>
             <div class="spaced">
                 <md-input placeholder="List">

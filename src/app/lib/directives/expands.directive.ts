@@ -3,7 +3,6 @@ import {
     Directive, Input, Output, OnDestroy, HostListener, EventEmitter, ElementRef, Renderer,
     AfterViewInit
 } from '@angular/core';
-// TODO: to finish later, add filterlist and other extensions
 
 export interface IExpandsOptions {
     guts?: string;
@@ -16,14 +15,14 @@ export interface IExpandsOptions {
 }
 
 @Directive({
-    selector: '[expands]',
+    // tslint:disable-next-line:directive-selector
+    selector: '[shExpands]',
     exportAs: 'expands'
 })
 export class ExpandsDirective implements OnDestroy, AfterViewInit {
 
-    @Input() trigger;
     @Input() options: IExpandsOptions;
-    @Input() expands: string;
+    @Input('shExpands') expands: string; // = type of behavior, default none, poplist, list... etc
 
     @Output() onShow = new EventEmitter();
     @Output() onHide = new EventEmitter();
@@ -31,65 +30,53 @@ export class ExpandsDirective implements OnDestroy, AfterViewInit {
     @Output() onLoad = new EventEmitter();
 
     private defaultOptions: IExpandsOptions = {
-        guts: '>.guts',
-        src: '>.h',
+        guts: '.guts',
+        src: '.h',
+        showsrc: '.showexpands',
+        hidesrc: '.hideexpands',
         active: true,
         togglecss: 'toggle',
         isvisible: false
     };
     private _options: IExpandsOptions;
-    private element: JQuery;
-    private srcElement: JQuery;
-    private gutsElement: JQuery;
+    private element: HTMLElement;
 
     constructor(private el: ElementRef, private renderer: Renderer) {
-        
+        // when the src is clicked, add class to element, let css handle behavior
     }
 
     ngAfterViewInit(): void {
-        
-        // guts and h are the esssential parts, when h is clicked, do something with visibility? or class?
-        this._options = Object.assign({}, this.defaultOptions, this.options);
-    
-        this.element = $(this.el.nativeElement);
 
-        this.srcElement = this.element.find(this._options.src);
+        this._options = {...this.defaultOptions, ...this.options};
 
-        this.gutsElement = this.element.find(this._options.guts);
+        this.element = this.el.nativeElement;
 
         // according to state, do something
         this._options.isvisible ? this.show() : this.hide();
 
-
         this.onLoad.emit();
-       
+
     }
-
-
 
     @HostListener('click', ['$event.target'])
     onClick(target: HTMLElement): void {
-        
-        const $target: JQuery = $(target);
 
-        if ($target.is(this.srcElement)) {
+        if (target.matches(this._options.src)) {
             // toggle
             this._options.isvisible ? this.hide() : this.show();
         }
 
-        if ($target.is(this._options.showsrc)) {
+        if (target.matches(this._options.showsrc)) {
             // show
             this.show();
         }
-        if ($target.is(this._options.hidesrc)) {
+        if (target.matches(this._options.hidesrc)) {
             // hide
             this.hide();
         }
 
 
     }
-
-
 
     public hide(): void {
         if (!this._options.active) {
@@ -101,7 +88,7 @@ export class ExpandsDirective implements OnDestroy, AfterViewInit {
             this.onToggle.emit();
         }
         this._options.isvisible = false;
-        this.element.removeClass(this._options.togglecss);
+        this.element.classList.remove(this._options.togglecss);
         this.onHide.emit();
 
     }
@@ -114,17 +101,17 @@ export class ExpandsDirective implements OnDestroy, AfterViewInit {
             this.onToggle.emit();
         }
 
-        this._options.isvisible = true; // change public
-        this.element.addClass(this._options.togglecss);
+        this._options.isvisible = true;
+        this.element.classList.add(this._options.togglecss);
         this.onShow.emit();
     }
 
     @HostListener('document:click', ['$event.target'])
-    onDocClick(target: any): void {
+    onDocClick(target: HTMLElement): void {
         // if poplist, hide
-        if (this.expands === 'poplist'){
+        if (this.expands === 'poplist') {
 
-            if (!jQuery.contains(this.el.nativeElement, target)) {
+            if (!this.element.contains(target)) {
                 this.hide();
             }
         }
@@ -135,7 +122,7 @@ export class ExpandsDirective implements OnDestroy, AfterViewInit {
     ngOnDestroy(): void {
         //
         this.hide();
-   
+
     }
 
 

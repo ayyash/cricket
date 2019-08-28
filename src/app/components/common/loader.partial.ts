@@ -1,23 +1,27 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { LoaderService, ILoaderState } from '../../core/services';
+import { share } from 'rxjs/operators';
 
 @Component({
     selector: 'http-loader',
-    // templateUrl: './loader.partial.html'
-    template: `<div *ngIf="show" class="httploader"><div class="line"></div></div>`
+    template: `<div *ngIf="show" class="httploader">
+    <div class="line"></div>
+    <div class="subline inc"></div>
+    <div class="subline dec"></div></div>`,
+    styleUrls: ['./loader.less']
 })
 export class LoaderComponent implements OnInit, OnDestroy {
     show = false;
     private subscription: Subscription;
 
-    // FIXME: the loader is too big it creates a flicker effect on fast request
     constructor(
         private loaderService: LoaderService
     ) { }
 
     ngOnInit() {
         this.subscription = this.loaderService.loaderState
+            .pipe(share())
             .subscribe((state: ILoaderState) => {
                 this.show = state.show;
             });

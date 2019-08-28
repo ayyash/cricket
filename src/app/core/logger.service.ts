@@ -11,7 +11,7 @@ declare module 'rxjs/internal/Observable' {
     }
 }
 
-Observable.prototype.debug = function(message: string, methodName: string) {
+Observable.prototype.debug = function(message: string, methodName: string, type: string = '') {
     // _debug(this.operator.project);
     return this.pipe(
         tap(nextValue => {
@@ -21,11 +21,12 @@ Observable.prototype.debug = function(message: string, methodName: string) {
                 value = nextValue.body;
             }
             if (nextValue && (<any>nextValue).type !== HttpEventType.Sent) {
-                _debug(value, `${methodName} ${message}`);
+                _debug(value, `${methodName} ${message}`, type);
             }
         })
     );
 };
+
 
 Observable.prototype.catchProjectError = function(message: string, methodName: string) {
     return this.pipe(
@@ -78,9 +79,7 @@ Observable.prototype.catchProjectError = function(message: string, methodName: s
                 m = error;
                 uiError.internalMessage = error;
             }
-            if (window['_indebug']) {
-                window.console.log(`%c ${methodName} ${message} ${m}`, 'background: red; color: #fff');
-            }
+            _debug(m, `${methodName} ${message}`, 'e');
             return throwError(uiError);
         })
     );

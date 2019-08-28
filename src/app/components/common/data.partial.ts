@@ -3,7 +3,7 @@ import { EnumDataType, DataService, IData } from '../../core/services';
 import { Observable } from 'rxjs';
 
 @Component({
-    selector: 'smoott-data',
+    selector: 'cr-data',
     template: `{{ (data$ | async)?.name}}`,
     changeDetection: ChangeDetectionStrategy.OnPush
 })

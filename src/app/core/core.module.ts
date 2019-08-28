@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
@@ -9,6 +9,10 @@ import {
     // inject:services
     // endinject
 } from './services';
+import { Config } from '../config';
+import { UploadModule } from '../lib/upload';
+import { LocalInterceptor } from './local.interceptor';
+
 
 
 // services singletons here
@@ -17,6 +21,21 @@ import {
     providers: [Title,
         // inject:services
         // endinject,
+        UploadModule.forRoot({
+            defaultUploadSize: Config.Basic.defaultUploadSize,
+            defaultUploadFormat: Config.Basic.defaultUploadFormat
+        }),
+        {
+            provide: APP_INITIALIZER,
+            useFactory: ConfigService.configFactory,
+            multi: true,
+            deps: [ConfigService]
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: LocalInterceptor,
+            multi: true
+        },
         {
             provide: HTTP_INTERCEPTORS,
             useClass: CricketInterceptor,

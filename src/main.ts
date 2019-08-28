@@ -1,25 +1,31 @@
+
 import './app/core/common';
-import './app/lib/behaviors';
 import './app/core/logger.service';
-import './app/core/storage';
 
 import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
-import { AppModule } from './app/app.module';
+import { AppBrowserModule } from './app/app.browser.module';
 import { environment } from './environments/environment';
 
 if (environment.production) {
     enableProdMode();
 }
 
-platformBrowserDynamic()
-    .bootstrapModule(AppModule)
-    .then(ref => {
-        if (window['ngRef']) {
-            window['ngRef'].destroy();
-        }
-        window['ngRef'] = ref;
-        // Otherwise, log the boot error
-    })
+// this failed! could not freely use the config from window without injection
+// fetch('_local/config.json')
+// .then((response: Response) => response.json())
+// .then(data => {
+//     window['_config'] = _config = data;
+//     _attn(_config, 'x');
+//     platformBrowserDynamic()
+//     .bootstrapModule(AppBrowserModule)
+//     .catch(err => console.log(err));
+// });
+
+// wait until server has finished caching
+document.addEventListener('DOMContentLoaded', () => {
+    platformBrowserDynamic()
+    .bootstrapModule(AppBrowserModule)
     .catch(err => console.log(err));
+});

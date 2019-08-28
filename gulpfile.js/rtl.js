@@ -1,6 +1,7 @@
 
 exports.MirrorText = function(txt) {
     // this function is still under testing
+    // TODO: allow a feature to ignore for LTR only
 
     // find /* RTL BEGIN */ and /* RTL END */ and save their index location
 

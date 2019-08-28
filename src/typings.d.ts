@@ -1,33 +1,14 @@
 
 
-/* SystemJS module definition */
-declare var module: NodeModule;
-interface NodeModule {
-    id: string;
+declare interface Navigator {
+    share: any;
 }
-
-interface IToasterOptions {
-    text?: string;
-    sticky?: boolean;
-    css?: string;
-    closecss?: string;
-    closetext?: string;
-    showCloseBtn?: boolean;
-    locked?: boolean;
-    newCss?: string;
-    delay?: number;
-}
-
-declare interface JQueryStatic {
-    Sh: any;
-    Cricket: any;
-    Toast(key: string, options?: IToasterOptions, fallback?: string): any;
-}
-
 
 declare interface String {
     toSentenceCase(): string;
     toPrettyPrice(): string;
+    toPrettyTime(): string;
 
 }
 declare function _debug(o, message?, type?): void;
+declare function _attn(o, message?): void;

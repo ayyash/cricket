@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject ,  BehaviorSubject } from 'rxjs';
-import { ILoaderState } from '../core/services';
+import { ILoaderState, EnumLoaderSource } from '../core/services';
+
 
 @Injectable()
 export class LoaderService {
@@ -10,11 +11,11 @@ export class LoaderService {
 
     loaderState = this.loaderSubject.asObservable();
 
-    show() {
-        this.loaderSubject.next(<ILoaderState>{ show: true });
+    show(source: EnumLoaderSource = EnumLoaderSource.HTTP) {
+        this.loaderSubject.next(<ILoaderState>{ show: true, source: source });
     }
-    hide() {
-        this.loaderSubject.next(<ILoaderState>{ show: false });
+    hide(source: EnumLoaderSource = EnumLoaderSource.HTTP) {
+        this.loaderSubject.next(<ILoaderState>{ show: false, source: source });
     }
     emitUrl(url: string) {
         this.urlSubject.next(url);

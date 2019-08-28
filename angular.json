@@ -1,86 +1,394 @@
 {
-  "$schema": "./node_modules/@angular-devkit/core/src/workspace/workspace-schema.json",
-  "version": 1,
-  "newProjectRoot": "projects",
-  "projects": {
-    "cricketweb": {
-      "root": "",
-      "sourceRoot": "src",
-      "projectType": "application",
-      "prefix": "cricket",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:browser",
-          "options": {
-            "outputPath": "dist",
-            "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "src/tsconfig.app.json",
-            "assets": [
-              {
-                "glob": "favicon.ico",
-                "input": "src",
-                "output": "/"
-              },
-              {
-                "glob": "images/**/*",
-                "input": "src/assets",
-                "output": "/assets"
-              }
-            ],
-            "styles": [
-                "src/assets/css/cricket.css"
-            ],
-            "scripts": [
-              "node_modules/jquery/dist/jquery.slim.min.js",
-              "src/assets/js/cricket.js"
-            ]
-          },
-          "configurations": {
-            "production": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
+    "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+    "version": 1,
+    "newProjectRoot": "projects",
+    "defaultProject": "cricketweb",
+    "projects": {
+        "cricketweb": {
+            "root": "",
+            "sourceRoot": "src",
+            "projectType": "application",
+            "prefix": "cr",
+            "architect": {
+                "build": {
+                    "browserslist": true,
+                    "builder": "@angular-devkit/build-angular:browser",
+                    "options": {
+                        "outputPath": "dist/en",
+                        "resourcesOutputPath": "assets/",
+                        "baseHref": "/en/",
+                        "index": "src/index.html",
+                        "main": "src/main.ts",
+                        "polyfills": "src/polyfills.ts",
+                        "tsConfig": "src/tsconfig.app.json",
+                        "assets": [
+                            {
+                                "glob": "cricket_favicon.png",
+                                "input": "src",
+                                "output": "/"
+                            },
+                            {
+                                "glob": "images/**/*",
+                                "input": "src/assets",
+                                "output": "/assets"
+                            }
+                        ],
+                        "styles": [
+                            {
+                                "input": "src/assets/css/cr.critical.css",
+                                "bundleName": "critical"
+                            },
+                            {
+                                "input": "src/assets/css/cr.general.css",
+                                "bundleName": "styles",
+                                "lazy": true
+                            },
+                            {
+                                "input": "./node_modules/leaflet/dist/leaflet.css",
+                                "bundleName": "leaflet"
+                            }
+                        ],
+                        "stylePreprocessorOptions": {
+                            "includePaths": [
+                                "./mockup/less",
+                                "./node_modules/shut/src/less"
+                            ]
+                        },
+                        "scripts": [
+                            {
+                                "input": "src/assets/js/cricket.js",
+                                "bundleName": "cricket"
+                            }
+                        ]
+                    },
+                    "configurations": {
+                        "production": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "src/environments/environment.ts",
+                                    "with": "src/environments/environment.prod.ts"
+                                }
+                            ],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            "aot": true,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "deleteOutputPath": true,
+                            "showCircularDependencies": false
+                        },
+                        "serve": {
+                            "extractCss": true,
+                            "namedChunks": true,
+                            "vendorChunk": false,
+                            "commonChunk": true,
+                            "optimization": false,
+                            "aot": true,
+                            "showCircularDependencies": false,
+                            "sourceMap": true,
+                            "index": "src/index.dev.html",
+                            "styles": [
+                                {
+                                    "input": "src/assets/css/cr.css",
+                                    "bundleName": "styles"
+                                },
+                                {
+                                    "input": "./node_modules/leaflet/dist/leaflet.css",
+                                    "bundleName": "leaflet"
+                                }
+                            ],
+                            "assets": [
+                                {
+                                    "glob": "cricket_favicon.png",
+                                    "input": "src",
+                                    "output": "/"
+                                },
+                                {
+                                    "glob": "images/**/*",
+                                    "input": "src/assets",
+                                    "output": "/assets"
+                                },
+                                {
+                                    "glob": "*.json",
+                                    "input": "src/localdata",
+                                    "output": "/localdata"
+                                },
+                                {
+                                    "glob": "config.json",
+                                    "input": "configs",
+                                    "output": "/localdata"
+                                }
+                            ]
+                        },
+                        "network": {
+                            "extractCss": true,
+                            "namedChunks": true,
+                            "vendorChunk": false,
+                            "commonChunk": true,
+                            "aot": true,
+                            "showCircularDependencies": false,
+                            "sourceMap": true,
+                            "index": "src/index.dev.html",
+                            "fileReplacements": [
+                                {
+                                    "replace": "src/environments/environment.ts",
+                                    "with": "src/environments/environment.network.ts"
+                                }
+                            ],
+                            "styles": [
+                                {
+                                    "input": "src/assets/css/cr.css",
+                                    "bundleName": "styles"
+                                },
+                                {
+                                    "input": "./node_modules/leaflet/dist/leaflet.css",
+                                    "bundleName": "leaflet"
+                                }
+                            ]
+                        },
+                        "ar": {
+                            "extractCss": true,
+                            "namedChunks": true,
+                            "vendorChunk": false,
+                            "commonChunk": true,
+                            "optimization": false,
+                            "aot": true,
+                            "showCircularDependencies": false,
+                            "sourceMap": true,
+                            "index": "src/index.dev.html",
+                            "styles": [
+                                {
+                                    "input": "src/assets/css/cr.rtl.css",
+                                    "bundleName": "styles"
+                                },
+                                {
+                                    "input": "./node_modules/leaflet/dist/leaflet.css",
+                                    "bundleName": "leaflet"
+                                }
+                            ],
+                            "assets": [
+                                {
+                                    "glob": "cricket_favicon.png",
+                                    "input": "src",
+                                    "output": "/"
+                                },
+                                {
+                                    "glob": "images/**/*",
+                                    "input": "src/assets",
+                                    "output": "/assets"
+                                },
+                                {
+                                    "glob": "*.json",
+                                    "input": "src/localdata",
+                                    "output": "/localdata"
+                                },
+                                {
+                                    "glob": "config.json",
+                                    "input": "configs",
+                                    "output": "/localdata"
+                                }
+                            ],
+
+                            "fileReplacements": [
+                                {
+                                    "replace": "src/environments/environment.ts",
+                                    "with": "src/environments/environment.ar.ts"
+                                },
+                                {
+                                    "replace": "src/locale/resources.ts",
+                                    "with": "src/locale/resources.ar.ts"
+                                }
+                            ],
+                            "outputPath": "dist/ar",
+                            "baseHref": "/ar/"
+                        },
+                        "serveStaging": {
+                            "extractCss": true,
+                            "namedChunks": true,
+                            "vendorChunk": false,
+                            "commonChunk": true,
+                            "optimization": false,
+                            "aot": true,
+                            "showCircularDependencies": false,
+                            "sourceMap": true,
+                            "index": "src/index.dev.html",
+                            "fileReplacements": [
+                                {
+                                    "replace": "configs/config.json",
+                                    "with": "configs/config.staging.json"
+                                }],
+                            "styles": [
+                                {
+                                    "input": "src/assets/css/cr.css",
+                                    "bundleName": "styles"
+                                },
+                                {
+                                    "input": "./node_modules/leaflet/dist/leaflet.css",
+                                    "bundleName": "leaflet"
+                                }
+                            ],
+                            "assets": [
+                                {
+                                    "glob": "cricket_favicon.png",
+                                    "input": "src",
+                                    "output": "/"
+                                },
+                                {
+                                    "glob": "images/**/*",
+                                    "input": "src/assets",
+                                    "output": "/assets"
+                                },
+                                {
+                                    "glob": "*.json",
+                                    "input": "src/localdata",
+                                    "output": "/localdata"
+                                },
+                                {
+                                    "glob": "config.json",
+                                    "input": "configs",
+                                    "output": "/localdata"
+                                }
+                            ]
+                        },
+                        "mockup": {
+                            "outputPath": "../cricket.mockups/en",
+                            "baseHref": "/en/",
+                            "fileReplacements": [
+                                {
+                                    "replace": "src/environments/environment.ts",
+                                    "with": "src/environments/environment.mockup.ts"
+                                }
+                            ],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            "aot": true,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "deleteOutputPath": true,
+                            "showCircularDependencies": false
+                        },
+                        "mockupAr": {
+                            "outputPath": "../cricket.mockups/ar",
+                            "baseHref": "/ar/",
+                            "index": "src/index.rtl.html",
+                            "fileReplacements": [
+                                {
+                                    "replace": "src/environments/environment.ts",
+                                    "with": "src/environments/environment.mockup.ar.ts"
+                                },
+                                {
+                                    "replace": "src/locale/resources.ts",
+                                    "with": "src/locale/resources.ar.ts"
+                                }
+                            ],
+                            "styles": [
+                                {
+                                    "input": "src/assets/css/cr.critical.rtl.css",
+                                    "bundleName": "critical-rtl"
+                                },
+                                {
+                                    "input": "src/assets/css/cr.general.rtl.css",
+                                    "bundleName": "styles-rtl",
+                                    "lazy": true
+                                },
+                                {
+                                    "input": "./node_modules/leaflet/dist/leaflet.css",
+                                    "bundleName": "leaflet"
+                                }
+                            ],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            "aot": true,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "deleteOutputPath": true,
+                            "showCircularDependencies": false
+                        }
+                    }
+                },
+                "serve": {
+                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "options": {
+                        "browserTarget": "cricketweb:build:serve"
+                    },
+                    "configurations": {
+                        "network": {
+                            "browserTarget": "cricketweb:build:network"
+                        },
+                        "ar": {
+                            "browserTarget": "cricketweb:build:ar"
+                        },
+                        "staging": {
+                            "browserTarget": "cricketweb:build:serveStaging"
+                        }
+                    }
+                },
+                "server": {
+                    "builder": "@angular-devkit/build-angular:server",
+                    "options": {
+                        "outputPath": "dist/en",
+                        "main": "src/main.server.ts",
+                        "tsConfig": "src/tsconfig.server.json",
+                        "stylePreprocessorOptions": {
+                            "includePaths": [
+                                "./mockup/less",
+                                "./node_modules/shut/src/less"
+                            ]
+                        }
+                    },
+                    "configurations": {
+                        "prod": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "src/environments/environment.ts",
+                                    "with": "src/environments/environment.mockup.ts"
+                                }
+                            ],
+                            "optimization": true,
+                            "outputHashing": "media",
+                            "sourceMap": false,
+                            "namedChunks": true,
+                            "extractLicenses": true,
+                            "vendorChunk": true,
+                            "deleteOutputPath": true,
+                            "showCircularDependencies": false
+                        },
+                        "prodAr": {
+                            "outputPath": "dist/ar",
+                            "fileReplacements": [
+                                {
+                                    "replace": "src/environments/environment.ts",
+                                    "with": "src/environments/environment.mockup.ar.ts"
+                                },
+                                {
+                                    "replace": "src/locale/resources.ts",
+                                    "with": "src/locale/resources.ar.ts"
+                                }
+                            ],
+                            "optimization": true,
+                            "outputHashing": "media",
+                            "sourceMap": false,
+                            "namedChunks": true,
+                            "extractLicenses": true,
+                            "vendorChunk": true,
+                            "deleteOutputPath": true,
+                            "showCircularDependencies": false
+                        }
+                    }
                 }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": true,
-              "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "deleteOutputPath": true,
-              "showCircularDependencies": false
-            },
-            "serve": {
-              "extractCss": true,
-              "namedChunks": true,
-              "vendorChunk": false,
-              "commonChunk": true,
-              "aot": true,
-              "showCircularDependencies": false,
-              "sourceMap": true
             }
-          }
-        },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "cricketweb:build:serve"
-          }
-        },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "browserTarget": "cricketweb:build"
-          }
         }
-      }
     }
-  }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { IViewMode} from '../../core/services';
+import { Toast } from '../../lib/toast';
 
 
 @Component({
@@ -41,7 +42,7 @@ export class MajorNamePartialComponent implements OnInit {
 
     saveMajor(): void {
         this.forceValidation = false;
-        $.Toast('hide');
+        Toast.Hide();
 
 
         if (this.majorForm.valid) {
@@ -54,7 +55,7 @@ export class MajorNamePartialComponent implements OnInit {
             this.onSave.emit(_major);
         } else {
             this.forceValidation = true;
-            $.Toast('INVALID_FORM', { sticky: false, css: 'nonsticky error toaster' });
+            Toast.Show('INVALID_FORM', { sticky: false, extracss: 'error' });
         }
     }
 }

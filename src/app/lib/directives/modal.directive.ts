@@ -1,124 +1,121 @@
-
+// static modal directive, can be linked to any html dialog to create the behavior of a dialog
 import {
-    Directive, Input, Output, OnDestroy, HostListener, EventEmitter, ElementRef, Renderer,
+    Directive,
+    Input,
+    Output,
+    OnDestroy,
+    HostListener,
+    EventEmitter,
+    ElementRef,
     AfterViewInit
 } from '@angular/core';
-
+import { Platform } from '@angular/cdk/platform';
 
 @Directive({
+    // tslint:disable-next-line:directive-selector
     selector: '[modal]',
     exportAs: 'modal'
 })
 export class ModalDirective implements OnDestroy, AfterViewInit {
-
+    // connect opener to a trigger by css selector
     @Input('modal') trigger;
-    @Input() modalSelector = '.modalwindow';
+
+    // look for html elements to interact with
+    // TODO: clone configs internally to allow partial config
+
+    @Input() config: {
+        modalSelector?: string;
+        closeSelector?: string;
+        titleSelector?: string;
+        modalContentSelector?: string;
+        bodyCss?: string;
+    } = {
+        modalSelector: '.dr-modal-overlay',
+        closeSelector: '.dr-close',
+        titleSelector: '.dr-title',
+        modalContentSelector: '.dr-content',
+        bodyCss: 'mdl-open'
+    };
 
     @Output() onShow = new EventEmitter();
     @Output() onHide = new EventEmitter();
     @Output() onLoad = new EventEmitter();
 
+    $overlay: HTMLDivElement;
+    $title: HTMLElement;
+    $modalElement: HTMLElement;
 
-
-    // TODO: make the props either contained in an object, or public
-    // NEVER: mixup this with css, those are selectors for script only
-    overlayClass = 'modaloverlay';
-    closeSelector = '.closeoverlay';
-    titleSelector = '.modaltitle';
-    modalDialogSelector = '.modalcontent';
-
-    $overlay: JQuery;
-    $title: JQuery;
-    $modalElement: JQuery;
-    $modalDialog: JQuery;
-    $trigger: JQuery;
-
-    constructor(private el: ElementRef, private renderer: Renderer) {
-
-    }
+    constructor(private el: ElementRef, private _platform: Platform) {}
 
     ngAfterViewInit(): void {
-        // because of the way bootstrap is working the modal itself covers the whole document
-        // modal content is the actual modal
+        if (this._platform.isBrowser) {
+            this.$modalElement = this.el.nativeElement.querySelector(this.config.modalSelector);
 
-        this.$modalElement = $(this.el.nativeElement).find(this.modalSelector);
+            this.$title = this.$modalElement.querySelector(this.config.titleSelector);
 
-        this.$overlay = $('<div />').addClass(this.overlayClass);
-        this.$title = this.$modalElement.find(this.titleSelector);
+            this.onLoad.emit();
 
-        // on body clicks of triggers
-
-        $('body').on('click', this.trigger, (ev: any) => {
-
-            this.show($(ev.currentTarget).attr('title'));
-        });
-        this.onLoad.emit();
-
+            // nice to have, type onload, if onload show here
+        }
     }
-    public hide(): void {
+    public hide(emit = true): void {
         // hide dialog
-
-        this.$modalElement.hide();
-        this.$overlay.remove();
-        this.onHide.emit();
-
+        if (this._platform.isBrowser) {
+            this.$modalElement.style.display = 'none';
+            if (emit) {
+                this.onHide.emit();
+            }
+            document.body.classList.remove(this.config.bodyCss);
+        }
     }
-    public show(title: string): void {
+    public show(title?: string): void {
         // show dialog
-        this.$overlay.prependTo('body');
-
-        // change title
-
-        this.$title.text(title);
-
-        this.$modalElement.show();
-
-
-        this.onShow.emit();
-
+        if (this._platform.isBrowser) {
+            // change title
+            this.$title.innerText = title;
+            this.$modalElement.style.display = 'block';
+            this.onShow.emit();
+            // add a class to body to help in positioning better
+            document.body.classList.add(this.config.bodyCss);
+        }
     }
-
-
 
     @HostListener('click', ['$event.target'])
     onClick(target: HTMLElement): void {
-
         // if target outside modalcontent, hide
-        if (!$(target).closest(this.modalDialogSelector).length) {
-
-            this.hide();
+        if (this._platform.isBrowser) {
+            if (!target.closest(this.config.modalContentSelector)) {
+                this.hide();
+            }
+            // if target is close, hide
+            if (target.matches(this.config.closeSelector)) {
+                this.hide();
+            }
         }
-        // if target is close, hide
-        if ($(target).is(this.closeSelector)) {
-            this.hide();
-        }
-
     }
 
-    // @HostListener('document:click', ['$event.target'])
-    // closeOverlay(target: any): void {
+    @HostListener('document:click', ['$event.target'])
+    onDocumentClick(target: HTMLElement): void {
+        // if this is the trigger, or a closest is the trigger, do trigger
 
-    //     if ($(target).is('.' + this.overlayClass)) {
-    //         this.hide();
-    //     }
-
-    // }
+        if (target.matches(this.trigger) || target.closest(this.trigger)) {
+            // itself or its parent
+            const _t = target.matches(this.trigger) ? target : target.closest(this.trigger);
+            this.show(_t.getAttribute('title'));
+        }
+    }
 
     @HostListener('window:keydown', ['$event'])
     closeEscape(event: KeyboardEvent): void {
+        // hide on escape
         if (event.keyCode === 27) {
             this.hide();
         }
-
     }
 
     ngOnDestroy(): void {
-        //
-        this.hide();
-        $('body').off('click', this.trigger);
-        $('body').off('click', '.' + this.overlayClass);
-
+        // shit, this caused issues
+        // hide without emitting
+         this.hide(false);
     }
-
-
 }
