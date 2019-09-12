@@ -17,14 +17,14 @@ import { LocalInterceptor } from './local.interceptor';
 
 // services singletons here
 @NgModule({
-    imports: [CommonModule, HttpClientModule],
+    imports: [CommonModule, HttpClientModule, UploadModule.forRoot({
+        defaultUploadSize: Config.Basic.defaultUploadSize,
+        defaultUploadFormat: Config.Basic.defaultUploadFormat
+    })],
     providers: [Title,
         // inject:services
         // endinject,
-        UploadModule.forRoot({
-            defaultUploadSize: Config.Basic.defaultUploadSize,
-            defaultUploadFormat: Config.Basic.defaultUploadFormat
-        }),
+        
         {
             provide: APP_INITIALIZER,
             useFactory: ConfigService.configFactory,

@@ -6,7 +6,9 @@ export const Config = {
         language: environment.language,
         defaultRoute: '/',
         defaultSize: 25,
-        defaultDateFormt: 'DD-MM-YYYY'
+        defaultDateFormt: 'DD-MM-YYYY',
+        defaultUploadSize: 1048576,
+        defaultUploadFormat: ["gif", "jpg", "jpeg", "png"]
     },
     Auth: {
         userAccessKey: 'cricket.user'
@@ -20,7 +22,7 @@ export const Config = {
         apiRoot: environment.apiRoot,
         apiVersion: 1,
         data: {
-            countries: '/data/countries'
+            notdefined: '/data/notdefined'
         },
         config: {
             local: 'localdata/config.json'

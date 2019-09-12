@@ -4,7 +4,7 @@ import { map, first, publishLast, refCount } from 'rxjs/operators';
 import { Config } from '../config';
 import { HttpClient } from '@angular/common/http';
 
-import { IData, DataClass, EnumDataType, Country, LocalStorageService } from '../core/services';
+import { IData, DataClass, EnumDataType, LocalStorageService } from '../core/services';
 
 @Injectable()
 export class DataService {
@@ -13,7 +13,7 @@ export class DataService {
 
     constructor(private _http: HttpClient, private localStorage: LocalStorageService) {
         // instantiate
-        this._urls[EnumDataType.Country] = { url: Config.API.data.countries };
+        this._urls[EnumDataType.NotDefined] = { url: Config.API.data.notdefined };
 
     }
 
@@ -44,11 +44,8 @@ export class DataService {
                         let _retdata: any;
 
                         switch (type) {
-                            case EnumDataType.Country:
-                                _retdata = Country.NewList(type, <any>response);
-                                break;
-                                                       default:
-                            _retdata = DataClass.NewList(type, <any>response);
+                            default:
+                            _retdata = DataClass.NewInstances(type, <any>response);
                         }
 
                         // assgin to localstorage with key and expires in hours if set
@@ -74,14 +71,6 @@ export class DataService {
             this.localStorage.setObject(name + '.' + id, _data, _cachedUrl.expiresin);
         }
         // else nothing, there is no storag to update
-    }
-
-    GetCountries(): Observable<IData[]> {
-        return this.GetData(EnumDataType.Country).pipe(
-            first(),
-            publishLast(),
-            refCount()
-        );
     }
 
     GetSingleDataById(type: EnumDataType, id: string): Observable<IData> {

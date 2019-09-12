@@ -5,7 +5,7 @@ import { GaTracking } from './core/ga';
 import { filter } from 'rxjs/operators';
 @Component({
     selector: 'app-root',
-    template: '<http-loader></http-loader><sh-toast *crServerRender="false"></sh-toast><router-outlet></router-outlet>'
+    template: '<http-loader></http-loader><sh-toast *shServerRender="false"></sh-toast><router-outlet></router-outlet>'
 })
 export class AppComponent {
     constructor(

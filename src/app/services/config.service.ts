@@ -6,10 +6,7 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 
 
 export interface IConfig {
-    Basic: {
-        defaultUploadSize: number;
-        defaultUploadFormat: string[];
-    };
+   
     API: {
         apiRoot: string;
     };

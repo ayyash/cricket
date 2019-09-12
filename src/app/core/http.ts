@@ -1,16 +1,14 @@
-import { throwError, Observable } from 'rxjs';
-import { switchMap, catchError, finalize } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import {
     HttpEvent,
     HttpInterceptor,
     HttpHandler,
     HttpRequest,
-    HttpHeaders,
-    HttpErrorResponse
+    HttpHeaders
 } from '@angular/common/http';
-import { Config } from '../config';
-import { ConfigService, LoaderService, AuthService } from './services';
+import { ConfigService, LoaderService } from './services';
 
 
 @Injectable()
@@ -18,7 +16,7 @@ export class CricketInterceptor implements HttpInterceptor {
     private isRefreshingToken = false;
     // tokenSubject: BehaviorSubject<string> = new BehaviorSubject<string>(null);
 
-    constructor(private loaderService: LoaderService, private authService: AuthService) {}
+    constructor(private loaderService: LoaderService) {}
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         if (req.url.indexOf('localdata') > -1 ) {
             // pass through

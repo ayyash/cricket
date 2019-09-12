@@ -1,8 +1,5 @@
 {
-    "Basic": {
-        "defaultUploadSize": 1048576,
-        "defaultUploadFormat": ["gif", "jpg", "jpeg", "png"]
-    },
+  
     "API": {
         "apiRoot": "http://localhost:50007/api"
     },

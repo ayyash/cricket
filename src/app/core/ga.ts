@@ -34,7 +34,7 @@ export class GaTracking {
     // for google analytics
     // u need a service
     public static get IsGaEnabled(): boolean {
-        return typeof window !== 'undefined' && window['ga'] !== null;
+        return typeof window !== 'undefined' && window['ga'];
     }
     private static MapGaDims(dims: IGaDims): any {
         // return dims with their real dimention names, remove empty

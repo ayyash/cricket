@@ -10,8 +10,7 @@ export interface IData {
 }
 
 export enum EnumDataType {
-    Country,
-    Currency
+   NotDefined
 }
 
 

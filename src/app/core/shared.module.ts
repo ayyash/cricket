@@ -6,7 +6,8 @@ import {
     LoaderComponent,
     ModalPartialComponent,
     PagerPartialComponent,
-    DataPartialComponent
+    DataPartialComponent,
+    StarsPartialComponent
 } from './components';
 import { MdInputModule } from '../lib/mdinput/mdinput.module';
 import { LibModule } from '../lib/lib.module';
@@ -19,13 +20,15 @@ import { DialogModule } from '../lib/dialog';
         LoaderComponent,
         ModalPartialComponent,
         PagerPartialComponent,
-        DataPartialComponent
+        DataPartialComponent,
+        StarsPartialComponent
     ],
     exports: [
         LoaderComponent,
         ModalPartialComponent,
         DataPartialComponent,
         PagerPartialComponent,
+        StarsPartialComponent,
         CommonModule,
         FormsModule,
         MdInputModule,
