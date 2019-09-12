@@ -40,12 +40,12 @@ const routes: Routes = [
             }
         ]
     },
-    {
-        path: '',
-        component: CoreComponents.MainLayoutComponent,
-        loadChildren: () => import('./routes/public.route').then(m => m.PublicRoutingModule),
+    // {
+    //     path: '',
+    //     component: CoreComponents.MainLayoutComponent,
+    //     loadChildren: () => import('./routes/public.route').then(m => m.PublicRoutingModule),
 
-    },
+    // },
 
     // **gulproute**
     {
@@ -60,9 +60,8 @@ const routes: Routes = [
     imports: [
         RouterModule.forRoot(routes, {
             preloadingStrategy: PreloadService,
-            // preloadingStrategy: PreloadAllModules,
             paramsInheritanceStrategy: 'always',
-            onSameUrlNavigation: 'reload', // WATCH: till now this proves nothing
+            onSameUrlNavigation: 'reload', 
             scrollPositionRestoration: 'top',
             initialNavigation: 'enabled'
         })

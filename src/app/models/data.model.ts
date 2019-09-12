@@ -1,5 +1,4 @@
 // a model for autcomolete data 
-import { Config } from '../config';
 
 export interface IData {
     name: string;

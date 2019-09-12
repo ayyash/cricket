@@ -42,10 +42,6 @@
                                 "input": "src/assets/css/cr.general.css",
                                 "bundleName": "styles",
                                 "lazy": true
-                            },
-                            {
-                                "input": "./node_modules/leaflet/dist/leaflet.css",
-                                "bundleName": "leaflet"
                             }
                         ],
                         "stylePreprocessorOptions": {
@@ -62,25 +58,7 @@
                         ]
                     },
                     "configurations": {
-                        "production": {
-                            "fileReplacements": [
-                                {
-                                    "replace": "src/environments/environment.ts",
-                                    "with": "src/environments/environment.prod.ts"
-                                }
-                            ],
-                            "optimization": true,
-                            "outputHashing": "all",
-                            "sourceMap": false,
-                            "extractCss": true,
-                            "namedChunks": false,
-                            "aot": true,
-                            "extractLicenses": true,
-                            "vendorChunk": false,
-                            "buildOptimizer": true,
-                            "deleteOutputPath": true,
-                            "showCircularDependencies": false
-                        },
+                       
                         "serve": {
                             "extractCss": true,
                             "namedChunks": true,
@@ -95,10 +73,6 @@
                                 {
                                     "input": "src/assets/css/cr.css",
                                     "bundleName": "styles"
-                                },
-                                {
-                                    "input": "./node_modules/leaflet/dist/leaflet.css",
-                                    "bundleName": "leaflet"
                                 }
                             ],
                             "assets": [
@@ -143,10 +117,6 @@
                                 {
                                     "input": "src/assets/css/cr.css",
                                     "bundleName": "styles"
-                                },
-                                {
-                                    "input": "./node_modules/leaflet/dist/leaflet.css",
-                                    "bundleName": "leaflet"
                                 }
                             ]
                         },
@@ -164,11 +134,8 @@
                                 {
                                     "input": "src/assets/css/cr.rtl.css",
                                     "bundleName": "styles"
-                                },
-                                {
-                                    "input": "./node_modules/leaflet/dist/leaflet.css",
-                                    "bundleName": "leaflet"
                                 }
+                            
                             ],
                             "assets": [
                                 {
@@ -225,10 +192,7 @@
                                 {
                                     "input": "src/assets/css/cr.css",
                                     "bundleName": "styles"
-                                },
-                                {
-                                    "input": "./node_modules/leaflet/dist/leaflet.css",
-                                    "bundleName": "leaflet"
+                                
                                 }
                             ],
                             "assets": [
@@ -254,13 +218,13 @@
                                 }
                             ]
                         },
-                        "mockup": {
-                            "outputPath": "../cricket.mockups/en",
+                        "production": {
+                            "outputPath": "../cricket.host/en",
                             "baseHref": "/en/",
                             "fileReplacements": [
                                 {
                                     "replace": "src/environments/environment.ts",
-                                    "with": "src/environments/environment.mockup.ts"
+                                    "with": "src/environments/environment.prod.ts"
                                 }
                             ],
                             "optimization": true,
@@ -275,14 +239,14 @@
                             "deleteOutputPath": true,
                             "showCircularDependencies": false
                         },
-                        "mockupAr": {
-                            "outputPath": "../cricket.mockups/ar",
+                        "productionAr": {
+                            "outputPath": "../cricket.host/ar",
                             "baseHref": "/ar/",
                             "index": "src/index.rtl.html",
                             "fileReplacements": [
                                 {
                                     "replace": "src/environments/environment.ts",
-                                    "with": "src/environments/environment.mockup.ar.ts"
+                                    "with": "src/environments/environment.prod.ar.ts"
                                 },
                                 {
                                     "replace": "src/locale/resources.ts",
@@ -298,10 +262,6 @@
                                     "input": "src/assets/css/cr.general.rtl.css",
                                     "bundleName": "styles-rtl",
                                     "lazy": true
-                                },
-                                {
-                                    "input": "./node_modules/leaflet/dist/leaflet.css",
-                                    "bundleName": "leaflet"
                                 }
                             ],
                             "optimization": true,
@@ -349,11 +309,11 @@
                         }
                     },
                     "configurations": {
-                        "prod": {
+                        "production": {
                             "fileReplacements": [
                                 {
                                     "replace": "src/environments/environment.ts",
-                                    "with": "src/environments/environment.mockup.ts"
+                                    "with": "src/environments/environment.prod.ts"
                                 }
                             ],
                             "optimization": true,
@@ -365,12 +325,12 @@
                             "deleteOutputPath": true,
                             "showCircularDependencies": false
                         },
-                        "prodAr": {
+                        "productionAr": {
                             "outputPath": "dist/ar",
                             "fileReplacements": [
                                 {
                                     "replace": "src/environments/environment.ts",
-                                    "with": "src/environments/environment.mockup.ar.ts"
+                                    "with": "src/environments/environment.prod.ar.ts"
                                 },
                                 {
                                     "replace": "src/locale/resources.ts",

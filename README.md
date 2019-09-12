@@ -34,7 +34,7 @@ You can optionally use these instead of the angular cli packaged commands (or yo
 ### Generate
 
 - `gulp component --name Example --major Container --ispartial false --isform false`  
-    **Useful and common** This task creates a component inside a folder indicated in 'major' (could be a folder path like Container/SubContainer), with the name example.component.ts, if ispartial is set to true, the file name is example.partial.ts (and it specifies a selected "jr-example" ready to be used). If isform is set to true, the code is ready with minimum form elements (always name a form component like this: form.partial.html). The task also adds the component to the correct module under /routes (major.routes.ts) and creates a dummy route for it if it was not "partial". Your job is to implement the component, and head to src/app/routes.module.ts to add the lazy loaded path to the new module (make sure to use the MainLayout as the default component there)
+    **Useful and common** This task creates a component inside a folder indicated in 'major' (could be a folder path like Container/SubContainer), with the name example.component.ts, if ispartial is set to true, the file name is example.partial.ts (and it specifies a selected "cr-example" ready to be used). If isform is set to true, the code is ready with minimum form elements (always name a form component like this: form.partial.html). The task also adds the component to the correct module under /routes (major.routes.ts) and creates a dummy route for it if it was not "partial". Your job is to implement the component, and head to src/app/routes.module.ts to add the lazy loaded path to the new module (make sure to use the MainLayout as the default component there)
 
 - `gulp model --name Example`  
     Creates an example.model.ts in /models folder with a single property 'id', your job is to implement it. it also performs an inject into /core/services
@@ -72,7 +72,7 @@ Following are quick calls to inject all classes in specific folders into their b
 
 To generate assets after changing less files (this is a very critical task, you should not modify styles unless 100% sure of what you're doing)
 
-- `gulp rawless`: prepares src/assets/css/jr.css and jr.rtl.css
+- `gulp rawless`: prepares src/assets/css/cricket.css and cricket.rtl.css
 - `gulp`: the default task does the same as rawless while watching sh.\*.less, ui.\*.less and rtl.\*.less in mockups less folder
 - `gulp iconset`: generates icons produced by icomoon tool, do not use this until I document it // TODO: document.
 

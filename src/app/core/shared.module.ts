@@ -5,27 +5,33 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
     LoaderComponent,
     ModalPartialComponent,
+    PagerPartialComponent,
     DataPartialComponent
 } from './components';
 import { MdInputModule } from '../lib/mdinput/mdinput.module';
 import { LibModule } from '../lib/lib.module';
-
+import { ToastModule } from '../lib/toast';
+import { DialogModule } from '../lib/dialog';
 
 @NgModule({
-    imports: [CommonModule, MdInputModule, LibModule],
+    imports: [CommonModule, MdInputModule, LibModule, ToastModule, DialogModule],
     declarations: [
         LoaderComponent,
         ModalPartialComponent,
+        PagerPartialComponent,
         DataPartialComponent
     ],
     exports: [
         LoaderComponent,
         ModalPartialComponent,
         DataPartialComponent,
+        PagerPartialComponent,
         CommonModule,
         FormsModule,
         MdInputModule,
         LibModule,
+        DialogModule,
+        ToastModule,
         ReactiveFormsModule]
 })
 export class SharedModule { }

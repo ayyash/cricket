@@ -14,7 +14,6 @@ export class AppShellRenderDirective implements OnInit {
     ) {}
 
     ngOnInit() {
-        // _debug(this.jrServerRender, 'server render', 'a');
         // if sherverrender is false, do not render on server, if true, serve only on server
         if (isPlatformServer(this.platformId) === this.shServerRender) {
             this.viewContainer.createEmbeddedView(this.templateRef);

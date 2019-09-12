@@ -15,7 +15,7 @@ export class LetDirective<T> {
     }
 
     @Input()
-    set jrLet(value: T) {
+    set shLet(value: T) {
         this._context.shLet = value;
     }
 }

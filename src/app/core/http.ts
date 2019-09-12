@@ -33,20 +33,7 @@ export class CricketInterceptor implements HttpInterceptor {
         return next
             .handle(adjustedReq)
             .pipe(
-                catchError((error: HttpErrorResponse) => {
-                    // catch 401
-
-                    if (error instanceof HttpErrorResponse) {
-                        if (error.status === 401) {
-                            return this.handle401Error(adjustedReq, next);
-                        } else if (error.status === 400 && error.error && error.error.error === 'invalid_grant') {
-                            error.error.code = 'INVALID_LOGIN';
-                            this.authService.logout();
-                            // is this error ever possible? to check: when server returns invalud after refresh token
-                        }
-                    }
-                    return throwError(error);
-                }),
+              
                 finalize(() => {
                     this.loaderService.hide();
                 })
@@ -60,54 +47,9 @@ export class CricketInterceptor implements HttpInterceptor {
         //  authorization here
         let headers: any = {};
 
-            const _auth = this.authService.getToken();
-
-        if (_auth && _auth !== '') {
-            headers['authorization'] = `Bearer ${_auth}`;
-        }
-
 
         return headers;
     }
 
-    handle401Error(req: HttpRequest<any>, next: HttpHandler): Observable<any> {
-        if (!this.isRefreshingToken) {
-            this.isRefreshingToken = true;
-
-            // Reset here so that the following requests wait until the token
-            // comes back from the refreshToken call.
-            // this.tokenSubject.next(null);
-
-            return this.authService
-                .RefreshToken()
-                .pipe(
-                    switchMap((result: boolean) => {
-
-                        if (result) {
-                            // this.tokenSubject.next(this.authService.getToken());
-
-                            const adjustedReq = req.clone({ setHeaders: this.getHeaders(req.headers) });
-                            return next.handle(adjustedReq);
-                        }
-
-                        // If we don't get a new token, we are in trouble so logout.
-                        this.authService.logout();
-                        return throwError('UNAUTHORIZED');
-                    }),
-                    catchError(error => {
-                        // If there is an exception calling 'refreshToken', bad news so logout.
-                        this.authService.logout();
-                        return throwError(error);
-                    }),
-                    finalize(() => {
-                        this.isRefreshingToken = false;
-                    })
-                )
-                .debug(req.urlWithParams, req.method);
-                // .catchProjectError(req.urlWithParams, req.method);
-        } else {
-            const adjustedReq = req.clone({ setHeaders: this.getHeaders(req.headers) });
-            return next.handle(adjustedReq);
-        }
-    }
+  
 }

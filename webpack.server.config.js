@@ -9,7 +9,7 @@ module.exports = {
     // this makes sure we include node_modules and other 3rd party libraries
     externals: [/(node_modules|main\..*\.js)/],
     output: {
-        path: path.join(__dirname, '../cricket.mockups/server'),
+        path: path.join(__dirname, '../cricket.host/server'),
         filename: '[name].js'
     },
     module: {

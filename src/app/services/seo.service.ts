@@ -49,17 +49,7 @@ export class SeoService {
         // send goole analytics view when seo is set per page
         GaTracking.RegisterView(path || this.doc.location.pathname, dims);
     }
-    switchLanguage() {
-        // switch language by really really navigating out of this... use base url from config the window.location
-        let href = this.doc.URL.replace(/\/en\//i, '/ar/'); // if en make root for ar
-
-        if (Config.Basic.language !== 'en') {
-            // WATCH: keep an eye on android chrome
-            // else build it again
-            href = this.doc.URL.replace(/\/ar\//i, '/en/');
-        }
-        this.doc.location.href = href;
-    }
+   
 
     getPagePath() {
         return this.doc.location.pathname;

@@ -35,6 +35,4 @@ export const keys = {
     DEFAULT_PAGE_TITLE: 'Welcome'
 };
 
-export const translateKeys = {
-    // keep empty to resort to original text
-};
+export const translateKeys = {};

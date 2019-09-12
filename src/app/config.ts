@@ -3,36 +3,27 @@ import { environment } from '../environments/environment';
 
 export const Config = {
     Basic: {
-        loginRoute: '/user/login',
-        defaultUserRoute: '/account',
+        language: environment.language,
         defaultRoute: '/',
         defaultSize: 25,
         defaultDateFormt: 'DD-MM-YYYY'
     },
     Auth: {
-        userAccessKey: environment.userAccessKey
+        userAccessKey: 'cricket.user'
     },
     Cache: {
-        Timeout: environment.dataCacheDefaultTimeout,
-        Key: environment.dataCacheKey,
-        ResetKey: environment.dataCacheResetKey,
-        SearchParams: 'sparams'
+        Timeout: 1,
+        Key: 'cricket.cache',
+        ResetKey: 'cricket.20190208'
     },
     API: {
         apiRoot: environment.apiRoot,
         apiVersion: 1,
-        user: {
-            profile: '/user/profile', // GET
-            refresh: '/user/refresh_token',
-            save: '/user/profile', // POST
-            token: '/user/login',
-            register: '/user/register',
-            reset: '/user/reset',
-            password: '/user/password',
-            newpassword: '/user/newpassword'
-        },
         data: {
             countries: '/data/countries'
+        },
+        config: {
+            local: 'localdata/config.json'
         }
          // **gulpmodel**
     }

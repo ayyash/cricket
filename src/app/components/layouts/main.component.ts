@@ -11,9 +11,7 @@ export class MainLayoutComponent implements OnInit {
 
     ngOnInit() {
     }
-    switchLanguage() {
-        this.seoService.switchLanguage();
-    }
+ 
 
 
 }

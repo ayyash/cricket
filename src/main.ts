@@ -12,18 +12,6 @@ if (environment.production) {
     enableProdMode();
 }
 
-// this failed! could not freely use the config from window without injection
-// fetch('_local/config.json')
-// .then((response: Response) => response.json())
-// .then(data => {
-//     window['_config'] = _config = data;
-//     _attn(_config, 'x');
-//     platformBrowserDynamic()
-//     .bootstrapModule(AppBrowserModule)
-//     .catch(err => console.log(err));
-// });
-
-// wait until server has finished caching
 document.addEventListener('DOMContentLoaded', () => {
     platformBrowserDynamic()
     .bootstrapModule(AppBrowserModule)

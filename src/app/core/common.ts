@@ -1,8 +1,7 @@
-import { environment } from '../../environments/environment';
-import { EnumStatus, IUiError } from './services';
-import { Res } from './resources';
+import { IUiError } from './services';
 import { of, Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { Toast } from '../lib/toast';
 
 
 String.prototype.toSentenceCase = function () {
@@ -65,17 +64,14 @@ export class Helpers {
     }
 
     public static HandleUiError(error: IUiError): void {
-
         if (error) {
-
             if (error.code) {
                 // this function handles whether to show the message or the fallback, if error.code = -1
-                $.Toast(error.code, { sticky: true, css: 'toaster error' }, <string>error.serverMessage);
+                Toast.Show(error.code, { sticky: true, extracss: 'error' }, <string>error.serverMessage);
             } else {
                 // something unpredictable happened
-                _debug(error, 'Something nasty', 'e');
+                _debug(error, 'Something nasty', 't');
             }
-
         }
     }
     public static HandleCatchError(error: IUiError, code?: string): Observable<any> {
@@ -106,5 +102,6 @@ export class Helpers {
 
         return Helpers.HandleCatchError(error, code);
     }
+
 
 }

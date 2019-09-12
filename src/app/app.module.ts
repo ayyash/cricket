@@ -13,7 +13,7 @@ import { MainLayoutComponent, SingleLayoutComponent, NotFoundComponent, ErrorCom
         NotFoundComponent,
         RerouteComponent,
         SingleLayoutComponent,
-        PublicHomeComponent
+        PublicHomeComponent,
          ErrorComponent],
     imports: [
         BrowserModule.withServerTransition({ appId: 'cricketS' }),
