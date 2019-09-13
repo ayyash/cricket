@@ -5,9 +5,9 @@
     "scripts": {
       "ng": "ng",
       "start": "ng serve  --port 5100 --watch --source-map  --live-reload false",
-      "start:staging": "ng serve --configuration=staging --port 5100 --watch --source-map  --live-reload false",
+      "start:prod": "ng serve --configuration=production --port 5100 --watch --source-map  --live-reload false",
       "start:ar": "ng serve --configuration=ar  --port 5100 --watch --source-map  --live-reload false",
-      "network": "ng serve --configuration=network --port 5200 --watch --source-map  --live-reload false --host 192.168.43.248 --disableHostCheck ",
+      "network": "ng serve --configuration=network --port 5200 --watch --source-map  --live-reload false --host 192.168.0.100 --disableHostCheck ",
       "network:secure": "ng serve --ssl --ssl-key c:\\d\\zjunk\\cricket\\localhost.key  --ssl-cert c:\\d\\zjunk\\cricket\\localhost.crt --configuration=network --port 5200 --watch --source-map  --live-reload false --host 192.168.0.100 --disableHostCheck ",
       "build:server": "ng run cricketweb:server  --configuration=production",
       "build:server:ar": "ng run cricketweb:server  --configuration=productionAr",

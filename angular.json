@@ -111,6 +111,10 @@
                                 {
                                     "replace": "src/environments/environment.ts",
                                     "with": "src/environments/environment.network.ts"
+                                },
+                                {
+                                    "replace": "configs/config.json",
+                                    "with": "configs/config.network.json"
                                 }
                             ],
                             "styles": [
@@ -173,7 +177,7 @@
                             "outputPath": "dist/ar",
                             "baseHref": "/ar/"
                         },
-                        "serveStaging": {
+                        "serveProduction": {
                             "extractCss": true,
                             "namedChunks": true,
                             "vendorChunk": false,
@@ -186,7 +190,7 @@
                             "fileReplacements": [
                                 {
                                     "replace": "configs/config.json",
-                                    "with": "configs/config.staging.json"
+                                    "with": "configs/config.prod.json"
                                 }],
                             "styles": [
                                 {
@@ -290,8 +294,8 @@
                         "ar": {
                             "browserTarget": "cricketweb:build:ar"
                         },
-                        "staging": {
-                            "browserTarget": "cricketweb:build:serveStaging"
+                        "production": {
+                            "browserTarget": "cricketweb:build:serveProduction"
                         }
                     }
                 },

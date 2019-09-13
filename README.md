@@ -10,25 +10,50 @@ Download nodejs (10+) and npm (6.5+), git clone the project, and in the root, ru
 
 You need gulp to run the gulp tasks to prepare css out of LESS and RTL files (TODO: this is a future task). Always check what typescript is supported by angular and install a local version of it.
 
+Run
+
+`npm run install` and `npm run install:dev`: will get you started with packages needed for this seed
+
+Then
+
+`gulp inject` to inject all components and services in barrel files
+
+Finally
+
+`gulp critical` to generate the css files from .less files
+
 ## NPM commands
 
 The following commands in npm to help you get going:
 
 - `npm start`: starts with normal english angular development (then browse to localhost:5100)
-> Also possible: 192.168.0.100:5100 (to test localhost on mobile devices)
 - `npm run start:ar`: starts development in Arabic version.
-- `npm run build:ssr`:  builds the serverside full mockup version under /Cricket.mockups
-
-
-// TODO: create a build for production version
-- `npm run network`: TODO: document
+- `npm run start:prod`: starts development server with production configuration and environment
+- `npm run network`: starts with 192.168.0.100:5200 as host to test localhost on mobile devices (change host in package.json)
 - `npm run network:secure`: starts with normal english angular development, under https (then browse to https://192.168.0.100:5200) This option might need a local certificate to be created. This option needs https for iis to run mockup api. This option never works on Safari.
+- `npm run build` and `npm run build:ar`: generates a client-side angular app in /cricket.host (/en and /ar) folders (outside current project folder)
+- `npm run build:ssr`:  builds the client-side and server-side full version under /cricket.host (outside current project folder), the client side under /en and /ar, the serverside under folder /server (see below).
+
+## Angular universal
+
+This seed assumes a second project living outside the current project named: `cricket.host`, where enough nodejs server code is created to run the server later. The npm task `build:ssr` creates two sub folders: `/en` and `/ar`, and the creates two server side files `en.js` and `ar.js` under `server` folder, as defined in `webpack.server.config.js`. So the final tree of the host folder looks like this
+
+```
+|-en
+|-ar
+|-server
+|----ar.js
+|----en.js
+|-server.js
+```
+
+// TODO: will create a seed for the expected files on server
 
 ## Gulp commands for Angular
 
 You can optionally use these instead of the angular cli packaged commands (or you can create files manually), here is a quick explanation of each command under ng.js, with the most useful at the top
 
-(general rule: name, and major name should start with uppercase letter: like Example, the file names and selectors created are all lowercase)
+(general rule: name, and major name should start with uppercase letter: like Example, the file names and selectors generated are all lowercase)
 
 
 ### Generate
@@ -72,12 +97,13 @@ Following are quick calls to inject all classes in specific folders into their b
 
 To generate assets after changing less files (this is a very critical task, you should not modify styles unless 100% sure of what you're doing)
 
-- `gulp rawless`: prepares src/assets/css/cricket.css and cricket.rtl.css
+- `gulp rawless`: prepares src/assets/css/cr.css and cr.rtl.css
 - `gulp`: the default task does the same as rawless while watching sh.\*.less, ui.\*.less and rtl.\*.less in mockups less folder
-- `gulp iconset`: generates icons produced by icomoon tool, do not use this until I document it // TODO: document.
+- `gulp prepicons`: TODO: document this, this generally takes files from the icomoon generated files and copies them in dummy folder in preparetion to generate icons
+- `gulp iconset`: generates icons produced by icomoon tool in `dummy/iconset.html` and in `mockup/ui.icons.less`, run gulp rawless afterwords to generate the css files
+- `gulp critical`: generates four files: `cr.general.css` and `cr.critical.css`, `cr.general.rtl.css` and `cr.critical.rtl.css` into `assets` folder (in addition to the cr.css and cr.rtl.css). The critical files are loaded through `angular.json` directly into html, the general files are lazyloaded in the header of the html file (they are referenced in `index.html` and `index.rtl.html`). This is to downsize the initial style file, and have better performance. The rules of which what gets placed in critical is very basic, any group of styles in any `mockup/*.less` file wrapped inside `/* CRITICAL BEGIN */` and `/* CRITICAL END */`. 
 
-You can see the different available icons here
-http://localhost/Cricket/Cricket.web/mockup/dummy/iconset.html
+
 
 > PS: Using less in components, is possible, remember to start with `@import "sh.vars.less"`; and avoid styles that need to be mirrored for RTL.
 
