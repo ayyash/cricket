@@ -7,15 +7,15 @@ import { IToast } from './toast.model';
     selector: 'sh-toast',
     template: `
         <ng-container *ngIf="(toast$ | async) as toast">
-            <div class="{{toast.css}} {{ toast.extracss }}" [class.nonsticky]="!toast.sticky">
+            <div class="{{toast.css}} {{ toast.extracss }}" [class.out]="toast.isHiding">
+                <div>
                 {{ toast.text }}
+                </div>
                 <span
-                    *ngIf="toast.sticky"
-                    class="symbol icon-x closelabel"
+                    class="symbol icon-close closelabel"
                     title="{{ toast.closetext }}"
                     (click)="hide()"
-                ></span></div
-        ></ng-container>
+                ></span></div></ng-container>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
     styleUrls: ['./toast.less']
@@ -23,19 +23,20 @@ import { IToast } from './toast.model';
 export class ToastPartialComponent implements OnInit, OnDestroy {
     toast$: Observable<IToast>;
 
-    constructor() {
+    constructor(private toastService: Toast) {
         //
     }
     ngOnInit(): void {
          // WATCH: static service does not need injection, lets try but keep an eye
          // this is why the toast cannot be called on load from server
-        this.toast$ = Toast.toast$.debug('TOAST', 'Subject');
+        
+        this.toast$ = this.toastService.toast$.debug('TOAST', 'Subject');
     }
     hide(): void {
-        Toast.Hide();
+        this.toastService.Hide();
     }
     ngOnDestroy(): void {
 
-        Toast.Hide();
+        this.toastService.Hide();
     }
 }

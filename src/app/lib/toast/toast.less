@@ -1,66 +1,42 @@
-@import (reference) "sh._vars.less";
+@import (reference) 'sh._vars.less';
 // @import (reference) "css.Icon.less";
 // @import (reference) "ui.icons.less";
+@import (reference) "utilities/media.less";
 
 .closelabel {
-    display: inline-block;
-    position: absolute;
-    right: 10px;
-    top: 0;
-    bottom: 0;
-    overflow: hidden;
-    width: 20px;
-    height: 26px;
-    margin: auto;
+    color: @white;
+    margin: @space;
+    margin-left: @halfspace;
+   display: block;
     cursor: pointer;
 }
 
 // VER_NEXT: rely on transition instead of animation, animation is quite unreliable and cannot be customized
 .toast {
-    padding: @space;
-    padding-right: 50px;
+    display: flex; 
+    flex-wrap: nowrap;
+    align-items: center;
+
     background-color: @grey-dark;
     color: @white;
     position: fixed;
     bottom: @space;
-    left: 0;
-    right: 0;
+    left: @space;
+    right: @space;
     font-size: 90%;
-    text-align: center;
-    z-index: 5100;
-    .closelabel {
-        color: @white;
-
-        width: 30px;
-
+ 
+    z-index: 5100; 
+  
+    div {
+        margin: @space;
+        margin-right: @halfspace;
+        flex-basis: 100%;
     }
     animation: gbox-in 0.2s ease-in-out;
-   // .box-shadow();
-    margin: auto;
-    min-width: 300px;
-    max-width: 50vw;
-    border-radius: @radius;
-
-
-    &.nonsticky,
-    &.fordone {
-        // animation: gbox-in 0.2s ease-in-out, gbox-out 1s ease-in-out 4.9s; // accomodate delay in IToasterOptions
-        animation-name: gbox-in, gbox-out;
-        animation-duration: 0.2s, 1s;
-        animation-timing-function: ease-in-out, ease-in-out;
-        animation-delay: 0s, 4.9s; // default 5000 delay
-        // remove extra padding
-        padding-right: @space * 0.8;
-
-    }
-    &.quick {
-        animation-delay: 0s, 2.9s; // quick removal for 3000
-    }
-    &.short,
-    &.fordone {
-        min-width: 100px;
-        width: 100px;
-    }
+    box-shadow: @shadows[level3];
+   
+    // stop doin gthis
+  
     &.error {
         background-color: @red;
     }
@@ -68,12 +44,20 @@
         background-color: @green;
     }
     &.fordone {
-       animation-delay: 0s, 2.9s; // quick removal for 3000, this does not work without proper delay
+       
         background-color: @green;
         font-weight: 500;
         text-transform: uppercase;
     }
+
+    &.out {
+        // animate out
+        animation-name: gbox-out;
+        animation-duration: 1s;
+        animation-timing-function: ease-in-out;
+    }
 }
+
 
 @keyframes gbox-in {
     0% {
@@ -96,3 +80,9 @@
         opacity: 0;
     }
 }
+
+.media(md, {
+    .toast {
+        max-width: 50vw; 
+    }
+});

@@ -3,22 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Config } from '../config';
 import { map, catchError } from 'rxjs/operators';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-
-
-export interface IConfig {
-   
-    API: {
-        apiRoot: string;
-    };
-    Auth: {
-        userAccessKey: string;
-    };
-    Cache: {
-        Timeout: number;
-        Key: string;
-        ResetKey: string;
-    };
-}
+import { IConfig } from '../core/services';
+ 
 
 @Injectable({
     providedIn: 'root'
@@ -46,8 +32,10 @@ export class ConfigService {
         // adjust cache key to have language in it
         _config.Cache.Key += '.' + Config.Basic.language;
 
-        // populate static element
+        // populate static element 
         ConfigService._config = _config;
+
+        
 
         return _config;
     }

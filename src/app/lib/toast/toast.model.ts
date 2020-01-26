@@ -7,4 +7,6 @@ export interface IToast {
     closetext?: string;
     delay?: number;
     extracss?: string;
+    threshold?: number;
+    isHiding?: boolean; 
 }

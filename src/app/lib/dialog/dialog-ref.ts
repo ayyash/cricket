@@ -7,6 +7,9 @@ export class DialogRef {
     private readonly _afterOpened = new Subject<any>();
     afterOpened: Observable<any> = this._afterOpened.asObservable();
 
+    private readonly _onEmit = new Subject<any>();
+    onEmit: Observable<any> = this._onEmit.asObservable();
+
     dialogTitle: string;
 
     dialogMode: string;
@@ -21,6 +24,11 @@ export class DialogRef {
 
     open(childComponent: any) {
         this._afterOpened.next(childComponent);
+    }
+
+    emit(data?: any) {
+        // emit any data to opener
+        this._onEmit.next(data);
     }
 
 

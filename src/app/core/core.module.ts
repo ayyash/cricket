@@ -22,9 +22,7 @@ import { LocalInterceptor } from './local.interceptor';
         defaultUploadFormat: Config.Basic.defaultUploadFormat
     })],
     providers: [Title,
-        // inject:services
-        // endinject,
-        
+       
         {
             provide: APP_INITIALIZER,
             useFactory: ConfigService.configFactory,

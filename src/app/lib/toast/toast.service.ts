@@ -1,48 +1,103 @@
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, of, timer } from 'rxjs';
 import { IToast } from './toast.model';
 import { Res } from '../../core/resources';
+import { Injectable } from '@angular/core';
+import { IUiError } from '../../core/services';
+import { takeWhile } from 'rxjs/operators';
 
+@Injectable({ providedIn: 'root' })
 export class Toast {
+    toast: BehaviorSubject<IToast> = new BehaviorSubject(null);
+    public toast$: Observable<IToast> = this.toast.asObservable();
 
-    public static toast: BehaviorSubject<IToast> = new BehaviorSubject({});
-    public static toast$: Observable<IToast> = Toast.toast.asObservable();
+   
 
-
-    public static options: IToast = {
+    options: IToast = {
         text: Res.Get('Error'),
         sticky: false,
         css: 'toast',
         closetext: Res.Get('Dismiss'),
         delay: 5000,
-        extracss: ''
+        threshold: 30000, // milliseconds before force hiding a sticky one
+        extracss: '',
+        isHiding: false // is in the state of hiding, to animate properly
     };
+
+    // VER_NEXT: allow this
+    // constructor(){
+    //     this.router.events.subscribe(event => {
+    //         if (event instanceof NavigationStart) {
+    //             if (this.keepAfterRouteChange) {
+    //                 // only keep for a single route change
+    //                 this.keepAfterRouteChange = false;
+    //             } else {
+    //                 // clear alert message
+    //                 this.clear();
+    //             }
+    //         }
+    //     });
+    // }
 
     // VER_NEXT: note to self, all ways to control animation through css has gone awry
     // the best way is to add and remove classes within delay,  never rely on css animation delay
-    public static Show(key: string, options?: IToast, fallback?: string): void {
+    Show(key: string, options?: IToast, fallback?: string): void {
         // clone optons and never override
-        // build the itoast here
-        // if sticky, hide after u show
 
-        Toast.Hide();
+        this.Hide();
 
-        const _options: IToast = {...Toast.options, ...options };
+        const _options: IToast = { ...this.options, ...options};
         // fallback if message does not exist in keys
         _options.text = Res.Get(key, fallback);
 
-        Toast.toast.next(_options);
+        this.toast.next(_options);
 
-        if (!_options.sticky && typeof window !== 'undefined') {
-            setTimeout(() => {
-                Toast.Hide();
-            }, _options.delay);
+        const _delay = !_options.sticky ? _options.delay : _options.threshold;
+
+        timer(_delay)
+            // if hidden cancel timer
+            .pipe(takeWhile(() => this.toast.getValue() !== null))
+            .subscribe(() => {
+                 // first apply class then remove (animation)
+                 this.toast.next({..._options, isHiding: true});
+                 timer(200).subscribe(() => {
+                    this.Hide();
+                });
+            });
+    }
+
+    Hide(): void {
+        this.toast.next(null);
+      
+    }
+
+    public HandleUiError(error: IUiError): void {
+        if (error) {
+            if (error.code) {
+                // this function handles whether to show the message or the fallback, if error.code = -1
+                this.Show(
+                    error.code,
+                    { sticky: true, extracss: 'error' },
+                    <string>error.serverMessage
+                );
+            } else {
+                // something unpredictable happened
+                _debug(error, 'Something nasty', 't');
+            }
         }
-
-        // VER_NEXT: if sticky, allow a threashold before you hide
     }
 
-    public static Hide(): void {
-        Toast.toast.next(null);
+    public HandleCatchError(error: IUiError, code?: string): Observable<any> {
+        if (error.status === 404) {
+            if (code) {
+                error.code = code + '_NOT_FOUND';
+            }
+        }
+        if (error.status === 400) {
+            if (code) {
+                error.code = code + '_ERROR';
+            }
+        }
+        this.HandleUiError(error);
+        return of(null);
     }
-
 }

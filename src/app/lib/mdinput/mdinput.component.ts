@@ -1,15 +1,19 @@
 import { Component, Input, ContentChild, AfterContentInit } from '@angular/core';
 import { MdInputDirective } from './mdinput.directive';
+import { NgControl } from '@angular/forms';
 
 // this is a better way than smartinput directive
 @Component({
     selector: 'md-input',
     template: `
-        <div [class.md-field]="normal" (click)="gainFocus()" [class.focused]="isFocused()" >
+        <div [class.md-field]="normal" (click)="gainFocus()"
+         [class.focused]="isFocused" 
+         [class.notempty]="!isEmpty"
+         [class.touched]="control?.touched"
+         [class.invalid]="control?.invalid"
+         [class.dirty]="control?.dirty" >
+            <label class="md-label" *ngIf="placeholder" for="{{ id }}">{{placeholder}}</label>
             <ng-content></ng-content>
-            <label class="md-label" *ngIf="placeholder" for="{{ id }}">{{
-                placeholder
-            }}</label>
             <span [class.md-asterisk]="required"></span>
             <span class="md-invalid-feedback">{{ labelText }}</span>
             <ng-content select="[helptext]"></ng-content>
@@ -29,17 +33,35 @@ export class MdInputComponent implements AfterContentInit {
     @Input('static') holdFocus: boolean; // if static, do not interace always show as focused
     @Input() normal = true;
 
-    @ContentChild(MdInputDirective, {static: false})
+    
+    @ContentChild(MdInputDirective, { static: false })
     input: MdInputDirective;
 
-    isFocused(): boolean {
+    @ContentChild(NgControl, { static: false })
+    control: NgControl;
+
+
+    get isFocused(): boolean {
         if (this.holdFocus) {
             return true;
         }
 
         if (this.input) {
             // if input focused and value is empty return tru
-            return this.input.focus || !!this.input.$element.value;
+            return this.input.focus; // || !!this.input.$element.value;
+        }
+        return false;
+    }
+
+    get isEmpty(): boolean {
+        // TODO: figure out the hold state
+        if (this.holdFocus) {
+            return false;
+        }
+
+        if (this.input) {
+            // if has no value return true
+            return !this.input.$element.value;
         }
         return false;
     }
@@ -60,10 +82,6 @@ export class MdInputComponent implements AfterContentInit {
 
         this.id = this.input.$element.id; // .getAttribute('id');
 
-        // setTimeout(() => {
-        //     // why? because sometimes the input is in an array and the id binding depends on the index
-        //     // ngAfterViewInit throws an error
-        //     this.id = this.input.$element.attr('id');
-        // }, 10);
+  
     }
 }

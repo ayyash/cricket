@@ -48,6 +48,11 @@ export class MdInputDirective implements OnInit, Validator {
         this.$element = this.el.nativeElement;
     }
 
+    // may be thsi is better than ngcontrol?
+    // get isvalid(): boolean {
+    //     return this.formControl.valid;
+    // }
+
     customValidate(fn: () => boolean) {
         // carry out custom validation, add error message if invalid
         const isvalid = fn.call(this);

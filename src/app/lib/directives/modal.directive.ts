@@ -18,7 +18,7 @@ import { Platform } from '@angular/cdk/platform';
 })
 export class ModalDirective implements OnDestroy, AfterViewInit {
     // connect opener to a trigger by css selector
-    @Input('modal') trigger;
+    @Input('modal') trigger: string;
 
     // look for html elements to interact with
     // TODO: clone configs internally to allow partial config
@@ -30,22 +30,23 @@ export class ModalDirective implements OnDestroy, AfterViewInit {
         modalContentSelector?: string;
         bodyCss?: string;
     } = {
-        modalSelector: '.dr-modal-overlay',
-        closeSelector: '.dr-close',
-        titleSelector: '.dr-title',
-        modalContentSelector: '.dr-content',
-        bodyCss: 'mdl-open'
-    };
+            modalSelector: '.dr-modal-overlay',
+            closeSelector: '.dr-close',
+            titleSelector: '.dr-title',
+            modalContentSelector: '.dr-content',
+            bodyCss: 'mdl-open'
+        };
 
     @Output() onShow = new EventEmitter();
     @Output() onHide = new EventEmitter();
     @Output() onLoad = new EventEmitter();
 
-    $overlay: HTMLDivElement;
+    // $overlay: HTMLDivElement;
     $title: HTMLElement;
     $modalElement: HTMLElement;
+    isopen: boolean;
 
-    constructor(private el: ElementRef, private _platform: Platform) {}
+    constructor(private el: ElementRef, private _platform: Platform) { }
 
     ngAfterViewInit(): void {
         if (this._platform.isBrowser) {
@@ -66,23 +67,40 @@ export class ModalDirective implements OnDestroy, AfterViewInit {
                 this.onHide.emit();
             }
             document.body.classList.remove(this.config.bodyCss);
+            this.isopen = false;
         }
     }
     public show(title?: string): void {
         // show dialog
         if (this._platform.isBrowser) {
+
             // change title
-            this.$title.innerText = title;
+            this.$title.textContent = title;
+            // this.$title.innerText = title;
+
             this.$modalElement.style.display = 'block';
             this.onShow.emit();
             // add a class to body to help in positioning better
             document.body.classList.add(this.config.bodyCss);
+            this.isopen = true;
+        }
+    }
+
+    public changeTitle(title?: string): void {
+        if (this._platform.isBrowser) {
+            // change title
+
+            this.$title.textContent = title;
+
         }
     }
 
     @HostListener('click', ['$event.target'])
     onClick(target: HTMLElement): void {
         // if target outside modalcontent, hide
+        // note to self, i keep forgetting this, when u face an issue with dialog hiding on click of something rememebr
+        // when u remove from angular and it does NOt reflect on DOM, the dom is now "outside" the dialog
+        // thus return false on the first conditional statement
         if (this._platform.isBrowser) {
             if (!target.closest(this.config.modalContentSelector)) {
                 this.hide();
@@ -97,12 +115,14 @@ export class ModalDirective implements OnDestroy, AfterViewInit {
     @HostListener('document:click', ['$event.target'])
     onDocumentClick(target: HTMLElement): void {
         // if this is the trigger, or a closest is the trigger, do trigger
-
-        if (target.matches(this.trigger) || target.closest(this.trigger)) {
-            // itself or its parent
-            const _t = target.matches(this.trigger) ? target : target.closest(this.trigger);
-            this.show(_t.getAttribute('title'));
+        if (this.trigger) {
+            if (target.matches(this.trigger) || target.closest(this.trigger)) {
+                // itself or its parent
+                const _t = target.matches(this.trigger) ? target : target.closest(this.trigger);
+                this.show(_t.getAttribute('title'));
+            }
         }
+
     }
 
     @HostListener('window:keydown', ['$event'])
@@ -116,6 +136,6 @@ export class ModalDirective implements OnDestroy, AfterViewInit {
     ngOnDestroy(): void {
         // shit, this caused issues
         // hide without emitting
-         this.hide(false);
+        this.hide(false);
     }
 }

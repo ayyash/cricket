@@ -20,7 +20,7 @@ import { DOCUMENT } from '@angular/common';
     providedIn: DialogModule
 })
 export class DialogService {
-    dialogComponentRef: ComponentRef<DialogComponent>;
+    // dialogComponentRef: ComponentRef<DialogComponent>; this was a mistake
 
     constructor(
         private componentFactoryResolver: ComponentFactoryResolver,
@@ -30,24 +30,20 @@ export class DialogService {
     ) {}
 
     public open(componentType: Type<any>, config: DialogConfig) {
-        const dialogRef = this.appendDialogComponentToBody(config);
+        // const dialogRef = this.appendDialogComponentToBody(componentType, config);
+        // this.dialogComponentRef.instance.childComponentType = componentType;
 
-        this.dialogComponentRef.instance.childComponentType = componentType;
-
-        return dialogRef;
+        return this.appendDialogComponentToBody(componentType, config);
     }
 
-    private appendDialogComponentToBody(config: DialogConfig) {
+    private appendDialogComponentToBody(componentType: Type<any>, config: DialogConfig) {
         const map = new WeakMap();
         map.set(DialogConfig, config);
 
         const dialogRef = new DialogRef();
         map.set(DialogRef, dialogRef);
 
-        const sub = dialogRef.afterClosed.subscribe(() => {
-            this.removeDialogComponentFromBody();
-            sub.unsubscribe();
-        });
+     
         // _debug(config, '0. config');
         // pass the config down to directives
         dialogRef.dialogTitle = config.title;
@@ -62,18 +58,23 @@ export class DialogService {
 
         this.doc.body.appendChild(domElem);
 
+        const sub = dialogRef.afterClosed.subscribe(() => {
+            this.removeDialogComponentFromBody(componentRef);
+            sub.unsubscribe();
+        });
 
-        this.dialogComponentRef = componentRef;
+        // this.dialogComponentRef = componentRef;
+        componentRef.instance.childComponentType = componentType;
 
-        this.dialogComponentRef.instance.onClose.subscribe(() => {
-            this.removeDialogComponentFromBody();
+        componentRef.instance.onClose.subscribe(() => {
+            this.removeDialogComponentFromBody(componentRef);
         });
 
         return dialogRef;
     }
 
-    private removeDialogComponentFromBody() {
-        this.appRef.detachView(this.dialogComponentRef.hostView);
-        this.dialogComponentRef.destroy();
+    private removeDialogComponentFromBody(componentRef: ComponentRef<DialogComponent>) {
+        this.appRef.detachView(componentRef.hostView);
+        componentRef.destroy();
     }
 }

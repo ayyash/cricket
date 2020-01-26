@@ -68,6 +68,7 @@ export class DialogComponent implements AfterViewInit, OnDestroy {
     }
 
     ngOnDestroy() {
+       
         if (this.componentRef) {
             this.componentRef.destroy();
         }

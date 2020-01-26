@@ -1,7 +1,3 @@
-import { IUiError } from './services';
-import { of, Observable } from 'rxjs';
-import { Router } from '@angular/router';
-import { Toast } from '../lib/toast';
 
 
 String.prototype.toSentenceCase = function () {
@@ -41,7 +37,7 @@ export class Helpers {
                     if (v.length) {
                         // filter out empty strings
                         // lookout for this, it might need an [] in the key
-                        v.filter(x => x !== '').forEach(f => s.append(n, f));
+                        v.filter(x => x !== '').forEach(f => s.append(n + '[]', f));
                     }
                 } else {
                     s.append(n, v);
@@ -63,45 +59,18 @@ export class Helpers {
         return null;
     }
 
-    public static HandleUiError(error: IUiError): void {
-        if (error) {
-            if (error.code) {
-                // this function handles whether to show the message or the fallback, if error.code = -1
-                Toast.Show(error.code, { sticky: true, extracss: 'error' }, <string>error.serverMessage);
-            } else {
-                // something unpredictable happened
-                _debug(error, 'Something nasty', 't');
-            }
-        }
-    }
-    public static HandleCatchError(error: IUiError, code?: string): Observable<any> {
-        if (error.status === 404) {
-            if (code) {
-                error.code = code + '_NOT_FOUND';
-            }
-        }
-        if (error.status === 400) {
-            if (code) {
-                error.code = code; // TODO: generic for all error artefacts like BOOKING_ERROR...etc
-            }
-        }
-        Helpers.HandleUiError(error);
-        return of(null);
-    }
+    // public static prepDate(date: Date | null): number {
+    //     if (date) {
+    //         if (!(date instanceof Date)) {
+    //             return null;
+    //         }
+    //         return date.valueOf();
+    //     }
+    //     return null;
+    // }
 
-    // for piped and redirections
-    public static HandleErrorAndRedirect(error: IUiError, router: Router, code?: string): Observable<any> {
-        // if 404 reroute to 404, else rewroute to error page
 
-        if (error.status === 404) {
-            router.navigateByUrl('/404');
-        }
-        if (error.status === 400) {
-            router.navigateByUrl('/error');
-        }
-
-        return Helpers.HandleCatchError(error, code);
-    }
+    
 
 
 }
