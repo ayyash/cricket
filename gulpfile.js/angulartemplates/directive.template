@@ -1,4 +1,4 @@
-import { OnInit, Directive, ElementRef, Input, Renderer } from '@angular/core';
+import { OnInit, Directive, ElementRef, Input } from '@angular/core';
 
 
 @Directive({
@@ -9,7 +9,7 @@ export class _Name_Directive implements OnInit {
 
     @Input() _name_: string;
 
-    constructor(private el: ElementRef, private renderer: Renderer) {
+    constructor(private el: ElementRef) {
         //
     }
 

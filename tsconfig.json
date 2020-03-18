@@ -3,7 +3,7 @@
     "angularCompilerOptions":{
         "fullTemplateTypeCheck": true,
         "preserveWhitespaces": false,
-        "enableIvy": false
+        "enableIvy": true
     },
     "compilerOptions": {
       "outDir": "./out-tsc",
@@ -11,9 +11,9 @@
       "sourceMap": true,
       "declaration": false,
       "moduleResolution": "node",
-      "emitDecoratorMetadata": true,
+      "emitDecoratorMetadata": false,
       "experimentalDecorators": true,
-      "target": "es2015",
+      "target": "ES2015",
       "module": "esnext",
       "resolveJsonModule": true,
       "esModuleInterop": true,

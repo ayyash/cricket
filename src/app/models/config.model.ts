@@ -12,8 +12,5 @@ export interface IConfig {
         Key: string;
         ResetKey: string;
     };
-    Notifications: {
-        PUBLIC_KEY: string;
-        Timer: number;
-    };
+   
 }

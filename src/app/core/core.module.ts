@@ -6,21 +6,15 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CricketInterceptor } from './http';
 
 import {
-    // inject:services
-    // endinject
+    
 } from './services';
-import { Config } from '../config';
-import { UploadModule } from '../lib/upload';
 import { LocalInterceptor } from './local.interceptor';
 
 
 
 // services singletons here
 @NgModule({
-    imports: [CommonModule, HttpClientModule, UploadModule.forRoot({
-        defaultUploadSize: Config.Basic.defaultUploadSize,
-        defaultUploadFormat: Config.Basic.defaultUploadFormat
-    })],
+    imports: [CommonModule, HttpClientModule],
     providers: [Title,
        
         {

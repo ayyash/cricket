@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, Renderer, AfterViewInit } from '@angular/core';
+import { Directive, ElementRef, Input, Renderer2, AfterViewInit } from '@angular/core';
 import { Platform } from '@angular/cdk/platform';
 
 @Directive({
@@ -8,7 +8,7 @@ import { Platform } from '@angular/cdk/platform';
 export class LazyDirective implements AfterViewInit {
     @Input() shLazy: string;
 
-    constructor(private el: ElementRef, private renderer: Renderer, private platform: Platform) {
+    constructor(private el: ElementRef, private renderer: Renderer2, private platform: Platform) {
         //
     }
 
@@ -21,10 +21,10 @@ export class LazyDirective implements AfterViewInit {
         // on intersection lazy load it // TODO: test on safari
         // give it a minimum height so that it always gets caught
         // https://github.com/verlok/lazyload/issues/350#issuecomment-499974362
-        this.renderer.setElementStyle(this.el.nativeElement, 'minHeight', '5px');
+        this.renderer.setStyle(this.el.nativeElement, 'minHeight', '5px');
 
         if (!IntersectionObserver) {
-            this.renderer.setElementProperty(this.el.nativeElement, 'src', this.shLazy);
+            this.renderer.setProperty(this.el.nativeElement, 'src', this.shLazy);
             return;
         }
 

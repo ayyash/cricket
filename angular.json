@@ -20,7 +20,7 @@
                         "index": "src/index.html",
                         "main": "src/main.ts",
                         "polyfills": "src/polyfills.ts",
-                        "tsConfig": "src/tsconfig.app.json",
+                        "tsConfig": "tsconfig.app.json",
                         "assets": [
                             {
                                 "glob": "cricket_favicon.png",
@@ -35,11 +35,11 @@
                         ],
                         "styles": [
                             {
-                                "input": "src/assets/css/cr.critical.css",
+                                "input": "src/assets/css/cricket.critical.css",
                                 "bundleName": "critical"
                             },
                             {
-                                "input": "src/assets/css/cr.general.css",
+                                "input": "src/assets/css/cricket.general.css",
                                 "bundleName": "styles",
                                 "lazy": true
                             }
@@ -71,7 +71,7 @@
                             "index": "src/index.dev.html",
                             "styles": [
                                 {
-                                    "input": "src/assets/css/cr.css",
+                                    "input": "src/assets/css/cricket.css",
                                     "bundleName": "styles"
                                 }
                             ],
@@ -119,7 +119,7 @@
                             ],
                             "styles": [
                                 {
-                                    "input": "src/assets/css/cr.css",
+                                    "input": "src/assets/css/cricket.css",
                                     "bundleName": "styles"
                                 }
                             ]
@@ -136,7 +136,7 @@
                             "index": "src/index.dev.html",
                             "styles": [
                                 {
-                                    "input": "src/assets/css/cr.rtl.css",
+                                    "input": "src/assets/css/cricket.rtl.css",
                                     "bundleName": "styles"
                                 }
                             
@@ -194,7 +194,7 @@
                                 }],
                             "styles": [
                                 {
-                                    "input": "src/assets/css/cr.css",
+                                    "input": "src/assets/css/cricket.css",
                                     "bundleName": "styles"
                                 
                                 }
@@ -259,11 +259,11 @@
                             ],
                             "styles": [
                                 {
-                                    "input": "src/assets/css/cr.critical.rtl.css",
+                                    "input": "src/assets/css/cricket.critical.rtl.css",
                                     "bundleName": "critical-rtl"
                                 },
                                 {
-                                    "input": "src/assets/css/cr.general.rtl.css",
+                                    "input": "src/assets/css/cricket.general.rtl.css",
                                     "bundleName": "styles-rtl",
                                     "lazy": true
                                 }
@@ -304,7 +304,7 @@
                     "options": {
                         "outputPath": "dist/en",
                         "main": "src/main.server.ts",
-                        "tsConfig": "src/tsconfig.server.json",
+                        "tsConfig": "tsconfig.server.json",
                         "stylePreprocessorOptions": {
                             "includePaths": [
                                 "./mockup/less",

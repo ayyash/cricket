@@ -3,7 +3,9 @@ import { Subject ,  BehaviorSubject } from 'rxjs';
 import { ILoaderState, EnumLoaderSource } from '../core/services';
 
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class LoaderService {
     private loaderSubject = new Subject<ILoaderState>();
 

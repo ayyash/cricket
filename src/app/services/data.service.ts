@@ -6,7 +6,9 @@ import { HttpClient } from '@angular/common/http';
 
 import { IData, DataClass, EnumDataType, LocalStorageService } from '../core/services';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class DataService {
     private _urls: { [id: number]: { url: string; expiresin?: number } } = {};
     private inAppData: { [id: number]: IData[] } = {}; // local data in app

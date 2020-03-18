@@ -200,6 +200,7 @@ const _injectServices = function() {
         .pipe(gulp.dest(ngConfig.Core.Services));
 };
 
+// not used any more
 const _injectCoreModule = function() {
     return gulp
         .src(ngConfig.Core.CoreModule + ngConfig.Core.CoreModuleFile)
@@ -452,11 +453,11 @@ const _addToConfig = function(){
 // TODO: create guard and resolve
 
 exports.injectComponents = _injectComponents;
-exports.injectServices = gulp.series(_injectServices, _injectCoreModule);
+exports.injectServices = _injectServices; // gulp.series(_injectServices, _injectCoreModule);
 exports.injectLibModule = _injectLibModule;
 exports.injectModels = _injectModels;
 
-exports.injectAll = gulp.parallel(  gulp.series(_injectModels, _injectServices, _injectCoreModule), _injectComponents, _injectLibModule, );
+exports.injectAll = gulp.parallel(  gulp.series(_injectModels, _injectServices), _injectComponents, _injectLibModule, );
 
 exports.createModule = _createModule; // create a module with defualt ListComponent
 
@@ -473,6 +474,6 @@ exports.createComponent = gulp.series(
 exports.createPipe = gulp.series(_createPipe, _injectLibModule);
 exports.createDirective = gulp.series(_createDirective, _injectLibModule);
 exports.createModel = gulp.series(_createModel, _injectModels);
-exports.createService = gulp.series(_createService, _injectServices, _injectCoreModule);
-exports.createFullService = gulp.series(gulp.parallel(_createModel, _createService, _addToConfig), _injectModels, _injectServices, _injectCoreModule);
+exports.createService = gulp.series(_createService, _injectServices);
+exports.createFullService = gulp.series(gulp.parallel(_createModel, _createService, _addToConfig), _injectModels, _injectServices);
 

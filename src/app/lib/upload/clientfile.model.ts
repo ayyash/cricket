@@ -1,44 +1,50 @@
+import { SafeUrl } from '@angular/platform-browser';
+
 export interface IClientFileConfig {
     defaultUploadSize: number;
     defaultUploadFormat: string[];
 }
 
-export interface IClientFile {
-    file: File;
-    url: string;
-}
-export interface IFileHolder<T> {
-    clientfile: IClientFile;
-    artifact: T;
-}
-
+// FIXME: allow thumbnails
 export interface IClientFileError {
     size: boolean;
     format: boolean;
     code?: string;
 }
 
-export interface IClientFileResponse {
-    imageUrl?: string;
-    error?: any;
-}
 
-export class ClientFile {
-    public file: any;
-    public url: string;
-    // DATABASE MAPPING, this is why it cannot be public lib just yet
-    // TODO: check mappings
-    public static MapImageUrl(obj: any, error: any): IClientFileResponse {
-        return {
-            imageUrl: obj ? obj.photo_uri : null,
-            error: error
-        };
-    }
+export interface IClientFile {
+    id?: string;
+    path: string | SafeUrl;
+    file?: {
+        name: string,
+        size: number
+    };
 }
+export class ClientFile implements IClientFile {
+    constructor(
+        public path: string,
+        public file?: { name: string, size: number },
+        public id?: string,
+    ) {
 
-export class FileHolder<T> implements IFileHolder<T> {
-    constructor(public clientfile: IClientFile, public artifact: T) {}
-    public static NewFileHolder(): IFileHolder<any> {
-        return new FileHolder<any>({ url: null, file: null }, null);
     }
+
+
+    public static NewInstance(file: any): IClientFile {
+        
+        return new ClientFile(
+            file.path,
+            {
+                name: file.file.name,
+                size: file.file.size
+            },
+            file.id
+        );
+    }
+    public static NewInstances(files: any[]): IClientFile[] {
+        return files.map(ClientFile.NewInstance);
+    }
+
+
 }

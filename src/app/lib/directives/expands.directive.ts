@@ -1,6 +1,6 @@
 
 import {
-    Directive, Input, Output, OnDestroy, HostListener, EventEmitter, ElementRef, Renderer,
+    Directive, Input, Output, OnDestroy, HostListener, EventEmitter, ElementRef,
     AfterViewInit
 } from '@angular/core';
 
@@ -41,7 +41,7 @@ export class ExpandsDirective implements OnDestroy, AfterViewInit {
     private _options: IExpandsOptions;
     private element: HTMLElement;
 
-    constructor(private el: ElementRef, private renderer: Renderer) {
+    constructor(private el: ElementRef) {
         // when the src is clicked, add class to element, let css handle behavior
     }
 

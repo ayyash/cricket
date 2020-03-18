@@ -12,7 +12,7 @@ import { IClientFileConfig } from './clientfile.model';
     exports: [UploadPartialComponent]
 })
 export class UploadModule {
-    static forRoot(config: IClientFileConfig): ModuleWithProviders {
+    static forChild(config: IClientFileConfig): ModuleWithProviders<UploadModule> {
         return {
             ngModule: UploadModule,
             providers: [ClientFileService, {provide: 'config', useValue: config}]

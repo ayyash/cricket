@@ -21,7 +21,7 @@ import { DialogRef } from './dialog-ref';
 export class DialogComponent implements AfterViewInit, OnDestroy {
     componentRef: ComponentRef<any>;
 
-    @ViewChild(DialogContentDirective, {static: false})
+    @ViewChild(DialogContentDirective)
     contentPoint: DialogContentDirective;
 
     dialogTitle: string;

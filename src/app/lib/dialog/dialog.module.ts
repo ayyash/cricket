@@ -5,7 +5,6 @@ import { DialogContentDirective } from './insertion.directive';
 
 @NgModule({
   imports: [CommonModule],
-  declarations: [DialogComponent, DialogContentDirective],
-  entryComponents: [DialogComponent]
+  declarations: [DialogComponent, DialogContentDirective]
 })
 export class DialogModule {}

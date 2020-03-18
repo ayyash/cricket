@@ -1,36 +1,29 @@
 import { Component, OnInit, ChangeDetectionStrategy, Output, EventEmitter, Input, Inject, ViewEncapsulation } from '@angular/core';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { IClientFile, IClientFileError, IClientFileResponse, IClientFileConfig } from './clientfile.model';
+import { IClientFile, IClientFileError, IClientFileConfig } from './clientfile.model';
 import { Res } from '../../core/resources';
 import { Toast } from '../toast';
-import { ClientFileService } from './clientfile.service';
-import { take } from 'rxjs/operators';
+import { DomSanitizer } from '@angular/platform-browser';
 
 // WATCH: its better not to allow this component to render on server side ever
 @Component({
     selector: 'sh-upload',
     templateUrl: './upload.html',
-    styleUrls: ['./upload.less'],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UploadPartialComponent implements OnInit {
-    @Output() onImageChange: EventEmitter<IClientFile> = new EventEmitter(null);
-
+    @Output() onFileChange: EventEmitter<IClientFile> = new EventEmitter(null);
     @Output() onError: EventEmitter<IClientFileError> = new EventEmitter(null);
 
-    @Output() onUpload: EventEmitter<IClientFileResponse> = new EventEmitter(null);
+    @Input() size: number; // override maximum size
+    @Input() format: string[]; // overfide allowed format
+    @Input() multiple: boolean; // VER_NEXT: if multiple emit an array
 
-    @Input() imageUrl: string;
-    @Input() postUrl: string;
-
-    @Input() size: number;
-    @Input() format: string[];
-
+    fileUrl: string;
     constructor(
         @Inject('config') private config: IClientFileConfig,
-        private sanitizer: DomSanitizer,
-        private uploadService: ClientFileService
+        private toast: Toast,
+        private sanitizer: DomSanitizer
     ) {
         //
     }
@@ -43,12 +36,12 @@ export class UploadPartialComponent implements OnInit {
         }
     }
 
-    getSafeUrl(url: string): SafeUrl {
-        return this.sanitizer.bypassSecurityTrustUrl(url);
-    }
 
-    getImage(input: HTMLInputElement): void {
-        // filereader to load image on client
+
+    getFile(input: HTMLInputElement): void {
+        // VER_NEXT: allow multiple types and allow upload immidiately
+
+        // filereader to load file on client
         // then place image in its own form and emit?! i need to upload after i create
 
         const files = input.files;
@@ -59,6 +52,7 @@ export class UploadPartialComponent implements OnInit {
 
         if (file) {
             // file types like "image/png"
+           
             if (this.format.findIndex(n => file.type.indexOf(n) > -1) < 0) {
                 valid.format = false;
                 _isvalid = false;
@@ -70,12 +64,18 @@ export class UploadPartialComponent implements OnInit {
             }
 
             if (_isvalid) {
+                // for images only
                 if (typeof window !== 'undefined') {
-                    this.imageUrl = window.URL.createObjectURL(file);
+                    this.fileUrl = window.URL.createObjectURL(file);
                 }
-                this.onImageChange.emit({ file, url: this.imageUrl });
-                // do upload here
-                this.uploadImage(file);
+                const clientfile: IClientFile = {
+                    id: '',
+                    path: this.sanitizer.bypassSecurityTrustUrl(this.fileUrl), // use this for images
+                    file: file // contains name and size
+                };
+                this.onFileChange.emit(clientfile);
+
+
             } else {
                 // handle most of the errors here
                 this.errorOut(valid);
@@ -88,29 +88,21 @@ export class UploadPartialComponent implements OnInit {
         }
     }
 
-    uploadImage(file: File) {
-        // post url check first
-        // TODO: emit an observable instead
-        this.uploadService
-            .UploadPhoto(file, this.postUrl)
-            .pipe(take(1))
-            .subscribe(imageResponse => this.onUpload.emit(imageResponse));
-    }
     errorOut(valid: IClientFileError): void {
         // alert message and remove file
 
         if (!valid.format) {
             // replce format
-            Toast.Show('', { extracss: 'error' }, Res.Get('INVALID_FILE_FORMAT').replace('$0', this.format.join(', ')));
+            this.toast.Show('', { extracss: 'error' }, Res.Get('INVALID_FILE_FORMAT').replace('$0', this.format.join(', ')));
         } else if (!valid.size) {
             // prettify size
             let _size = Math.floor(this.size / 1000); // KB
             if (_size > 1000) {
                 _size = Math.floor(_size / 1000); // MB
             }
-            Toast.Show('', { extracss: 'error' }, Res.Get('FILE_LARGE').replace('$0', _size.toString()));
+            this.toast.Show('', { extracss: 'error' }, Res.Get('FILE_LARGE').replace('$0', _size.toString()));
         } else {
-            Toast.Show(valid.code, { extracss: 'error' });
+            this.toast.Show(valid.code, { extracss: 'error' });
         }
     }
 }

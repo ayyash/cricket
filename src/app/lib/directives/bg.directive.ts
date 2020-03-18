@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, Renderer, OnChanges } from '@angular/core';
+import { Directive, ElementRef, Input, Renderer2, OnChanges } from '@angular/core';
 import { Platform } from '@angular/cdk/platform';
 
 @Directive({
@@ -11,7 +11,7 @@ export class BgDirective implements OnChanges {
     @Input() lazy = false;
     // use this intead of behavior if the element needs to keep track of background changes
 
-    constructor(private el: ElementRef, private renderer: Renderer, private platform: Platform) {
+    constructor(private el: ElementRef, private renderer: Renderer2, private platform: Platform) {
         //
     }
     ngOnChanges() {
@@ -29,7 +29,7 @@ export class BgDirective implements OnChanges {
                         entries.forEach(entry => {
                             if (entry.isIntersecting) {
                                 // load image from data-img
-                                this.renderer.setElementStyle(entry.target, 'background-image', `url("${this.shBg}")`);
+                                this.renderer.setStyle(entry.target, 'background-image', `url("${this.shBg}")`);
                                 observer.disconnect();
                             }
                         });
@@ -40,7 +40,7 @@ export class BgDirective implements OnChanges {
                 );
                 io.observe(this.el.nativeElement);
             } else {
-                this.renderer.setElementStyle(this.el.nativeElement, 'background-image', `url("${this.shBg}")`);
+                this.renderer.setStyle(this.el.nativeElement, 'background-image', `url("${this.shBg}")`);
             }
         }
     }

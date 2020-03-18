@@ -1,33 +1,29 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import {  ClientFile, IClientFileResponse } from './clientfile.model';
+import { ClientFile, IClientFile } from './clientfile.model';
 
 @Injectable()
 export class ClientFileService {
-    constructor(private _http: HttpClient) {}
+    constructor(private _http: HttpClient) {
+    }
 
-    UploadPhoto(file: any, url: string): Observable<IClientFileResponse> {
+    UploadFile(files: any[], url: string): Observable<IClientFile[]> {
         // if no clientFile, do not upload
-        if (!file) {
-            return of({});
+        if (!files || !files.length) {
+            return of(null);
         }
 
         const data = new FormData();
-        data.append('file', file);
+        files.forEach(n => data.append('files', n));
 
-        _debug(file.name, 'UploadPhoto Data');
+        _debug(files.map(n => n.name).join(', '), 'UploadFile Data');
 
         // change header
         return this._http.post(url, data).pipe(
-            map(response => {
-                return ClientFile.MapImageUrl(<any>response, null);
-            }),
-            catchError((error: any) => {
-                // always return a decent result, to simplify switchMapping
-
-                return of(ClientFile.MapImageUrl(null, error));
+            map(response => { 
+                return ClientFile.NewInstances(<any>response);
             })
         );
     }

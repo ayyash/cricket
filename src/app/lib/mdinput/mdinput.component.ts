@@ -34,10 +34,10 @@ export class MdInputComponent implements AfterContentInit {
     @Input() normal = true;
 
     
-    @ContentChild(MdInputDirective, { static: false })
+    @ContentChild(MdInputDirective)
     input: MdInputDirective;
 
-    @ContentChild(NgControl, { static: false })
+    @ContentChild(NgControl)
     control: NgControl;
 
 

@@ -1,0 +1,19 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+      "outDir": "./out-tsc/app",
+      "baseUrl": "./",
+      "module": "esnext",
+      "types": []
+    },
+    "angularCompilerOptions": {
+        "enableIvy": true
+      },
+      "files": [
+        "src/main.ts",
+        "src/polyfills.ts"
+      ],
+      "include": [
+        "src/typings.d.ts"
+      ]
+  }

@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Toast } from './toast.service';
-import { IToast } from './toast.model';
+import { IToast, IToastButton } from './toast.model';
 
 @Component({
     selector: 'sh-toast',
@@ -11,10 +11,11 @@ import { IToast } from './toast.model';
                 <div>
                 {{ toast.text }}
                 </div>
+                <span *ngFor="let button of toast.buttons" (click)="click(button, $event)" [class]="button.css">{{button.text}}</span>
                 <span
                     class="symbol icon-close closelabel"
                     title="{{ toast.closetext }}"
-                    (click)="hide()"
+                    (click)="hide(toast)"
                 ></span></div></ng-container>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -27,16 +28,21 @@ export class ToastPartialComponent implements OnInit, OnDestroy {
         //
     }
     ngOnInit(): void {
-         // WATCH: static service does not need injection, lets try but keep an eye
-         // this is why the toast cannot be called on load from server
-        
+
         this.toast$ = this.toastService.toast$.debug('TOAST', 'Subject');
     }
-    hide(): void {
+    hide(toast: IToast): void {
         this.toastService.Hide();
+        // how to eit something here
+        if (toast.onHide) {
+            toast.onHide.call(toast);
+        }
     }
     ngOnDestroy(): void {
 
         this.toastService.Hide();
+    }
+    click(button: IToastButton, event: MouseEvent) {
+        button.click.call(button, event);
     }
 }
