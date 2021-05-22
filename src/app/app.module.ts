@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import {TransferHttpCacheModule} from '@nguniversal/common';
+import { TransferHttpCacheModule } from '@nguniversal/common';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './routing.module';
@@ -13,13 +13,13 @@ import { MainLayoutComponent, SingleLayoutComponent, NotFoundComponent, ErrorCom
         NotFoundComponent,
         SingleLayoutComponent,
         PublicHomeComponent,
-         ErrorComponent],
+        ErrorComponent],
     imports: [
-        BrowserModule.withServerTransition({ appId: 'cricketS' }),
+        BrowserModule.withServerTransition({ appId: 'cricketServer' }),
         TransferHttpCacheModule,
         SharedModule,
         AppRoutingModule,
         CoreModule
     ]
 })
-export class AppModule {}
+export class AppModule { }

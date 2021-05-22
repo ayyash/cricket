@@ -3,12 +3,11 @@ import { Subscription, fromEvent } from 'rxjs';
 import { auditTime } from 'rxjs/operators';
 
 @Directive({
-    selector: '[pyScroll]',
-    exportAs: 'pyScroll'
+    selector: '[shScroll]',
+    exportAs: 'shScroll'
 })
 export class ScrollDirective implements AfterViewInit, OnDestroy {
     // the heading of the app, keep somethign showing on scroll events
-    @Input() prScroll: string;
 
     private _savevalue = 0;
     private _scrolledSubscription: Subscription;
@@ -35,7 +34,7 @@ export class ScrollDirective implements AfterViewInit, OnDestroy {
                         document.body.classList.add('sc_up');
                         document.body.classList.remove('sc_down');
                     }
-
+                    this._savevalue = window.pageYOffset;
                      // Fix a mobile vh problem when address bar disappares
                 });
                 window.addEventListener('resize', this._setValue);

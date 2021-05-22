@@ -61,9 +61,9 @@ const routes: Routes = [
         RouterModule.forRoot(routes, {
             preloadingStrategy: PreloadService,
             paramsInheritanceStrategy: 'always',
-            onSameUrlNavigation: 'reload', 
+            onSameUrlNavigation: 'reload',
             scrollPositionRestoration: 'top',
-            initialNavigation: 'enabled'
+            initialNavigation: 'enabledBlocking'
         })
     ],
     exports: [RouterModule]

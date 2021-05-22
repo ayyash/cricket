@@ -10,6 +10,7 @@ export class AppShellRenderDirective implements OnInit {
     constructor(
         private viewContainer: ViewContainerRef,
         private templateRef: TemplateRef<any>,
+        // instead of the cdk for some reason
         @Inject(PLATFORM_ID) private platformId: any
     ) {}
 

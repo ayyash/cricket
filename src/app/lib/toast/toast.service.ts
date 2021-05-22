@@ -1,16 +1,15 @@
-import { Observable, BehaviorSubject, of, timer } from 'rxjs';
+import { Observable, BehaviorSubject, of, timer, Subscription } from 'rxjs';
 import { IToast } from './toast.model';
 import { Res } from '../../core/resources';
 import { Injectable } from '@angular/core';
 import { IUiError } from '../../core/services';
-import { takeWhile } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class Toast {
     toast: BehaviorSubject<IToast> = new BehaviorSubject(null);
     public toast$: Observable<IToast> = this.toast.asObservable();
 
-   
+    private isCancled: Subscription;
 
     options: IToast = {
         text: Res.Get('Error'),
@@ -20,6 +19,8 @@ export class Toast {
         delay: 5000,
         threshold: 30000, // milliseconds before force hiding a sticky one
         extracss: '',
+        buttons: [],
+        onHide: null,
         isHiding: false // is in the state of hiding, to animate properly
     };
 
@@ -48,14 +49,14 @@ export class Toast {
         const _options: IToast = { ...this.options, ...options};
         // fallback if message does not exist in keys
         _options.text = Res.Get(key, fallback);
+       
 
         this.toast.next(_options);
 
         const _delay = !_options.sticky ? _options.delay : _options.threshold;
-
-        timer(_delay)
-            // if hidden cancel timer
-            .pipe(takeWhile(() => this.toast.getValue() !== null))
+         
+        this.isCancled = timer(_delay)
+            // if hidden cancel timer, also unsubscribe just in case the toast refills before timer, duh!
             .subscribe(() => {
                  // first apply class then remove (animation)
                  this.toast.next({..._options, isHiding: true});
@@ -66,6 +67,9 @@ export class Toast {
     }
 
     Hide(): void {
+        if (this.isCancled) {
+            this.isCancled.unsubscribe();
+        }
         this.toast.next(null);
       
     }
