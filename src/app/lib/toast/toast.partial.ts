@@ -22,7 +22,7 @@ import { IToast, IToastButton } from './toast.model';
     styleUrls: ['./toast.less']
 })
 export class ToastPartialComponent implements OnInit, OnDestroy {
-    toast$: Observable<IToast>;
+    toast$: Observable<IToast | null >;
 
     constructor(private toastService: Toast) {
         //

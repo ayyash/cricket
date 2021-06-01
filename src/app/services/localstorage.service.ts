@@ -12,7 +12,7 @@ export class LocalStorageService {
             this.isBrowser = true;
             this._setResetKey();
         }
-        
+
     }
 
     private _setResetKey(): void {
@@ -22,25 +22,29 @@ export class LocalStorageService {
             skipWhile(config => !config),
             take(1)
         ).subscribe(config => {
-            const _reset: any = this.getItem(config.Cache.ResetKey);
 
-            if (!_reset || _reset !== 'true') {
-                // set key and force reste of data
-               
-                this.clear(); // added, clear localstorage here, bullox this is breaking storage
-    
-                this.setItem(config.Cache.ResetKey, 'true');
+            if (config) {
+
+                const _reset: any = this.getItem(config.Cache.ResetKey);
+                if (!_reset || _reset !== 'true') {
+                    // set key and force reste of data
+
+                    this.clear(); // added, clear localstorage here, bullox this is breaking storage
+
+                    this.setItem(config.Cache.ResetKey, 'true');
+                }
             }
-    
+
+
         });
 
     }
 
     setObject(key: string, value: any, expiresin: number = ConfigService.Config.Cache.Timeout): void {
         // set cache with expiration time stamp, each obect has its own? or one for all?
-        
+
         if (!this.isBrowser) {
-            return null;
+            return;
         }
 
         const _storage: ICachedStorage = {
@@ -49,18 +53,18 @@ export class LocalStorageService {
             expiresin: expiresin, // in hours
             key: ConfigService.Config.Cache.Key + '.' + key
         };
-      
-        
+
+
         this.setItem(_storage.key, JSON.stringify(_storage));
     }
 
     getObject(key: string): any {
         // if browser get storage, else return null
-        
+
         if (!this.isBrowser) {
             return null;
         }
-       
+
 
         const value: any = this.getItem(ConfigService.Config.Cache.Key + '.' + key);
 
@@ -95,7 +99,7 @@ export class LocalStorageService {
         }
     }
 
-    getItem(key: string): string {
+    getItem(key: string): (string | null) {
         if (this.isBrowser) {
             return localStorage.getItem(key);
         }

@@ -6,8 +6,8 @@ import { IUiError } from '../../core/services';
 
 @Injectable({ providedIn: 'root' })
 export class Toast {
-    toast: BehaviorSubject<IToast> = new BehaviorSubject(null);
-    public toast$: Observable<IToast> = this.toast.asObservable();
+    toast: BehaviorSubject<IToast | null> = new BehaviorSubject(null);
+    public toast$: Observable<IToast | null> = this.toast.asObservable();
 
     private isCancled: Subscription;
 
@@ -20,7 +20,7 @@ export class Toast {
         threshold: 30000, // milliseconds before force hiding a sticky one
         extracss: '',
         buttons: [],
-        onHide: null,
+        // onHide: null,
         isHiding: false // is in the state of hiding, to animate properly
     };
 
@@ -49,21 +49,24 @@ export class Toast {
         const _options: IToast = { ...this.options, ...options};
         // fallback if message does not exist in keys
         _options.text = Res.Get(key, fallback);
-       
+
 
         this.toast.next(_options);
 
         const _delay = !_options.sticky ? _options.delay : _options.threshold;
-         
-        this.isCancled = timer(_delay)
-            // if hidden cancel timer, also unsubscribe just in case the toast refills before timer, duh!
-            .subscribe(() => {
-                 // first apply class then remove (animation)
-                 this.toast.next({..._options, isHiding: true});
-                 timer(200).subscribe(() => {
-                    this.Hide();
+
+        if (_delay) {
+
+            this.isCancled = timer(_delay)
+                // if hidden cancel timer, also unsubscribe just in case the toast refills before timer, duh!
+                .subscribe(() => {
+                     // first apply class then remove (animation)
+                     this.toast.next({..._options, isHiding: true});
+                     timer(200).subscribe(() => {
+                        this.Hide();
+                    });
                 });
-            });
+        }
     }
 
     Hide(): void {
@@ -71,7 +74,7 @@ export class Toast {
             this.isCancled.unsubscribe();
         }
         this.toast.next(null);
-      
+
     }
 
     public HandleUiError(error: IUiError): void {

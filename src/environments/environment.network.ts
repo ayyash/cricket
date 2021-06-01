@@ -8,5 +8,7 @@ window && (window['_indebug'] = true);
 export const environment = {
     production: false,
     apiRoot: '//192.168.43.248:50007/api',
-    language: 'en'
+    language: 'en',
+    localConfig: 'localdata/config.json'
+
 };

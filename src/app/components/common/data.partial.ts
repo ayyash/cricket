@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DataPartialComponent {
-    data$: Observable<IData>;
+    data$: Observable<IData | undefined>;
 
     @Input()
     set dataitem(value: { key: string; type: EnumDataType }) {

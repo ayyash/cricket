@@ -74,7 +74,7 @@ export const CleanParams = (params: any): any => {
 
 
 
-export const makeDate = (dateString: string): Date => {
+export const makeDate = (dateString: string): Date | null => {
     if (dateString) {
         // do check to make sure it is valid date
 

@@ -8,7 +8,7 @@ export interface IToast {
     delay?: number;
     extracss?: string;
     threshold?: number;
-    isHiding?: boolean; 
+    isHiding?: boolean;
     buttons?: IToastButton[];
     onHide?(): void;
 }

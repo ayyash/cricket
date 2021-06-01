@@ -1,17 +1,18 @@
 {
-	"shutUrl": "./node_modules/shut/src/",
-	"srcUrl": "./mockup/",
-	"distUrl": "./src/assets/",
-	"distBaseUrl": "/",
-	"stageUrl": "./src/",
+    "shutUrl": "./node_modules/shut/src/",
+    "srcUrl": "./mockup/",
+    "distUrl": "./src/assets/",
+    "distBaseUrl": "/",
+    "stageUrl": "./src/",
     "projectName": "cricket",
+    "angularPrefix": "cr",
+    "iconfontspath": "C:/D/zjunk/aumet/fonts/",
     "isRtl": true,
-	"scripts": [
-    ],
+    "scripts": [],
     "browserslist": [
         "last 1 version",
         "> 1%",
         "maintained node versions",
         "not dead"
-      ]
+    ]
 }

@@ -6,8 +6,8 @@ import { tap, catchError } from 'rxjs/operators';
 //  upgrade to rxjs by implementing a custom pipe
 declare module 'rxjs/internal/Observable' {
     interface Observable<T> {
-        debug: (...any) => Observable<T>;
-        catchProjectError: (...any) => Observable<T>;
+        debug: (...args: any) => Observable<T>;
+        catchProjectError: (...args: any) => Observable<T>;
     }
 }
 
@@ -36,7 +36,7 @@ Observable.prototype.catchProjectError = function(message: string, methodName: s
             const uiError: IUiError = {
                 code: 'Unknown',
                 internalMessage: '',
-                serverMessage: null,
+                serverMessage: undefined,
                 status: 0
             };
             let m = error.message;
@@ -66,7 +66,7 @@ Observable.prototype.catchProjectError = function(message: string, methodName: s
                             }
                             if (error.error.internalMessage) {
                                 uiError.internalMessage = error.error.internalMessage;
-                                m += '\n' + uiError.code; 
+                                m += '\n' + uiError.code;
                                 m += ': ' + uiError.internalMessage;
                             }
                             if (error.error.serverMessage) {

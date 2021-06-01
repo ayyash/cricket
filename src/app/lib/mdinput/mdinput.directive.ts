@@ -2,6 +2,7 @@ import { Directive, Input, OnInit, ElementRef, forwardRef, HostListener } from '
 import { Validator, FormControl, NG_VALIDATORS, Validators } from '@angular/forms';
 import { Res } from '../../core/resources';
 import { MdPatterns } from './validators';
+import { Subject, Observable } from 'rxjs';
 
 @Directive({
     // tslint:disable-next-line:directive-selector
@@ -29,23 +30,31 @@ export class MdInputDirective implements OnInit, Validator {
 
     formControl: FormControl;
     errorText: string;
-    // TODO: FIXME: drop jquery
     $element: HTMLInputElement;
 
     focus = false;
+
+    private _focus: Subject<string> = new Subject();
+    focus$: Observable<string> = this._focus.asObservable();
+
+    private _blur: Subject<any> = new Subject();
+    blur$: Observable<any> = this._blur.asObservable();
+
     // i can pollute this with hostlisters
     @HostListener('focus')
     onFocus() {
         this.focus = true;
+        this._focus.next(this.$element.value);
     }
-    @HostListener('blur')
-    onBlur() {
+    @HostListener('blur', ['$event.relatedTarget'])
+    onBlur(relatedTarget: HTMLElement) {
         this.focus = false;
+        this._blur.next(relatedTarget);
     }
 
     ngOnInit() {
-
         this.$element = this.el.nativeElement;
+
     }
 
     // may be thsi is better than ngcontrol?
@@ -67,7 +76,7 @@ export class MdInputDirective implements OnInit, Validator {
         return isvalid;
     }
 
-    validate(c: FormControl): { [key: string]: any } {
+    validate(c: FormControl): { [key: string]: any} | null {
         // call the validation by attribute and return
         this.formControl = c;
 
@@ -154,5 +163,6 @@ export class MdInputDirective implements OnInit, Validator {
 
             return null;
         }
+        return null;
     }
 }

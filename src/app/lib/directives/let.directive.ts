@@ -1,7 +1,7 @@
 import {Directive, Input, TemplateRef, ViewContainerRef} from '@angular/core';
 
 interface LetContext<T> {
-    shLet: T;
+    shLet: T | null;
 }
 
 @Directive({

@@ -46,7 +46,7 @@ export class DialogComponent implements AfterViewInit, OnDestroy {
 
     onOverlayClicked(evt: MouseEvent) {
         // AYYASH: this should only next onclose, not close
-        this._onClose.next();
+        this._onClose.next(null);
         // this.dialogRef.close();
     }
 
@@ -68,13 +68,13 @@ export class DialogComponent implements AfterViewInit, OnDestroy {
     }
 
     ngOnDestroy() {
-       
+
         if (this.componentRef) {
             this.componentRef.destroy();
         }
     }
 
     close() {
-        this._onClose.next();
+        this._onClose.next(null);
     }
 }

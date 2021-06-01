@@ -36,7 +36,7 @@ export class GaTracking {
     public static get IsGaEnabled(): boolean {
         return typeof window !== 'undefined' && window['ga'];
     }
-    private static MapGaDims(dims: IGaDims): any {
+    private static MapGaDims(dims?: IGaDims): any {
         // return dims with their real dimention names, remove empty
         const ret = {};
         if (!dims) {

@@ -24,11 +24,11 @@ export class ModalDirective implements OnDestroy, AfterViewInit {
     // TODO: clone configs internally to allow partial config
 
     @Input() config: {
-        modalSelector?: string;
-        closeSelector?: string;
-        titleSelector?: string;
-        modalContentSelector?: string;
-        bodyCss?: string;
+        modalSelector: string;
+        closeSelector: string;
+        titleSelector: string;
+        modalContentSelector: string;
+        bodyCss: string;
     } = {
             modalSelector: '.dr-modal-overlay',
             closeSelector: '.dr-close',
@@ -41,8 +41,7 @@ export class ModalDirective implements OnDestroy, AfterViewInit {
     @Output() onHide = new EventEmitter();
     @Output() onLoad = new EventEmitter();
 
-    // $overlay: HTMLDivElement;
-    $title: HTMLElement;
+    $title: HTMLElement | null;
     $modalElement: HTMLElement;
     isopen: boolean;
 
@@ -75,9 +74,9 @@ export class ModalDirective implements OnDestroy, AfterViewInit {
         if (this._platform.isBrowser) {
 
             // change title
-            this.$title.textContent = title;
-            // this.$title.innerText = title;
-
+            if (this.$title && title) {
+                this.$title.textContent = title;
+            }
             this.$modalElement.style.display = 'block';
             this.onShow.emit();
             // add a class to body to help in positioning better
@@ -90,7 +89,9 @@ export class ModalDirective implements OnDestroy, AfterViewInit {
         if (this._platform.isBrowser) {
             // change title
 
-            this.$title.textContent = title;
+            if (this.$title && title) {
+                this.$title.textContent = title;
+            }
 
         }
     }
@@ -119,7 +120,10 @@ export class ModalDirective implements OnDestroy, AfterViewInit {
             if (target.matches(this.trigger) || target.closest(this.trigger)) {
                 // itself or its parent
                 const _t = target.matches(this.trigger) ? target : target.closest(this.trigger);
-                this.show(_t.getAttribute('title'));
+                if (_t) {
+
+                    this.show(_t.getAttribute('title') || undefined);
+                }
             }
         }
 
@@ -128,7 +132,7 @@ export class ModalDirective implements OnDestroy, AfterViewInit {
     @HostListener('window:keydown', ['$event'])
     closeEscape(event: KeyboardEvent): void {
         // hide on escape
-        if (event.keyCode === 27) {
+        if (event.code === 'Escape') {
             this.hide();
         }
     }

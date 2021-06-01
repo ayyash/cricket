@@ -3,12 +3,13 @@ import { environment } from '../environments/environment';
 
 export const Config = {
     Basic: {
-        language: environment.language,
+        language: resources.language,
+        country: resources.country,
         defaultRoute: '/',
         defaultSize: 25,
         defaultDateFormt: 'DD-MM-YYYY',
         defaultUploadSize: 1048576,
-        defaultUploadFormat: ["gif", "jpg", "jpeg", "png"]
+        defaultUploadFormat: ['gif', 'jpg', 'jpeg', 'png']
     },
     Auth: {
         userAccessKey: 'cricket.user'
@@ -25,7 +26,7 @@ export const Config = {
             notdefined: '/data/notdefined'
         },
         config: {
-            local: 'localdata/config.json'
+            local: environment.localConfig // TODO: make thru env 'localdata/config.json'
         }
          // **gulpmodel**
     }

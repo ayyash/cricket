@@ -2,6 +2,7 @@ const j = require('./ng');
 const assets = require('./assets');
 const icons = require('./icons');
 const translate = require('./translate');
+const postbuild = require('./postbuild');
 
 exports.injectComponents = j.injectComponents;
 exports.injectServices = j.injectServices;
@@ -9,7 +10,7 @@ exports.injectLib = j.injectLibModule;
 exports.injectModels = j.injectModels;
 exports.inject = j.injectAll;
 
-exports.module = j.createModule;
+exports.routemodule = j.createRouteModule;
 exports.component = j.createComponent;
 exports.pipe = j.createPipe;
 exports.directive = j.createDirective;
@@ -26,9 +27,20 @@ exports.default = assets.watch;
 exports.iconset = icons.iconset;
 // to prepare icons from remote folder
 exports.prepicons = icons.prepicons;
+// to do both
+exports.createicons = icons.createicons;
 
 // extract all translation pipes in resources.ar.ts to be ready for transation
 // this is done once, redoing will overwrite existing translations
 exports.extract = translate.extract;
+
+// build resourcekeys.json for ssr
+exports.resourcekeys = translate.resourcekeys;
+
+// post build
+exports.generateIndex = postbuild.generateIndex;
+exports.copyResourceKeys = postbuild.copyResourceKeys;
+
+exports.postbuild = postbuild.all;
 
 

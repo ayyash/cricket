@@ -47,17 +47,22 @@
                                 "glob": "*.js",
                                 "input": "src/locale",
                                 "output": "/locale"
+                            },
+                            {
+                                "glob": "*.json",
+                                "input": "configs",
+                                "output": "/localdata"
                             }
                         ],
                         "styles": [
                             {
                                 "input": "src/assets/css/cricket.critical.css",
-                                "bundleName": "critical"
+                                "bundleName": "critical",
+                                "inject": false
                             },
                             {
                                 "input": "src/assets/css/cricket.general.css",
-                                "bundleName": "styles",
-                                "lazy": true
+                                "bundleName": "styles"
                             }
                         ],
                         "stylePreprocessorOptions": {

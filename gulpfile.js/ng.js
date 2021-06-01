@@ -1,6 +1,8 @@
 // TODO: here
 // gulp taks to create angular component according to this set up
 
+// TODO: allow for modules without routing
+
 // var gulp = require('gulp-param')(require('gulp'), process.argv);
 var options = require('minimist')(process.argv.slice(2)); // those are params passed by cmd line
 var fs = require('fs');
@@ -21,7 +23,7 @@ var ngConfig = {
         Directives: __dirname + '/angulartemplates/directive.template',
         Pipes: __dirname + '/angulartemplates/pipe.template',
         Route: __dirname + '/angulartemplates/route.template',
-        // RouteModule: './angulartemplates/routeModule.template',
+        RouteModule: __dirname + '/angulartemplates/routeModule.template',
         Declaration: 'CoreComponents.MajorNamePartialComponent',
         Module: __dirname + '/angulartemplates/module.template',
         Model: __dirname + '/angulartemplates/model.template',
@@ -200,30 +202,9 @@ const _injectServices = function() {
         .pipe(gulp.dest(ngConfig.Core.Services));
 };
 
-// not used any more
-const _injectCoreModule = function() {
-    return gulp
-        .src(ngConfig.Core.CoreModule + ngConfig.Core.CoreModuleFile)
-        .pipe(
-            inject(
-                gulp.src([
-                    ngConfig.Destinations.Services + '**/*.ts',
-                    '!' + ngConfig.Destinations.Services + '**/*.abstract.ts',
-                    '!' + ngConfig.Destinations.Services + '**/_*.ts'
-                ]),
-                {
-                    relative: true,
-                    starttag: '// inject:services',
-                    endtag: '// endinject',
-                    transform: transformClassName
-                }
-            )
-        )
-        .pipe(gulp.dest(ngConfig.Core.CoreModule));
-};
 
-const _createModule = function() {
-    let { major, name, ispartial } = options;
+const _createRouteModule = function() {
+    let { major, withroute } = options;
 
     if (!major) {
         return gulp.src('.');
@@ -235,23 +216,23 @@ const _createModule = function() {
         return gulp.src('.');
     }
 
+    const src = withroute ? ngConfig.Templates.RouteModule : ngConfig.Templates.Module;
     return gulp
-        .src(ngConfig.Templates.Module)
+        .src(src)
         .pipe(replace('Major', majorName))
         .pipe(
             rename({
                 basename: majorName.toLowerCase(),
-                suffix: '.route',
+                suffix: withroute ? '.route' : '.module',
                 extname: '.ts'
             })
         )
         .pipe(gulp.dest(ngConfig.Destinations.Routes, { overwrite: false }));
 };
-// TODO: next version clean up the repepetive parts
 
 // add component to a module or create a new one
 const _addComponentToModule = function() {
-    const { major, name, ispartial } = options;
+    const { major, name, ispartial, withroute } = options;
     if (!major) {
         return gulp.src('.');
     }
@@ -277,14 +258,15 @@ const _addComponentToModule = function() {
 
 
     // place it inside the module, if // **gulpcomponent_first exists, replace with // **gulpcomponent and dont add a comma
-
+    // src from /routes folder, no subfolders
+    const src = withroute ? '.route.ts' : '.module.ts';
     return (
         gulp
-            .src(ngConfig.Destinations.Routes + major.toLowerCase() + '.route.ts')
+            .src(ngConfig.Destinations.Routes + majorName.toLowerCase() + src)
             // replace route and component
             .pipe(gulpif(!ispartial, replace('// **gulproute**', ','+ route + '\n// **gulproute**')))
             .pipe(gulpif(!ispartial, replace('// **gulproute_first**', route + '\n// **gulproute**')))
-            .pipe(replace('// **gulpcomponent**',  ',' + component + '\n// **gulpcomponent**' ))
+            .pipe(replace('// **gulpcomponent**',  ', ' + component + '\n// **gulpcomponent**' ))
             .pipe(replace('// **gulpcomponent_first**',  component + '\n// **gulpcomponent**' ))
             .pipe(gulp.dest(ngConfig.Destinations.Routes))
     );
@@ -327,7 +309,7 @@ const _createComponent = function() {
     }
     if (ispartial) {
         _partialView = '.partial';
-        _selector = `selector: '${gulpConfig.projectName}-${majorName.toLowerCase()}-${name.toLowerCase()}',`;
+        _selector = `selector: '${gulpConfig.angularPrefix}${majorName ? '-'+ majorName.toLowerCase() : ''}-${name.toLowerCase()}',`;
     }
     return gulp
         .src(isform ? ngConfig.Templates.FormComponents : ngConfig.Templates.Components)
@@ -453,19 +435,21 @@ const _addToConfig = function(){
 // TODO: create guard and resolve
 
 exports.injectComponents = _injectComponents;
-exports.injectServices = _injectServices; // gulp.series(_injectServices, _injectCoreModule);
+exports.injectServices = _injectServices;
 exports.injectLibModule = _injectLibModule;
 exports.injectModels = _injectModels;
 
 exports.injectAll = gulp.parallel(  gulp.series(_injectModels, _injectServices), _injectComponents, _injectLibModule, );
 
-exports.createModule = _createModule; // create a module with defualt ListComponent
+// exports.createModule = _createModule; // create a module
+
+exports.createRouteModule = _createRouteModule; // create a module with routing
 
 exports.createComponent = gulp.series(
     gulp.parallel(
         _createView,
         _createComponent,
-        _createModule
+        _createRouteModule
     ),
     _injectComponents,
     _addComponentToModule

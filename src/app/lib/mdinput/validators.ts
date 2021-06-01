@@ -12,7 +12,7 @@ export class MdPatterns {
             return this._Patterns[key];
         }
 
-        return fallback;
+        return fallback || '';
     }
 }
 

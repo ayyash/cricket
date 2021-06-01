@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { map, first, publishLast, refCount } from 'rxjs/operators';
+import { map, first, share } from 'rxjs/operators';
 import { Config } from '../config';
 import { HttpClient } from '@angular/common/http';
 
@@ -75,33 +75,32 @@ export class DataService {
         // else nothing, there is no storag to update
     }
 
-    GetSingleDataById(type: EnumDataType, id: string): Observable<IData> {
+    GetSingleDataById(type: EnumDataType, id: string): Observable<IData | undefined> | null {
         if (id === null) {
             return null;
         }
 
         return this.GetData(type).pipe(
-            map(data => data.find(n => n.id.toString() === id.toString())),
+            map(data => data.find(n => n.id?.toString() === id.toString())),
             first(),
-            publishLast(),
-            refCount()
+            share()
         );
     }
 
-    GetSingleDataByKey(type: EnumDataType, key: string): Observable<IData> {
+    GetSingleDataByKey(type: EnumDataType, key: string): Observable<IData | undefined> {
+        // WATCH: observable of null
         if (key === null) {
-            return null;
+            return of(undefined);
         }
 
         return this.GetData(type).pipe(
             map(data => data.find(n => n.key === key)),
             first(),
-            publishLast(),
-            refCount()
+            share()
         );
     }
 
-    GetLocalDataByKey(type: EnumDataType, key: string): IData {
+    GetLocalDataByKey(type: EnumDataType, key: string): IData | null {
         if (key === null) {
             return null;
         }

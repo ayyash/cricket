@@ -1,10 +1,10 @@
-import { Injectable, Injector } from '@angular/core';
+import { Inject, Injectable, Injector, Optional } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Config } from '../config';
 import { map, catchError } from 'rxjs/operators';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { IConfig } from '../core/services';
- 
+
 
 @Injectable({
     providedIn: 'root'
@@ -14,59 +14,69 @@ export class ConfigService {
 
     private _getUrl: string = Config.API.config.local;
 
-    private config = new BehaviorSubject<IConfig>(null);
+    // WATCH: keep an eye, it should accept null
+    private config = new BehaviorSubject<IConfig>(Config as IConfig);
     config$: Observable<IConfig> = this.config.asObservable();
 
     private _http: HttpClient;
 
-    static configFactory = (config: ConfigService): (() => Promise<boolean>) => {
-        return (): Promise<boolean> => {
-            return config.loadAppConfig();
-        };
+    static configFactory = (config: ConfigService): (() => Observable<boolean>) => {
+        return () => config.loadAppConfig();
+
     }
 
     private static NewInstance(config: any): IConfig {
         // clone first, because in ssr the object is transfered in state to client, which adds the key again, unless u clone
-        const _config = {...<IConfig>config};
-        _config.Cache = {..._config.Cache};
+        const _config = { ...<IConfig>config };
+        _config.Cache = { ..._config.Cache };
         // adjust cache key to have language in it
         _config.Cache.Key += '.' + Config.Basic.language;
 
-        // populate static element 
+        // populate static element
         ConfigService._config = _config;
 
-        
+
 
         return _config;
     }
 
-    constructor(private injector: Injector) {
+    constructor(
+        @Optional() @Inject('localConfig') protected localConfig: IConfig,
+        private injector: Injector) {
         this._http = this.injector.get(HttpClient);
     }
 
-    loadAppConfig(): Promise<boolean> {
+    loadAppConfig(): Observable<boolean> {
         // too much typing
-        return new Promise<boolean>(resolve => {
-                this._http
-                    .get(this._getUrl)
-                    .pipe(
-                        map(response => {
-                            const config = ConfigService.NewInstance(<any>response);
 
-                            this.config.next(config);
-                            resolve(true);
-                        }),
-                        catchError(error => {
-                            // if in error, return default fall back from environment
-                            resolve(true);
-                            _debug(error, 'Error in resolve', 'e');
-                            return of(Config);
-                        })
-                    )
-                    .subscribe();
-            }
-        );
+        // WATCH: on server, retrieve from local file injected from server
+        if (this.localConfig) {
+
+            const localconfig = ConfigService.NewInstance(this.localConfig);
+            this.config.next(localconfig);
+
+            return of(true);
+        }
+
+        return this._http
+            .get(this._getUrl)
+            .pipe(
+                map(response => {
+                    const config = ConfigService.NewInstance(<any>response);
+
+                    this.config.next(config);
+                    return true;
+                }),
+                catchError(error => {
+                    // if in error, return default fall back from environment
+                    _debug(error, 'Error in resolve', 'e');
+                    this.config.next(Config);
+                    return of(false);
+                })
+            );
+
     }
+
 
 
     static get Config(): IConfig {
@@ -74,7 +84,7 @@ export class ConfigService {
         return ConfigService._config ? ConfigService._config : <IConfig>Config;
     }
 
-    public GetConfig(): IConfig {
+    public GetConfig(): IConfig | null {
         return this.config.getValue();
     }
 

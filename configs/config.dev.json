@@ -1,0 +1,14 @@
+{
+   
+    "API": {
+        "apiRoot": "http://localhost:50007/api"
+    },
+    "Auth": {
+        "userAccessKey": "cricket.user"
+    },
+    "Cache": {
+        "Timeout": 1,
+        "Key": "cricket.cache",
+        "ResetKey": "cricket.20190208"
+    }
+}

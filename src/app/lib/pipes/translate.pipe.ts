@@ -1,16 +1,16 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { Res } from '../../core/resources';
+import { toSentenceCase } from '../../core/common';
 
 @Pipe({ name: 'translate' })
 export class TranslatePipe implements PipeTransform {
 
 
     transform(original: string, res: string, tocase: string = 'normal'): string {
-        const value = Res.Translate(res);
+        const value = Res.Get(res, original);
 
-        // get resid if found else return original (so in english, better leave off the resource)
         if (value) {
-            return tocase === 'sentence' ? value.toSentenceCase() : value;
+            return tocase === 'sentence' ? toSentenceCase(value) : value;
         }
         return original;
 

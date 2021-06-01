@@ -1,12 +1,13 @@
-// a model for autcomolete data 
+// a model for autcomolete data
+// TODO: rewrite to have a bit more flexible data types
 
 export interface IData {
-    name: string;
-    id: string;
+    name: string | null;
+    id: string | null;
     key?: string;
-    
+
     type: EnumDataType; // internal
-    
+
 }
 
 export enum EnumDataType {
@@ -17,8 +18,8 @@ export enum EnumDataType {
 export class DataClass implements IData {
     constructor(
         public type: EnumDataType,
-        public id: string,
-        public name: string,
+        public id: string | null,
+        public name: string | null,
         public key?: string
 
     ) {

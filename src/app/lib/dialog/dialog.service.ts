@@ -43,11 +43,11 @@ export class DialogService {
         const dialogRef = new DialogRef();
         map.set(DialogRef, dialogRef);
 
-     
+
         // _debug(config, '0. config');
         // pass the config down to directives
-        dialogRef.dialogTitle = config.title;
-        dialogRef.dialogMode = config.mode;
+        dialogRef.dialogTitle = config.title || '';
+        dialogRef.dialogMode = config.mode || '';
 
         const componentFactory = this.componentFactoryResolver.resolveComponentFactory(DialogComponent);
         const componentRef = componentFactory.create(new DialogInjector(this.injector, map));

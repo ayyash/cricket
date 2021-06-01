@@ -5,13 +5,13 @@ import {
 } from '@angular/core';
 
 export interface IExpandsOptions {
-    guts?: string;
-    src?: string;
-    active?: boolean;
-    togglecss?: string;
-    hidesrc?: string;
-    showsrc?: string;
-    isvisible?: boolean; // default state, false is default
+    guts: string;
+    src: string;
+    active: boolean;
+    togglecss: string;
+    hidesrc: string;
+    showsrc: string;
+    isvisible: boolean; // default state, false is default
 }
 
 @Directive({
@@ -21,7 +21,8 @@ export interface IExpandsOptions {
 })
 export class ExpandsDirective implements OnDestroy, AfterViewInit {
 
-    @Input() options: IExpandsOptions;
+    // WATCH: is partial good enough? i doubt
+    @Input() options: Partial<IExpandsOptions>;
     @Input('shExpands') expands: string; // = type of behavior, default none, poplist, list... etc
 
     @Output() onShow = new EventEmitter();
@@ -43,6 +44,7 @@ export class ExpandsDirective implements OnDestroy, AfterViewInit {
 
     constructor(private el: ElementRef) {
         // when the src is clicked, add class to element, let css handle behavior
+
     }
 
     ngAfterViewInit(): void {
