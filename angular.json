@@ -1,3 +1,4 @@
+// FILE NOT READY FOR USE
 {
     "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
     "version": 1,
@@ -32,28 +33,6 @@
                         "main": "src/main.ts",
                         "polyfills": "src/polyfills.ts",
                         "tsConfig": "tsconfig.app.json",
-                        "assets": [
-                            {
-                                "glob": "cricket_favicon.png",
-                                "input": "src",
-                                "output": "/"
-                            },
-                            {
-                                "glob": "images/**/*",
-                                "input": "src/assets",
-                                "output": "/assets"
-                            },
-                            {
-                                "glob": "*.js",
-                                "input": "src/locale",
-                                "output": "/locale"
-                            },
-                            {
-                                "glob": "*.json",
-                                "input": "configs",
-                                "output": "/localdata"
-                            }
-                        ],
                         "styles": [
                             {
                                 "input": "src/assets/css/cricket.critical.css",
@@ -94,6 +73,28 @@
                                     "input": "src/assets/css/cricket.css",
                                     "bundleName": "styles"
                                 }
+                            ],
+                            "assets": [
+                                {
+                                    "glob": "cricket_favicon.png",
+                                    "input": "src",
+                                    "output": "/"
+                                },
+                                {
+                                    "glob": "images/**/*",
+                                    "input": "src/assets",
+                                    "output": "/assets"
+                                },
+                                {
+                                    "glob": "*.js",
+                                    "input": "src/locale",
+                                    "output": "/locale"
+                                },
+                                {
+                                    "glob": "config.json",
+                                    "input": "configs",
+                                    "output": "/localdata"
+                                }
                             ]
                         },
                         "network": {
@@ -132,12 +133,29 @@
                             ]
                         },
                         "production": {
-                            "outputPath": "../cricket.host/views/",
+                            "outputPath": "./host/client/",
                             "baseHref": "/$lang/",
                             "fileReplacements": [
                                 {
                                     "replace": "src/environments/environment.ts",
                                     "with": "src/environments/environment.prod.ts"
+                                }
+                            ],
+                            "assets": [
+                                {
+                                    "glob": "cricket_favicon.png",
+                                    "input": "src",
+                                    "output": "/"
+                                },
+                                {
+                                    "glob": "images/**/*",
+                                    "input": "src/assets",
+                                    "output": "/assets"
+                                },
+                                {
+                                    "glob": "*.js",
+                                    "input": "src/locale",
+                                    "output": "/locale"
                                 }
                             ],
                             "optimization": true,

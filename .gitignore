@@ -4,6 +4,7 @@
 /dist
 /tmp
 /out-tsc
+/fontfiles
 
 # dependencies
 /node_modules

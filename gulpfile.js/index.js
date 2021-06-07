@@ -34,13 +34,12 @@ exports.createicons = icons.createicons;
 // this is done once, redoing will overwrite existing translations
 exports.extract = translate.extract;
 
-// build resourcekeys.json for ssr
-exports.resourcekeys = translate.resourcekeys;
 
-// post build
+// copy locales to server for ssr
+exports.locales = postbuild.locales;
+// generate index files
 exports.generateIndex = postbuild.generateIndex;
-exports.copyResourceKeys = postbuild.copyResourceKeys;
 
-exports.postbuild = postbuild.all;
-
+// post build both:
+exports.postbuild = postbuild.postbuild;
 

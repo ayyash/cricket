@@ -1,5 +1,4 @@
 // barrel for services and models
-// note to self, keep explicit names for service because cli keeps objecting
 // inject:services
 export { ConfigService } from '../services/config.service';
 export { DataService } from '../services/data.service';

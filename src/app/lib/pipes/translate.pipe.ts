@@ -5,7 +5,6 @@ import { toSentenceCase } from '../../core/common';
 @Pipe({ name: 'translate' })
 export class TranslatePipe implements PipeTransform {
 
-
     transform(original: string, res: string, tocase: string = 'normal'): string {
         const value = Res.Get(res, original);
 

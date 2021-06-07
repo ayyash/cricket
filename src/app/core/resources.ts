@@ -1,23 +1,38 @@
-import { Config } from '../config';
+/*
+* keys can come from two places, resources global async file (from script in html header /locale/en.js)
+* from internal resources import from locale/resources.ts
+* when importing, generate multiple builds for each language with the proper file replacement
+* This file can be replaced during build by using the `fileReplacements` array. */
+// import { keys } from '../../locale/resources';
 
-const keys = resources.keys;
+// from en.js (add typing entry for it)
+// FIXME: why was this copied by value?! i need to know why resources.keys is not by reference, may be nodejs module encapsulation?
+
+// const keys = resources.keys;
 
 export class Res {
 
     public static Get(key: string, fallback?: string): string {
         // if found return else generic
-        if (keys[Config.Basic.language][key]) {
-            return keys[Config.Basic.language][key];
+        // FIXME: later
+        const keys = resources.keys;
+        
+
+        if (keys[key]) {
+            return keys[key];
         }
 
-        return fallback || keys[Config.Basic.language].NoRes;
+        return fallback || keys.NoRes;
     }
 
 
 
     public static RelativeTime(key: string, value: number): string {
 
-        // no more const ret = keys[Config.Basic.language].RELATIVE_TIME.AGO; // {0} ago
+        // FIXME: later
+        const keys = resources.keys;
+
+        // no more const ret = keys.RELATIVE_TIME.AGO; // {0} ago
         let factor = 11;
         if (value <= 1) {
             factor = 1;
@@ -26,9 +41,13 @@ export class Res {
         } else if (value < 11) {
             factor = 3;
         }
-        return keys[Config.Basic.language].RELATIVE_TIME[key][factor].replace('$0', value);
+        return keys.RELATIVE_TIME[key][factor].replace('$0', value);
     }
     public static Plural(key: string, count: number): string {
+
+        // FIXME: later
+        const keys = resources.keys;
+
         // get main key, which will have its own counts in both languages
         // 0: none, 1: singlular, 2: dual, 3: plural, 10: singular
         // or 1: single, 2: plural
@@ -43,6 +62,6 @@ export class Res {
             factor = 3;
         }
 
-        return keys[Config.Basic.language][key][factor].replace('$0', count);
+        return keys[key][factor].replace('$0', count);
     }
 }

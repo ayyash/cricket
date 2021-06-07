@@ -5,7 +5,7 @@ export const environment = {
     production: true,
     language: 'en',
     apiRoot: 'https://api.website.com',
-    localConfig: 'localdata/config.json'
+    localConfig: 'localdata/config.prod.json'
 
 
 };

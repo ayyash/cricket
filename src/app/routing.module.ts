@@ -36,7 +36,10 @@ const routes: Routes = [
         children: [
             {
                 path: '',
-                component: CoreComponents.PublicHomeComponent
+                component: CoreComponents.PublicHomeComponent,
+                data: {
+                    title: 'SITE_NAME'
+                }
             }
         ]
     },

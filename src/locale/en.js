@@ -1,9 +1,11 @@
 
 
 function getCountry() {
-    const _country = document.cookie.split(';').find(n => n.indexOf('country') > -1);
-    if (_country) {
-       return _country.split('=')[1];
+    if (window) {
+        const _country = document.cookie.split(';').find(n => n.indexOf('country') > -1);
+        if (_country) {
+           return _country.split('=')[1];
+        }
     }
     return 'JO';
 }
@@ -13,10 +15,9 @@ const resources = {
     country: getCountry(),
     keys: {}
 };
-// WATCH: always add an extra comma at the last element
-resources.keys[resources.language] = {
-    /* JSON BEGIN */
-    "SITE_NAME": "Aumet",
+resources.keys = {
+    "LANGUAGE": "English",
+    "SITE_NAME": "Cricket",
     "UiLanguage": "عربي",
     "Required": "Required",
     "Error": "An error occurred",
@@ -94,6 +95,6 @@ resources.keys[resources.language] = {
         "ERROR": "Oh oh, an error occurred",
         "NOT_FOUND": "404! Hmm! Once in a while, we change address and forget to update the mailman."
     },
-    /* JSON END */
-
+    "DEFAULT_PAGE_TITLE": "Welcome"
 };
+

@@ -1,46 +1,60 @@
 const gulp = require('gulp');
 const inject = require('gulp-inject');
 
-var gulpConfig = require('./config.json');
-var ngConfig = {
-    Sources: './src/app/components/*.html',
-    Destination: './src/locale/',
-    DestinationFile: 'resources.ar.ts'
+
+const gulpConfig = require('./config.json');
+const _config = {
+    Sources: './src/app/components/**/*.html',
+    Destination: './src/locale/'
 };
 
+const _translateReg = /{{\s*["']([\w\d?.,!\s\(\)]+)["']\s*\|\s*translate:['"]([\w]+)['"]\s*}}/gim;
 
-exports.extract = function() {
-    // read all what? html files only, find {{ "" | transalate:"something" }} and copy "something" with default text in resurces.ar
+// NOTETOSELF: extraction for translation never uses resources.ts, because that is for a single language only
 
-    var reg = /{{\s*["']([\w\d?.,!\s\(\)]+)["']\s*\|\s*translate:['"]([\w]+)['"]\s*}}/gim;
-    var returnStr = '';
+// generate translation json
+const _extract = gulpConfig.languages.map(language => {
 
-    return gulp
-        .src(ngConfig.Destination + ngConfig.DestinationFile)
-        .pipe(
-            inject(gulp.src(ngConfig.Sources), {
-                starttag: '// inject:resources',
+    return function (cb) {
+        // read all what? html files only, find {{ "" | transalate:"something" }} and copy "something" with default text in ar.js...
+
+        let returnStr = '';
+
+        gulp.src(
+            _config.Destination + language + '.js'
+        ).pipe(
+            inject(gulp.src(_config.Sources), {
+                starttag: '// inject:translations',
                 endtag: '// endinject',
                 empty: true,
-                transform: function(filePath, file, index, length, targetFile) {
+                transform: function (
+                    filePath,
+                    file,
+                    index,
+                    length,
+                    targetFile
+                ) {
                     // for every translate pipe found, insert a new line name: "value"
                     // before you do, check if the match already exists
 
                     returnStr = '';
-                    var content = file.contents.toString('utf8');
-                    var destination = targetFile.contents.toString('utf8');
-                    var _match;
-                    while ((_match = reg.exec(content))) {
+                    const content = file.contents.toString('utf8');
+                    const destination = targetFile.contents.toString('utf8');
+                    let _match;
+                    while ((_match = _translateReg.exec(content))) {
                         // extract first and second match
-                        if (destination.indexOf(_match[2]) < 0){
-
-                            returnStr += `${_match[2]}: '${_match[1]}',\n`;
+                        if (destination.indexOf(_match[2]) < 0) {
+                            returnStr += `"${_match[2]}": "${_match[1]}",`;
                         }
                     }
 
                     return returnStr === '' ? null : returnStr;
-                }
+                },
             })
-        )
-        .pipe(gulp.dest(ngConfig.Destination));
-};
+        ).pipe(gulp.dest(_config.Destination));
+        cb();
+    }
+});
+
+exports.extract = gulp.parallel(..._extract);
+

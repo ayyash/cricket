@@ -1,6 +1,7 @@
+// example file, not used in cricket
+
 export const keys = {
     SITE_NAME: 'Cricket',
-    UiLanguage: 'عربي', // do not translate
     Required: 'Required',
     Error: 'An error occurred',
     Dismiss: 'Dismiss',
@@ -32,7 +33,7 @@ export const keys = {
         MONTHS: { 1: 'one month', 2: 'two months', 3: '$0 months', 11: '$0 months' },
         YEARS: { 1: 'one year', 2: 'two years', 3: '$0 years', 11: '$0 years' }
     },
-    DEFAULT_PAGE_TITLE: 'Welcome'
+    DEFAULT_PAGE_TITLE: 'Welcome',
+    WELCOME_TEXT: 'Hello Cricket'
 };
 
-export const translateKeys = {};

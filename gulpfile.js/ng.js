@@ -31,29 +31,29 @@ var ngConfig = {
         ApiConfig: __dirname + '/angulartemplates/config.template'
     },
     Destinations: {
-        Components: './src/app/components/',
-        Views: './src/app/components/',
-        Directives: './src/app/lib/directives/',
-        Pipes: './src/app/lib/pipes/',
-        // Modules: './src/app/', // root route location
-        Routes: './src/app/routes/',
+        Components: gulpConfig.appUrl + 'components/',
+        Views: gulpConfig.appUrl + 'components/',
+        Directives: gulpConfig.appUrl + 'lib/directives/',
+        Pipes: gulpConfig.appUrl + 'lib/pipes/',
+        // Modules: gulpConfig.appUrl + '', // root route location
+        Routes: gulpConfig.appUrl + 'routes/',
         // RouteFile: 'routing.module.ts',
-        Models: './src/app/models/',
-        Services: './src/app/services/',
-        ApiConfig: './src/app/'
+        Models: gulpConfig.appUrl + 'models/',
+        Services: gulpConfig.appUrl + 'services/',
+        ApiConfig: gulpConfig.appUrl + ''
     },
     Core: {
-        Components: './src/app/core/', // barrel
+        Components: gulpConfig.appUrl + 'core/', // barrel
         ComponentsFile: 'components.ts',
-        Services: './src/app/core/', // barrel
+        Services: gulpConfig.appUrl + 'core/', // barrel
         ServicesFile: 'services.ts',
-        CoreModule: './src/app/core/', // module
+        CoreModule: gulpConfig.appUrl + 'core/', // module
         CoreModuleFile: 'core.module.ts',
-        // Libs: './src/app/core/', // barrel
+        // Libs: gulpConfig.appUrl + 'core/', // barrel
         // LibFile: 'lib.ts',
-        LibModule: './src/app/lib/', // module
+        LibModule: gulpConfig.appUrl + 'lib/', // module
         LibModuleFile: 'lib.module.ts',
-        ApiConfigFile: './src/app/config.ts'
+        ApiConfigFile: gulpConfig.appUrl + 'config.ts'
     }
 };
 

@@ -8,6 +8,8 @@ Download nodejs (10+) and npm (6.5+), git clone the project, and in the root, ru
 
 `npm install -g @angular/cli typescript gulp`
 
+> Keep an eye on https://github.com/gulp-community/gulp-less/issues/312, if not yet resolved, update node_modules/gulp-less/index file with the content of the pull request https://github.com/gulp-community/gulp-less/pull/313
+
 You need gulp to run the gulp tasks to prepare css out of LESS and RTL files (TODO: this is a future task). Always check what typescript is supported by angular and install a local version of it.
 
 Run
@@ -27,27 +29,29 @@ Finally
 The following commands in npm to help you get going:
 
 - `npm start`: starts with normal english angular development (then browse to localhost:5100)
-- `npm run start:ar`: starts development in Arabic version.
+    serves index.dev.html with localdata/config.json
 - `npm run start:prod`: starts development server with production configuration and environment
-- `npm run network`: starts with 192.168.0.100:5200 as host to test localhost on mobile devices (change host in package.json)
-- `npm run network:secure`: starts with normal english angular development, under https (then browse to https://192.168.0.100:5200) This option might need a local certificate to be created. This option needs https for iis to run mockup api. This option never works on Safari.
-- `npm run build` and `npm run build:ar`: generates a client-side angular app in /cricket.host (/en and /ar) folders (outside current project folder)
-- `npm run build:ssr`:  builds the client-side and server-side full version under /cricket.host (outside current project folder), the client side under /en and /ar, the serverside under folder /server (see below).
+    serves index.dev.prod.html with localdata/config.json
+
+<!-- - `npm run network`: starts with 192.168.0.100:5200 as host to test localhost on mobile devices (change host in package.json)
+- `npm run network:secure`: starts with normal english angular development, under https (then browse to https://192.168.0.100:5200) This option might need a local certificate to be created. This option needs https for iis to run mockup api. This option never works on Safari. -->
+
+- `npm run build` generates a client-side angular app in /host/client + /host/index/index.lang.html to be served
+> this rewrites the baseHref to / or /lang/ depending on gulp configuration: isUrlBased
+
+- `npm run build:ssr`:  builds the client-side and server-side full version under /host/client, also copies resources
 
 ## Angular universal
 
-This seed assumes a second project living outside the current project named: `cricket.host`, where enough nodejs server code is created to run the server later. The npm task `build:ssr` creates two sub folders: `/en` and `/ar`, and the creates two server side files `en.js` and `ar.js` under `server` folder, as defined in `webpack.server.config.js`. So the final tree of the host folder looks like this
+This seed assumes a second project living in: `host`, where enough nodejs server code is created to run the server later. The npm task `build:ssr` creates : `/client`, and the creates server side files `server/server.js`, So the final tree of the host folder looks like this
 
 ```
-|-en
-|-ar
+|-client
 |-server
-|----ar.js
-|----en.js
+|----other server files
+|----server.js
 |-server.js
 ```
-
-// TODO: will create a seed for the expected files on server
 
 ## Gulp commands for Angular
 
@@ -100,11 +104,10 @@ To generate assets after changing less files (this is a very critical task, you 
 - `gulp rawless`: prepares src/assets/css/cr.css and cr.rtl.css
 - `gulp`: the default task does the same as rawless while watching sh.\*.less, ui.\*.less and rtl.\*.less in mockups less folder
 - `gulp prepicons`: TODO: document this, this generally takes files from the icomoon generated files and copies them in dummy folder in preparetion to generate icons
-- `gulp iconset`: generates icons produced by icomoon tool in `dummy/iconset.html` and in `mockup/ui.icons.less`, run gulp rawless afterwords to generate the css files
+- `gulp iconset`: generates icons produced by icomoon tool in `dummy/iconset.html` and in `mockup/ui.icons.less`, run gulp rawless afterwords to generate the css files. Browse to `localhost/~projectname/mockup/dummy/iconset.html` to see a list of icons generated. 
 - `gulp critical`: generates four files: `cr.general.css` and `cr.critical.css`, `cr.general.rtl.css` and `cr.critical.rtl.css` into `assets` folder (in addition to the cr.css and cr.rtl.css). The critical files are loaded through `angular.json` directly into html, the general files are lazyloaded in the header of the html file (they are referenced in `index.html` and `index.rtl.html`). This is to downsize the initial style file, and have better performance. The rules of which what gets placed in critical is very basic, any group of styles in any `mockup/*.less` file wrapped inside `/* CRITICAL BEGIN */` and `/* CRITICAL END */`. 
 
 
 
 > PS: Using less in components, is possible, remember to start with `@import "sh.vars.less"`; and avoid styles that need to be mirrored for RTL.
-
 
