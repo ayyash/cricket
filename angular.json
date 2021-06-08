@@ -68,7 +68,7 @@
                         ],
                         "assets": [
                             {
-                                "glob": "favicon.png",
+                                "glob": "favicon.ico",
                                 "input": "src",
                                 "output": "/"
                             },
@@ -162,7 +162,7 @@
                             "deleteOutputPath": true,
                             "assets": [
                                 {
-                                    "glob": "favicon.png",
+                                    "glob": "favicon.ico",
                                     "input": "src",
                                     "output": "/"
                                 },
