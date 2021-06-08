@@ -18,7 +18,7 @@
         "importHelpers": true,
         "target": "es2017",
         "module": "es2020",
-        "emitDecoratorMetadata": false,
+        // "emitDecoratorMetadata": false,
         "resolveJsonModule": true,
         // "esModuleInterop": true,
         "noImplicitAny": true,

@@ -95,6 +95,7 @@ resources.keys = {
         "ERROR": "Oh oh, an error occurred",
         "NOT_FOUND": "404! Hmm! Once in a while, we change address and forget to update the mailman."
     },
-    "DEFAULT_PAGE_TITLE": "Welcome"
+    "DEFAULT_PAGE_TITLE": "Welcome",
+    "WELCOME_TEXT": "Welcome"
 };
 

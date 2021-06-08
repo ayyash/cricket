@@ -13,7 +13,7 @@
         "server.ts"
     ],
     "include": [
-        "typings.d.ts"
+        "src/typings.d.ts"
     ],
     "exclude": [
         "test.ts",
