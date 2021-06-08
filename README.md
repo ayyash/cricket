@@ -116,7 +116,6 @@ Following are quick calls to inject all classes in specific folders into their b
 
 ## Assets
 
-// TODO: rtl styles not incorporated in build yet
 
 To generate assets after changing less files (this is a very critical task, you should not modify styles unless 100% sure of what you're doing)
 
