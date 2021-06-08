@@ -10,7 +10,7 @@ const transform = require('gulp-transform');
 
 const gulpConfig = require('./config.json');
 
-var _config = {
+const _config = {
     index: {
         src: gulpConfig.hostUrl + 'client/placeholder.html',
         dest: gulpConfig.hostUrl + 'index' // destination of multiple index files
@@ -22,20 +22,39 @@ var _config = {
 
 };
 
+const reLTR = /<!-- #LTRCSS -->([\s\S]*)<!-- #ENDLTRCSS -->/gim;
+const reRTL = /<!-- #RTLCSS -->([\s\S]*)<!-- #ENDRTLCSS -->/gim;
+
 
 const _generateIndex = gulpConfig.languages.map(language => {
     return function (cb) {
          gulp.src(_config.index.src)
             .pipe(transform(function(contents, file){
                 // change $lang to language
-                // also if urlbased language is applied on server, replace <base href="/"> with <base href="/language/">
+                // change $basehref to either / or /language/ dependong on isUrlBased
                 if (gulpConfig.isUrlBased){
-                    contents = contents.replace('<base href="/">', `<base href="/${language}/">`);
+                    contents = contents.replace(/\$basehref/gim, language.name);
                 }
-                return contents.replace(/\$lang/gim, language);
+                if (language.isRtl) {
+                    // replace $rtl with rtl
+                    contents = contents.replace(/\$rtl/gim, 'rtl');
+                    // remove reLTR
+                    contents = contents.replace(reLTR, '');
+                    // strip reRTL
+                    contents = contents.replace(reRTL, '$1');
+                } else {
+                     // replace $rtl with ''
+                     contents = contents.replace(/\$rtl/gim, '');
+                     // remove reRTL
+                     contents = contents.replace(reRTL, '');
+                     // strip reLTR
+                     contents = contents.replace(reLTR, '$1');
+                }
+
+                return contents.replace(/\$lang/gim, language.name);
 
             }, { encoding: 'utf8' }))
-            .pipe(rename({basename: `index.${language}`}))
+            .pipe(rename({basename: `index.${language.name}`}))
             .pipe(gulp.dest(_config.index.dest));
             cb();
         }

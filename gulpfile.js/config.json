@@ -1,24 +1,33 @@
 {
-	"shutUrl": "./node_modules/shut/src/",
-	"srcUrl": "./mockup/",
-	"distUrl": "./src/assets/",
-	"appUrl": "./src/app/",
-	"hostUrl": "./host/",
-	"distBaseUrl": "/",
+    "shutUrl": "./node_modules/shut/src/",
+    "srcUrl": "./mockup/",
+    "distUrl": "./src/assets/",
+    "appUrl": "./src/app/",
+    "hostUrl": "./host/",
+    "distBaseUrl": "/",
     "projectName": "cricket",
-	"angularPrefix": "cr",
-	"iconfontspath": "./fontfiles/",
+    "angularPrefix": "cr",
+    "iconfontspath": "./fontfiles/",
     "isRtl": true,
     "isUrlBased": true,
     "languages": [
-        "en",
-        "ar",
-        "tr"
+        {
+            "name": "en",
+            "isRtl": false
+        },
+        {
+            "name": "ar",
+            "isRtl": true
+        },
+        {
+            "name": "tr",
+            "isRtl": false
+        }
     ],
     "browserslist": [
         "last 1 version",
         "> 1%",
         "maintained node versions",
         "not dead"
-      ]
+    ]
 }

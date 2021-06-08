@@ -21,7 +21,7 @@ const _extract = gulpConfig.languages.map(language => {
         let returnStr = '';
 
         gulp.src(
-            _config.Destination + language + '.js'
+            _config.Destination + language.name + '.js'
         ).pipe(
             inject(gulp.src(_config.Sources), {
                 starttag: '// inject:translations',

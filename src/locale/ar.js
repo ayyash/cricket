@@ -16,6 +16,7 @@ const resources = {
 
 resources.keys = {
     "Unknown": "حسنًأ. في النظام أمرٌ لم يعمل. نحن ننظر في الأمر الآن.",
+    "SITE_NAME": "كريكت",
     "NoRes": "",
     "DONE": "انتهى",
     "UNAUTHORIZED": "سجّل دخول أولًا.",
@@ -46,6 +47,9 @@ resources.keys = {
         "YEARS": { "1": "سنة واحدة", "2": "سنتين", "3": "$0 سنوات", "11": "$0 سنة" }
     },
     "DEFAULT_PAGE_TITLE": "أهلا",
+    "WELCOME_TEXT": "أهلا كريكت",
     // inject:translations
+    "ShowMore": "show more",
+    "WelcomeCricket": "أهلا وسهلا",
     // endinject
 };

@@ -26,7 +26,7 @@ export const Config = {
             notdefined: '/data/notdefined'
         },
         config: {
-            local: environment.localConfig // TODO: make thru env 'localdata/config.json'
+            local: environment.localConfig
         }
          // **gulpmodel**
     }
