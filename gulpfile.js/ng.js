@@ -1,7 +1,6 @@
-// TODO: here
-// gulp taks to create angular component according to this set up
+// TODO: fix vars and consts
+// TODO: more consts for files names
 
-// TODO: allow for modules without routing
 
 // var gulp = require('gulp-param')(require('gulp'), process.argv);
 var options = require('minimist')(process.argv.slice(2)); // those are params passed by cmd line
@@ -14,21 +13,23 @@ var replace = require('gulp-replace');
 var gulpif = require('gulp-if');
 
 var gulpConfig = require('./config.json');
+const angularTemplates = '/angulartemplates/';
+
 var ngConfig = {
     Templates: {
-        Components: __dirname + '/angulartemplates/component.template',
-        FormComponents: __dirname + '/angulartemplates/component.form.template',
-        Views: __dirname + '/angulartemplates/view.template',
-        FormViews: __dirname + '/angulartemplates/view.form.template',
-        Directives: __dirname + '/angulartemplates/directive.template',
-        Pipes: __dirname + '/angulartemplates/pipe.template',
-        Route: __dirname + '/angulartemplates/route.template',
-        RouteModule: __dirname + '/angulartemplates/routeModule.template',
+        Components: __dirname + angularTemplates + 'component.template',
+        FormComponents: __dirname + angularTemplates + 'component.form.template',
+        Views: __dirname + angularTemplates + 'view.template',
+        FormViews: __dirname + angularTemplates + 'view.form.template',
+        Directives: __dirname + angularTemplates + 'directive.template',
+        Pipes: __dirname + angularTemplates + 'pipe.template',
+        Route: __dirname + angularTemplates + 'route.template',
+        RouteModule: __dirname + angularTemplates + 'routeModule.template',
         Declaration: 'CoreComponents.MajorNamePartialComponent',
-        Module: __dirname + '/angulartemplates/module.template',
-        Model: __dirname + '/angulartemplates/model.template',
-        Service: __dirname + '/angulartemplates/service.template',
-        ApiConfig: __dirname + '/angulartemplates/config.template'
+        Module: __dirname + angularTemplates + 'module.template',
+        Model: __dirname + angularTemplates + 'model.template',
+        Service: __dirname + angularTemplates + 'service.template',
+        ApiConfig: __dirname + angularTemplates + 'config.template'
     },
     Destinations: {
         Components: gulpConfig.appUrl + 'components/',
@@ -334,7 +335,6 @@ const _createPipe = function() {
     if (!name) {
         return gulp.src('.');
     }
-    // TODO inject in shared.module
 
     return gulp
         .src(ngConfig.Templates.Pipes)
@@ -355,11 +355,11 @@ const _createDirective = function() {
     if (!name) {
         return gulp.src('.');
     }
-    // TODO inject in shared.module
 
+    // prefix directive with angularPrefix
     return gulp
         .src(ngConfig.Templates.Directives)
-        .pipe(replace('_Name_', name))
+        .pipe(replace('_Name_', gulpConfig.angularPrefix + name))
         .pipe(replace('_name_', name.toLowerCase()))
         .pipe(
             rename({

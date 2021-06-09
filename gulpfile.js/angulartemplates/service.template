@@ -3,12 +3,12 @@ import { Config } from '../config';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { Helpers } from '../core/common';
+import { GetParamsAsString } from '../core/common';
 import { I_Name_, _Name_, IListOptions, IList, ListOptions } from '../core/services';
 
 
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class _Name_Service {
 
     private _listUrl = Config.API._name_.list;
@@ -22,7 +22,7 @@ export class _Name_Service {
     }
 
     Get_Name_s(options: IListOptions = {}): Observable<IList<I_Name_>> {
-        const params = Helpers.GetParamsAsString(ListOptions.MapSearchListOptions(options));
+        const params = GetParamsAsString(ListOptions.MapSearchListOptions(options));
         const _url = this._listUrl.replace(':options', params);
 
         return this._http.get(_url).pipe(

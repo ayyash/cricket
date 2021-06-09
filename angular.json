@@ -176,6 +176,18 @@
                                     "input": "src/locale",
                                     "output": "/locale"
                                 }
+                            ],
+                            "budgets": [
+                                {
+                                    "type": "initial",
+                                    "maximumWarning": "500kb",
+                                    "maximumError": "5mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "2kb",
+                                    "maximumError": "4mb"
+                                }
                             ]
                         }
                     }

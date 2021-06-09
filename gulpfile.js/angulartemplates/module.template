@@ -1,19 +1,18 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../core/shared.module';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import * as CoreComponents from '../core/components';
-
-const routes: Routes = [
-   // **gulproute_first**
-];
 
 @NgModule({
     imports: [
         SharedModule,
-        RouterModule.forChild(routes)
+        RouterModule
     ],
     declarations: [
          // **gulpcomponent_first**
+    ],
+    exports: [
+        // **gulpcomponent_first**
     ]
 })
 
