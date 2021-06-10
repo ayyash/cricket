@@ -24,6 +24,14 @@ Finally
 
 `gulp critical` to generate the css files from .less files
 
+## Renaming
+
+To rename every instance of "cricket" to a new name, find and replace the following
+- "cricket" -> "newname"
+- "Cricket" -> "Newname"
+- "cr" -> "nn" (angular selector prefix)
+- rename assets/js/cricket.js to `newname.js`
+
 ## NPM commands
 
 The following commands in npm to help you get going:
