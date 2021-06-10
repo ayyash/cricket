@@ -75,16 +75,18 @@ export class DataService {
         // else nothing, there is no storag to update
     }
 
+
+    // Example GetCategories(): Observable<IData[]> {
+    //     return this.GetData(EnumDataType.Category);
+    // }
+
     GetSingleDataById(type: EnumDataType, id: string): Observable<IData | undefined> | null {
         if (id === null) {
             return null;
         }
 
         return this.GetData(type).pipe(
-            map(data => data.find(n => n.id?.toString() === id.toString())),
-            first(),
-            share()
-        );
+            map(data => data.find(n => n.id?.toString() === id.toString())));
     }
 
     GetSingleDataByKey(type: EnumDataType, key: string): Observable<IData | undefined> {
@@ -94,10 +96,7 @@ export class DataService {
         }
 
         return this.GetData(type).pipe(
-            map(data => data.find(n => n.key === key)),
-            first(),
-            share()
-        );
+            map(data => data.find(n => n.key === key)));
     }
 
     GetLocalDataByKey(type: EnumDataType, key: string): IData | null {

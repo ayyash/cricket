@@ -1,4 +1,3 @@
-
 .md-field {
     position: relative;
     display: block;
@@ -12,35 +11,34 @@
 
 .md-help-text {
     color: @text-light;
-    .small;
+    .smaller;
     display: block;
     text-align: right;
     margin-top: @halfspace;
     float: right;
 }
 
-
 .md-input {
-    border: 1px solid @grey-light;
-    border-radius: 0; // safari
+    border: 1px solid @grey;
+    border-radius: @input-radius;
     -webkit-appearance: none;
     outline: none;
-    padding: 10px;
+    padding: @input-padding;
+    box-shadow: 0 2px 5px 0 rgba(@text-light, 0.15);
 
-    background-color: transparent;
+    background-color: @white;
     caret-color: @linkcolor;
     &:focus {
         outline: none;
         border-color: @linkcolor;
         box-shadow: 0 0 0 1px @linkcolor;
     }
-    &:focus~.md-asterisk {
+    &:focus ~ .md-asterisk {
         display: none;
     }
-    &:focus~.md-label {
+    &:focus ~ .md-label {
         color: @linkcolor;
     }
-
 }
 select.md-input {
     padding-left: 7px;
@@ -57,12 +55,19 @@ select.md-input {
     transition: transform 0.3s;
     padding: 0 3px;
     background-color: @white; // check parent to change this
-
 }
 .md-field.focused {
     .md-label {
         // transform: translateY(142%);
+        transform: translateY(-100%) scale(0.8);
+    }
+}
+
+.md-field.notempty {
+    .md-label {
+        // transform: translateY(142%);
         transform: translateY(-100%) scale(.8);
+
     }
 }
 
@@ -74,7 +79,7 @@ span.md-asterisk {
     z-index: 2;
     &:after {
         display: block;
-        content: "*";
+        content: '*';
         font-size: 1.6rem;
         font-weight: @font-weight-bold;
         line-height: 1.5;
@@ -83,53 +88,37 @@ span.md-asterisk {
 }
 
 .md-invalid-feedback {
-    background-color: @red;
-    color: @white;
-    .small();
+    // background-color: @red;
+    color: @red;
+    .smaller();
     position: absolute;
-    bottom: -3rem;
-    left: 5px;
+    bottom: -2rem;
+    left: 1rem;
     z-index: 100;
-    border-radius: 100px;
-    padding: 5px 8px;
+    // border-radius: 100px;
+    // padding: 5px 8px;
     white-space: nowrap;
-    width: auto; // god damn u bootstrap
-    &:before {
-        border-color: @red;
-        content: "";
-        display: inline-block;
-        height: 0;
-        width: 0;
-        position: absolute;
-        left: 45%;
-        top: -4px;
-        border-style: solid;
-        border-color: transparent;
-        border-width: 0 4px 4px;
-        border-bottom-color: @red;
-    }
+
     display: none;
 }
 
 input.md-input:-webkit-autofill,
 input.md-input:-webkit-autofill:hover,
-input.md-input:-webkit-autofill:focus
-{
-
-  -webkit-text-fill-color: #73953d;
-  -webkit-box-shadow: 0 0 0px 1000px @white inset;
-  border: 1px solid #e1e1e1;
-
+input.md-input:-webkit-autofill:focus {
+    // -webkit-text-fill-color: @yellow-dark;
+    -webkit-box-shadow: 0 2px 5px 0 rgba(@text-light, 0.15),
+        0 0 0px 1000px @white inset;
+    border: 1px solid #e1e1e1;
 }
 
 .ng-validate-force-show() {
     box-shadow+: inset 0 0 0 1px @red;
     border-color: @red;
-    ~.md-invalid-feedback,
-    ~.md-invalid-feedback--custom {
+    ~ .md-invalid-feedback,
+    ~ .md-invalid-feedback--custom {
         display: block;
     }
-    ~.md-label {
+    ~ .md-label {
         color: @red;
     }
 }
@@ -160,4 +149,3 @@ input.md-input:-webkit-autofill:focus
 .custommd.ng-invalid {
     .ng-validate-force-show();
 }
-

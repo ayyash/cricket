@@ -177,3 +177,4 @@ TODO:
 - Make a lazy loaded module
 - Seperate Sever-only service
 - Add PWA
+- Get rid of clonedeep in state

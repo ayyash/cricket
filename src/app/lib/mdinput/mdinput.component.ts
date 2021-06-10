@@ -1,17 +1,17 @@
 import { Component, Input, ContentChild, AfterContentInit } from '@angular/core';
 import { MdInputDirective } from './mdinput.directive';
-import { NgControl } from '@angular/forms';
+// import { NgControl } from '@angular/forms';
 
 // this is a better way than smartinput directive
 @Component({
     selector: 'md-input',
     template: `
         <div [class.md-field]="normal" (click)="gainFocus()"
-         [class.focused]="isFocused" 
+         [class.focused]="isFocused"
          [class.notempty]="!isEmpty"
-         [class.touched]="control?.touched"
-         [class.invalid]="control?.invalid"
-         [class.dirty]="control?.dirty" >
+         [class.touched]="input?.formControl?.touched"
+         [class.invalid]="input?.formControl?.invalid"
+         [class.dirty]="input?.formControl?.dirty" >
             <label class="md-label" *ngIf="placeholder" for="{{ id }}">{{placeholder}}</label>
             <ng-content></ng-content>
             <span [class.md-asterisk]="required"></span>
@@ -33,12 +33,13 @@ export class MdInputComponent implements AfterContentInit {
     @Input('static') holdFocus: boolean; // if static, do not interace always show as focused
     @Input() normal = true;
 
-    
+
     @ContentChild(MdInputDirective)
     input: MdInputDirective;
 
-    @ContentChild(NgControl)
-    control: NgControl;
+    // mmm, why am i using this?
+    // @ContentChild(NgControl)
+    // control: NgControl;
 
 
     get isFocused(): boolean {
@@ -54,7 +55,7 @@ export class MdInputComponent implements AfterContentInit {
     }
 
     get isEmpty(): boolean {
-        // TODO: figure out the hold state
+
         if (this.holdFocus) {
             return false;
         }
@@ -80,8 +81,8 @@ export class MdInputComponent implements AfterContentInit {
 
         this.input.$element.classList.add('materialinput');
 
-        this.id = this.input.$element.id; // .getAttribute('id');
+        this.id = this.input.$element.id;
 
-  
+
     }
 }

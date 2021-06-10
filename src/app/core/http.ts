@@ -1,10 +1,10 @@
 import { Observable } from 'rxjs';
-import { finalize } from 'rxjs/operators';
+import { finalize, shareReplay, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import {
     HttpEvent,
     HttpInterceptor,
-    HttpHandler,  
+    HttpHandler,
     HttpRequest,
     HttpHeaders
 } from '@angular/common/http';
@@ -31,7 +31,8 @@ export class CricketInterceptor implements HttpInterceptor {
         return next
             .handle(adjustedReq)
             .pipe(
-              
+                shareReplay(),
+                map(response => this.mapData(response)),
                 finalize(() => {
                     this.loaderService.hide();
                 })
@@ -49,5 +50,16 @@ export class CricketInterceptor implements HttpInterceptor {
         return headers;
     }
 
-  
+     // if response wrapped with "data"
+     private mapData(response: any) {
+        if (response instanceof HttpResponse) {
+
+            // clone body and modify so that "data" is removed as a wrapper
+            if (response.body && response.body.data) {
+                response = response.clone({ body: response.body.data });
+            }
+        }
+        return response;
+    }
+
 }

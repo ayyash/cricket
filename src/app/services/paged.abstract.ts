@@ -1,11 +1,8 @@
 import { Observable } from 'rxjs';
 import { IList, IListOptions } from '../core/services';
+import { IStateService } from './state.abstract';
 
 
-export abstract class PagedService<T> {
-
-    abstract GetPagedList(options: IListOptions): Observable<IList<T>>;
-    // abstract DeleteItem();
-    // abstract UpdateItem();
-    // abstract AddItem();
+export interface IPagedService<T>  extends IStateService<T> {
+    GetPagedList(options: IListOptions): Observable<IList<T>>;
 }
