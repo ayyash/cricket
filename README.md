@@ -37,6 +37,23 @@ To rename every instance of "cricket" to a new name, find and replace the follow
 The main branch contains everything, different combinations are added in different branches. TODO:
 [ ] Add explanation of each flavor here.
 
+<!-- |             | SSR         | URL BASED | RTL
+| ----------- | ----------- | --------- |-------
+| ssr-url     | ✅         | ✅        |
+| ssr         | ✅         |           |
+| client-url  |             | ✅       |
+| client      |             |            |
+| ssr-url-rtl | ✅         | ✅        | ✅
+| ssr-rtl     | ✅         |           | ✅
+| client-url-rtl  |             | ✅       | ✅
+| client-rtl      |             |            | ✅
+
+1. ssr
+2. ssr-rtl
+3. client-only
+4. client-only-rtl
+
+// being url based does not need a lot of work -->
 
 ## NPM commands
 
