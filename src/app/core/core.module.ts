@@ -9,6 +9,7 @@ import {
 
 } from './services';
 import { LocalInterceptor } from './local.interceptor';
+import { CricketErrorHandler } from './error.service';
 
 
 
@@ -32,7 +33,8 @@ import { LocalInterceptor } from './local.interceptor';
             provide: HTTP_INTERCEPTORS,
             useClass: CricketInterceptor,
             multi: true,
-        }]
+        },
+        { provide: ErrorHandler, useClass: CricketErrorHandler }]
 })
 export class CoreModule {
 

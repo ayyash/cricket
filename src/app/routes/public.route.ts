@@ -18,9 +18,9 @@ export class PublicModule {}
 const routes: Routes = [
     {
         path: '',
-        // component: CoreComponents.PublicHomeComponent,
+        component: CoreComponents.PublicHomeComponent,
         data: {
-            title: 'Public homes'
+            title: 'SITE_NAME'
         }
     }
      // **gulproute**
@@ -33,7 +33,7 @@ const routes: Routes = [
         RouterModule.forChild(routes)
     ],
     declarations: [
-        // CoreComponents.PublicHomeComponent
+        CoreComponents.PublicHomeComponent
          // **gulpcomponent**
     ]
 })

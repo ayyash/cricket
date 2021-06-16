@@ -27,7 +27,6 @@
                             "lodash",
                             "express"
                         ],
-                        "baseHref": "/",
                         "index": "src/placeholder.html",
                         "main": "src/main.ts",
                         "polyfills": "src/polyfills.ts",

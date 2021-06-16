@@ -32,9 +32,8 @@ const _generateIndex = gulpConfig.languages.map(language => {
             .pipe(transform(function(contents, file){
                 // change $lang to language
                 // change $basehref to either / or /language/ dependong on isUrlBased
-                if (gulpConfig.isUrlBased){
-                    contents = contents.replace(/\$basehref/gim, language.name);
-                }
+                contents = contents.replace(/\$basehref/gim, gulpConfig.isUrlBased ? `/${language.name}/` : '/');
+
                 if (language.isRtl) {
                     // replace $rtl with rtl
                     contents = contents.replace(/\$rtl/gim, 'rtl');

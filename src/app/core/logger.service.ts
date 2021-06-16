@@ -1,4 +1,4 @@
-import { throwError, Observable, pipe } from 'rxjs';
+import { throwError, Observable } from 'rxjs';
 import { IUiError } from '../core/services';
 import { HttpResponse, HttpErrorResponse, HttpEventType } from '@angular/common/http';
 import { tap, catchError } from 'rxjs/operators';
@@ -26,7 +26,6 @@ Observable.prototype.debug = function(message: string, methodName: string, type:
         })
     );
 };
-
 
 Observable.prototype.catchProjectError = function(message: string, methodName: string) {
     return this.pipe(
@@ -64,8 +63,8 @@ Observable.prototype.catchProjectError = function(message: string, methodName: s
                             if (error.error.code) {
                                 uiError.code = error.error.code;
                             }
-                            if (error.error.internalMessage) {
-                                uiError.internalMessage = error.error.internalMessage;
+                            if (error.error.message) {
+                                uiError.internalMessage = error.error.message;
                                 m += '\n' + uiError.code;
                                 m += ': ' + uiError.internalMessage;
                             }
@@ -81,7 +80,8 @@ Observable.prototype.catchProjectError = function(message: string, methodName: s
                 uiError.internalMessage = error;
             }
             _debug(m, `${methodName} ${message}`, 'e');
-            return throwError(uiError);
+            // WATCH: keep an eye on syntax
+            return throwError(() => uiError);
         })
     );
 };

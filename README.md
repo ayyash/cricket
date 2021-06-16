@@ -32,6 +32,12 @@ To rename every instance of "cricket" to a new name, find and replace the follow
 - "cr" -> "nn" (angular selector prefix)
 - rename assets/js/cricket.js to `newname.js`
 
+## Cricket flavors
+
+The main branch contains everything, different combinations are added in different branches. TODO:
+[ ] Add explanation of each flavor here.
+
+
 ## NPM commands
 
 The following commands in npm to help you get going:
@@ -127,7 +133,7 @@ You can optionally use these instead of the angular cli packaged commands (or yo
 
 ### Inject
 
-Following are quick calls to inject all classes in specific folders into their barrels in the core folder, to make them easier to use throughout the project. Classes should not be imported individually but through their barrel, to keep maintenance of their folder path under control.loader-container
+Following are quick calls to inject all classes in specific folders into their barrels in the core folder, to make them easier to use throughout the project. Classes should not be imported individually but through their barrel, to keep maintenance of their folder path under control.
 
 > A general rule, all files prefixed with "_" are excluded from injection. Also no files under the following folders are included in injection: components/layouts, components/common, components/abstract.
 
@@ -172,9 +178,9 @@ Notes:
 
 TODO:
 
-- Add reuse strategy
-- Add default components examples
-- Make a lazy loaded module
-- Seperate Sever-only service
-- Add PWA
-- Get rid of clonedeep in state
+[x] Add reuse strategy
+[ ] Add default components examples
+[x] Make a lazy loaded module
+[ ] Seperate Sever-only service
+[ ] Add PWA
+[x] Get rid of clonedeep in state
