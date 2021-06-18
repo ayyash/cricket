@@ -4,7 +4,6 @@ export { ConfigService } from '../services/config.service';
 export { DataService } from '../services/data.service';
 export { LoaderService } from '../services/loader.service';
 export { LocalStorageService } from '../services/localstorage.service';
-export { PreloadService } from '../services/preload.service';
 export { SeoService } from '../services/seo.service';
 // endinject
 

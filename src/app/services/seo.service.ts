@@ -2,7 +2,6 @@ import { Injectable, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { Platform } from '@angular/cdk/platform';
 
-import { Config } from '../config';
 import { Res } from '../core/resources';
 import { Title, Meta } from '@angular/platform-browser';
 import { GaTracking, IGaDims } from '../core/ga';
@@ -49,7 +48,7 @@ export class SeoService {
         // send goole analytics view when seo is set per page
         GaTracking.RegisterView(path || this.doc.location.pathname, dims);
     }
-   
+
 
     getPagePath() {
         return this.doc.location.pathname;

@@ -7,7 +7,9 @@ module.exports = function (config) {
 
         let country = req.cookies.country;
 
-        global.resources.country = country;
+        // for ssr, set country on global resources
+        global.resources && (global.resources.country = country);
+
         if (country) {
             next();
             return;

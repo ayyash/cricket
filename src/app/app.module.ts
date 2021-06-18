@@ -5,14 +5,13 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './routing.module';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './core/shared.module';
-import { MainLayoutComponent, SingleLayoutComponent, NotFoundComponent, ErrorComponent, PublicHomeComponent } from './core/components';
+import { MainLayoutComponent, SingleLayoutComponent, NotFoundComponent, ErrorComponent } from './core/components';
 
 @NgModule({
     declarations: [AppComponent,
         MainLayoutComponent,
         NotFoundComponent,
         SingleLayoutComponent,
-        PublicHomeComponent,
         ErrorComponent],
     imports: [
         BrowserModule.withServerTransition({ appId: 'cricketServer' }),

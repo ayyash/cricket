@@ -1,13 +1,10 @@
-import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { NgModule, APP_INITIALIZER, ErrorHandler } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CricketInterceptor } from './http';
 import { ConfigService } from './services';
-import {
-
-} from './services';
 import { LocalInterceptor } from './local.interceptor';
 import { CricketErrorHandler } from './error.service';
 

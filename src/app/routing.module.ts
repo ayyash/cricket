@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouteReuseStrategy, RouterModule, Routes } from '@angular/router';
 import * as CoreComponents from './core/components';
-import { PreloadService } from './services/preload.service';
+import { PreloadService } from './core/preload.service';
 import {  RouteReuseService  } from './core/routereuse.service';
 
 const routes: Routes = [
@@ -31,6 +31,7 @@ const routes: Routes = [
             }
         ]
     },
+    // example of non lazy laded public, add declaration to app.module
     // {
     //     path: '',
     //     component: CoreComponents.MainLayoutComponent,
@@ -44,11 +45,12 @@ const routes: Routes = [
     //         }
     //     ]
     // },
+    // lazy loading? remove declration from app.module
     {
         path: '',
         component: CoreComponents.MainLayoutComponent,
         loadChildren: () => import('./routes/public.route').then(m => m.PublicRoutingModule),
-        data: {preload: true, delay: true}
+        data: {preload: true}
 
     },
 
@@ -65,7 +67,6 @@ const routes: Routes = [
     imports: [
         RouterModule.forRoot(routes, {
             preloadingStrategy: PreloadService,
-            reuse
             paramsInheritanceStrategy: 'always',
             onSameUrlNavigation: 'reload',
             scrollPositionRestoration: 'top',

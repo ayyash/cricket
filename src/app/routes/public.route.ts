@@ -4,17 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import * as CoreComponents from '../core/components';
 
 
-// for non routing module exports, use a different module like this:
-@NgModule({
-    imports: [SharedModule],
-    declarations: [],
-    exports: []
-})
-export class PublicModule {}
 
-
-
-// =============================== Routed module
 const routes: Routes = [
     {
         path: '',
@@ -23,18 +13,17 @@ const routes: Routes = [
             title: 'SITE_NAME'
         }
     }
-     // **gulproute**
+    // **gulproute**
 ];
 
 @NgModule({
     imports: [
         SharedModule,
-        PublicModule,
         RouterModule.forChild(routes)
     ],
     declarations: [
         CoreComponents.PublicHomeComponent
-         // **gulpcomponent**
+        // **gulpcomponent**
     ]
 })
 export class PublicRoutingModule { }

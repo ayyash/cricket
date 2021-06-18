@@ -24,7 +24,6 @@
                         "outputPath": "dist",
                         "resourcesOutputPath": "assets/",
                         "allowedCommonJsDependencies": [
-                            "lodash",
                             "express"
                         ],
                         "index": "src/placeholder.html",
