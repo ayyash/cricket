@@ -4,7 +4,6 @@
     "distUrl": "./src/assets/",
     "appUrl": "./src/app/",
     "hostUrl": "./host/",
-    "distBaseUrl": "/",
     "projectName": "cricket",
     "angularPrefix": "cr",
     "iconfontspath": "./fontfiles/",

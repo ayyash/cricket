@@ -86,7 +86,7 @@ app.use(function(req, res, next){
      next();
 });
 
-// default, change this to match need
+// serve the right router
 const _routes = (config.ssr ? '-ssr' : '') + (config.urlBased ? '-url' : '');
 require('./server/routes' + _routes)(app, config);
 // require('./server/routes')(app, config);
