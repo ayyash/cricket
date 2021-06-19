@@ -36,18 +36,8 @@
                                 "inject": false
                             },
                             {
-                                "input": "src/assets/css/cricket.critical.rtl.css",
-                                "bundleName": "criticalrtl",
-                                "inject": false
-                            },
-                            {
                                 "input": "src/assets/css/cricket.general.css",
                                 "bundleName": "styles",
-                                "inject": false
-                            },
-                            {
-                                "input": "src/assets/css/cricket.general.rtl.css",
-                                "bundleName": "stylesrtl",
                                 "inject": false
                             }
                         ],
@@ -124,23 +114,6 @@
                                 }
                             ]
                         },
-                        "serveRtl": {
-                            "buildOptimizer": false,
-                            "optimization": false,
-                            "vendorChunk": true,
-                            "extractLicenses": false,
-                            "sourceMap": true,
-                            "namedChunks": true,
-                            "commonChunk": true,
-                            "aot": true,
-                            "index": "src/index.rtl.html",
-                            "styles": [
-                                {
-                                    "input": "src/assets/css/cricket.rtl.css",
-                                    "bundleName": "styles"
-                                }
-                            ]
-                        },
                         "production": {
                             "outputPath": "./host/client/",
                             "fileReplacements": [
@@ -202,39 +175,6 @@
                     "configurations": {
                         "production": {
                             "browserTarget": "cricketweb:build:serveProduction"
-                        },
-                        "rtl": {
-                            "browserTarget": "cricketweb:build:serveRtl"
-                        }
-                    }
-                },
-				"server": {
-                    "builder": "@angular-devkit/build-angular:server",
-                    "options": {
-                        "outputPath": "./host/server",
-                        "main": "server.ts",
-                        "tsConfig": "tsconfig.server.json",
-                        "stylePreprocessorOptions": {
-                            "includePaths": [
-                                "./mockup/less",
-                                "./node_modules/shut/src/less"
-                            ]
-                        }
-                    },
-                    "configurations": {
-                        "production": {
-                            "fileReplacements": [
-                                {
-                                    "replace": "src/environments/environment.ts",
-                                    "with": "src/environments/environment.prod.ts"
-                                }
-                            ],
-                            "optimization": false,
-                            "outputHashing": "media",
-                            "sourceMap": false,
-                            "namedChunks": true,
-                            "extractLicenses": true,
-                            "deleteOutputPath": false
                         }
                     }
                 }

@@ -7,19 +7,11 @@
     "projectName": "cricket",
     "angularPrefix": "cr",
     "iconfontspath": "./fontfiles/",
-    "isRtl": true,
-    "isUrlBased": true,
+    "isRtl": false,
+    "isUrlBased": false,
     "languages": [
         {
             "name": "en",
-            "isRtl": false
-        },
-        {
-            "name": "ar",
-            "isRtl": true
-        },
-        {
-            "name": "tr",
             "isRtl": false
         }
     ],

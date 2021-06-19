@@ -8,8 +8,6 @@ Download nodejs (10+) and npm (6.5+), download this project (it's a boilerplate,
 
 `npm install -g @angular/cli typescript gulp`
 
-> Keep an eye on https://github.com/gulp-community/gulp-less/issues/312, if not yet resolved, update node_modules/gulp-less/index file with the content of the pull request https://github.com/gulp-community/gulp-less/pull/313
-
 You need gulp to run the gulp tasks to prepare css out of LESS and RTL files, in addition to post build for ssr. Always check what typescript is supported by angular and install a local version of it.
 
 Run
@@ -29,7 +27,7 @@ Finally
 To rename every instance of "cricket" to a new name, find and replace the following
 - "cricket" -> "newname"
 - "Cricket" -> "Newname"
-- "cr" -> "nn" (angular selector prefix)
+- "cr" -> "nn" (angular selector prefix, and in gulfiles/config.json)
 - rename assets/js/cricket.js to `newname.js`
 
 ## Cricket flavors
