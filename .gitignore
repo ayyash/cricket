@@ -5,6 +5,7 @@
 /tmp
 /out-tsc
 /fontfiles
+/gulpfiles.js
 
 # dependencies
 /node_modules

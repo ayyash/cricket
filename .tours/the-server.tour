@@ -43,7 +43,13 @@
       "line": 4,
       "title": "language middleware",
       "contents": "// to make language change on ssr, use globals\r\n\r\nmodule.exports = function (config) {\r\n    return function (req, res, next) {\r\n\r\n        // check cookies for language, for html request only\r\n        res.locals.lang = req.cookies.lang || 'en';\r\n\r\n        // TODO: exclude non html sources, for now exclude all resources with extension\r\n        if (req.path.indexOf('.') > 1) {\r\n            next();\r\n            return;\r\n        }\r\n\r\n        // if urlbased (also multilingual) derive language from url\r\n        if (config.urlBased) {\r\n            for (let lang of config.languages) {\r\n                if (req.path.indexOf('/' + lang) === 0) {\r\n                    res.locals.lang = lang; // force en from url\r\n                }\r\n            }\r\n        }\r\n\r\n        // in ssr populate resources with the language keys\r\n        if (config.ssr) {\r\n            global.resources.language = res.locals.lang;\r\n            global.resources.keys = global.resources.allLanguages[res.locals.lang];\r\n        }\r\n\r\n        // set cookie for a year\r\n        res.cookie('lang', res.locals.lang, { expires: new Date(Date.now() + 31622444360) });\r\n\r\n        next();\r\n\r\n    };\r\n}\r\n"
-    }
+    },
+    {
+        "file": "src/app/core/local.interceptor.ts",
+        "description": "Remove this line when no ssr is supported. And remove the if condition when request exist. Those are lines that make the localinterceptor work well on nodejs during ssr cycle. ",
+        "line": 12,
+        "title": "ssr in localinterceptor"
+      }
   ],
   "ref": "master"
 }
