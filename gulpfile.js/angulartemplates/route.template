@@ -1,4 +1,0 @@
-{
-    path: 'name',
-    component: CoreComponents.MajorNameComponent
-}
