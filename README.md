@@ -86,7 +86,7 @@ Notes:
     - routes-ssr (server side)
     - routes-ssr-url (server side, language switch via url)
 - Known limitation with resources. I still depend on global `resources.keys` directly, to read resources on both client and server, depending on language cookie. This needs to be fixed so that the resources are fully loaded on server before use.
-- Build ssr task also takes care of generating RTL css links for all languages that support RTL. Setup languages supported in `gulpfiles/config.json`, under `languages` collection.
+- Build ssr task also takes care of generating RTL css links for all languages that support RTL. Setup languages supported in `gulpfile/config.json`, under `languages` collection.
 
 ## Angular universal
 
