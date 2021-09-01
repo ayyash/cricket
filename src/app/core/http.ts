@@ -6,6 +6,7 @@ import {
     HttpInterceptor,
     HttpHandler,
     HttpRequest,
+    HttpResponse,
     HttpHeaders
 } from '@angular/common/http';
 import { ConfigService, LoaderService } from './services';
