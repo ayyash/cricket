@@ -8,7 +8,7 @@
         "start:prod": "ng serve --configuration=production --port 5100 --watch  --live-reload false",
         "build": "gulp critical && ng build --configuration=production && gulp postbuild",
         "install": "npm install --save @angular/animations @angular/cdk @angular/common @angular/compiler @angular/core @angular/forms @angular/material @angular/platform-browser @angular/platform-browser-dynamic @angular/router rxjs shut zone.js tslib",
-        "install:dev": "npm install --save-dev @angular-devkit/build-angular @angular/cli @angular/compiler-cli @types/express  @types/node gulp @sekrab/gulpbin rxjs-tslint ",
+        "install:dev": "npm install --save-dev @angular-devkit/build-angular @angular/cli @angular/compiler-cli @types/express  @types/node gulp sekrab-gulpbin rxjs-tslint ",
         "install:all": "npm run install && npm run install:dev"
     }
 }
