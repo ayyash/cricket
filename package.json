@@ -10,7 +10,7 @@
         "build:server": "ng run cricketweb:server --configuration=production",
         "build:ssr": "gulp critical && npm run build && npm run build:server && gulp locales",
         "install": "npm install --save @angular/animations @angular/cdk @angular/common @angular/compiler @angular/core @angular/forms @angular/material @angular/platform-browser @angular/platform-browser-dynamic @angular/platform-server @angular/router @nguniversal/common @nguniversal/express-engine rxjs shut zone.js tslib",
-        "install:dev": "npm install --save-dev @angular-devkit/build-angular @angular/cli @angular/compiler-cli @types/express  @types/node gulp @sekrab/gulpbin rxjs-tslint",
+        "install:dev": "npm install --save-dev @angular-devkit/build-angular @angular/cli @angular/compiler-cli @types/express  @types/node gulp sekrab-gulpbin rxjs-tslint",
         "install:all": "npm run install && npm run install:dev",
         "network": "ng serve --configuration=network --port 5200 --watch  --live-reload false --host 192.168.0.100 --disableHostCheck ",
         "network:secure": "ng serve --ssl --ssl-key c:\\d\\zjunk\\cricket\\localhost.key  --ssl-cert c:\\d\\zjunk\\cricket\\localhost.crt --configuration=network --port 5200 --watch  --live-reload false --host 192.168.0.100 --disableHostCheck "
