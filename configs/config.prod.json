@@ -1,5 +1,5 @@
 {
-   
+
     "API": {
         "apiRoot": "http://localhost:50007/api"
     },
@@ -10,5 +10,9 @@
         "Timeout": 1,
         "Key": "cricket.cache",
         "ResetKey": "cricket.20190208"
-    }
+    },
+    "Seo": {
+        "gaEnabled": true
+    },
+    "isServed": true
 }
