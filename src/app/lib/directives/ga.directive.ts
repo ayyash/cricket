@@ -1,26 +1,26 @@
-import { Directive, Input, HostListener } from '@angular/core';
-import { GaTracking, IGaOptions, EnumGaType } from '../../core/ga';
+import { Directive, Input, HostListener, ElementRef } from '@angular/core';
+import { EnumGaAction, EnumGaCategory, GaTracking, IGaOptions } from '../../core/ga';
 
 
 @Directive({
-    selector: '[shTrack]',
-    exportAs: 'shGa'
+    selector: '[edTrack]',
+    exportAs: 'edGa'
 })
 export class GaDirective {
-    @Input() shTrack: IGaOptions;
+    @Input() edTrack: Partial<IGaOptions> = { category: EnumGaCategory.General, action: EnumGaAction.Click };
+
+    constructor(private el: ElementRef) {
+
+    }
 
     @HostListener('click', ['$event.target'])
     onClick(target: HTMLElement): void {
-        // if event is click send a click event
-        // simplify
-        GaTracking.RegisterEvent(
-            this.shTrack.category,
-            this.shTrack.action,
-            this.shTrack.label,
-            {
-                type:  this.shTrack.type || EnumGaType.event,
-                value: this.shTrack.value
-            });
 
+        GaTracking.RegisterEvent(
+            this.edTrack.category || EnumGaCategory.General,
+            this.edTrack.action || EnumGaAction.Click,
+            this.edTrack.label,
+            this.edTrack.value
+        );
     }
 }

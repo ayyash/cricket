@@ -1,6 +1,6 @@
 
 export interface IConfig {
-   
+    isServed: boolean;
     API: {
         apiRoot: string;
     };
@@ -12,5 +12,8 @@ export interface IConfig {
         Key: string;
         ResetKey: string;
     };
-   
+    Seo: {
+        gaEnabled: boolean;
+    }
+
 }

@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../core/shared.module';
 import { Routes, RouterModule } from '@angular/router';
-import * as CoreComponents from '../core/components';
+import { PublicHomeComponent } from '../components/public/home.component';
 
 
 
 const routes: Routes = [
     {
         path: '',
-        component: CoreComponents.PublicHomeComponent,
+        component: PublicHomeComponent,
         data: {
             title: 'SITE_NAME'
         }
@@ -22,7 +22,7 @@ const routes: Routes = [
         RouterModule.forChild(routes)
     ],
     declarations: [
-        CoreComponents.PublicHomeComponent
+        PublicHomeComponent
         // **gulpcomponent**
     ]
 })

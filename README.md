@@ -16,7 +16,7 @@ Run
 
 `npm run install` and `npm run install:dev`: will get you started with packages needed for this seed
 
-Then (these gulp tasks are part of [@sekrab/gulpbin](https://www.npmjs.com/package/@sekrab/gulpbin) package)
+Then (these gulp tasks are part of [sekrab-gulpbin](https://www.npmjs.com/package/sekrab-gulpbin) package)
 
 `gulp inject` to inject all components and services in barrel files
 
@@ -105,7 +105,7 @@ This seed assumes a second project living in: `host`, where enough nodejs server
 
 ## Gulp commands for Angular
 
-> Gulp tasks has been moved to its own package under [@sekrab/gulpbin](https://www.npmjs.com/package/@sekrab/gulpbin)
+> Gulp tasks has been moved to its own package under [sekrab-gulpbin](https://www.npmjs.com/package/sekrab-gulpbin)
 
 You can optionally use these instead of the angular cli packaged commands (or you can create files manually). Read on here:
 [GulpBin Readme](https://github.com/ayyash/gulpbin)

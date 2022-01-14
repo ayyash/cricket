@@ -2,6 +2,7 @@ import { environment } from '../environments/environment';
 
 
 export const Config = {
+    isServed: false,
     Basic: {
         language: resources.language,
         country: resources.country,
@@ -16,8 +17,11 @@ export const Config = {
     },
     Cache: {
         Timeout: 1,
-        Key: 'cricket.cache',
+        Key: 'cricket.cache.' + resources.language,
         ResetKey: 'cricket.20190208'
+    },
+    Seo: {
+        gaEnabled: true
     },
     API: {
         apiRoot: environment.apiRoot,

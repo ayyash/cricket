@@ -59,20 +59,16 @@ Observable.prototype.catchProjectError = function(message: string, methodName: s
                         uiError.code = 'Unknown';
 
                         // take note of bad error format from server! bleh!
-                        if (error.error) {
-                            if (error.error.code) {
-                                uiError.code = error.error.code;
-                            }
-                            if (error.error.message) {
-                                uiError.internalMessage = error.error.message;
-                                m += '\n' + uiError.code;
-                                m += ': ' + uiError.internalMessage;
-                            }
-                            if (error.error.serverMessage) {
-                                uiError.serverMessage = error.error.serverMessage;
-                                uiError.code = '-1'; // force server message
-                            }
+                        if (error.error?.errors && error.error?.errors.length) {
+                            const errors = error.error.errors;
+
+                            uiError.internalMessage = errors.map((l: any) => l.message).join('. ');
+                            // code of first error is enough for ui
+                            uiError.code = errors[0].code || 'Unknown';
+
                         }
+                        m += '\n' + uiError.code;
+                        m += ': ' + uiError.internalMessage;
                 }
             } else {
                 // just throw error as is

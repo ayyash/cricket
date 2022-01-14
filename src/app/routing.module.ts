@@ -1,17 +1,20 @@
 import { NgModule } from '@angular/core';
 import { RouteReuseStrategy, RouterModule, Routes } from '@angular/router';
-import * as CoreComponents from './core/components';
+import { NotFoundComponent } from './components/layouts/404.component';
+import { ErrorComponent } from './components/layouts/error.component';
+import { MainLayoutComponent } from './components/layouts/main.component';
+import { SingleLayoutComponent } from './components/layouts/single.component';
 import { PreloadService } from './core/preload.service';
 import {  RouteReuseService  } from './core/routereuse.service';
 
 const routes: Routes = [
     {
         path: 'error',
-        component: CoreComponents.SingleLayoutComponent,
+        component: SingleLayoutComponent,
         children: [
             {
                 path: '',
-                component: CoreComponents.ErrorComponent,
+                component: ErrorComponent,
                 data: {
                     title: 'ERROR'
                 }
@@ -20,11 +23,11 @@ const routes: Routes = [
     },
     {
         path: '404',
-        component: CoreComponents.SingleLayoutComponent,
+        component: SingleLayoutComponent,
         children: [
             {
                 path: '',
-                component: CoreComponents.NotFoundComponent,
+                component: NotFoundComponent,
                 data: {
                     title: 'NOT_FOUND'
                 }
@@ -34,11 +37,11 @@ const routes: Routes = [
     // example of non lazy laded public, add declaration to app.module
     // {
     //     path: '',
-    //     component: CoreComponents.MainLayoutComponent,
+    //     component: MainLayoutComponent,
     //     children: [
     //         {
     //             path: '',
-    //             component: CoreComponents.PublicHomeComponent,
+    //             component: PublicHomeComponent,
     //             data: {
     //                 title: 'SITE_NAME'
     //             }
@@ -48,7 +51,7 @@ const routes: Routes = [
     // lazy loading? remove declration from app.module
     {
         path: '',
-        component: CoreComponents.MainLayoutComponent,
+        component: MainLayoutComponent,
         loadChildren: () => import('./routes/public.route').then(m => m.PublicRoutingModule),
         data: {preload: true}
 
