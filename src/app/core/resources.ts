@@ -6,17 +6,14 @@
 // import { keys } from '../../locale/resources';
 
 // from en.js (add typing entry for it)
-// FIXME: why was this copied by value?! i need to know why resources.keys is not by reference, may be nodejs module encapsulation?
 
-// const keys = resources.keys;
 
 export class Res {
 
     public static Get(key: string, fallback?: string): string {
         // if found return else generic
-        // FIXME: later
         const keys = resources.keys;
-        
+
 
         if (keys[key]) {
             return keys[key];
@@ -29,7 +26,6 @@ export class Res {
 
     public static RelativeTime(key: string, value: number): string {
 
-        // FIXME: later
         const keys = resources.keys;
 
         // no more const ret = keys.RELATIVE_TIME.AGO; // {0} ago
@@ -45,7 +41,6 @@ export class Res {
     }
     public static Plural(key: string, count: number): string {
 
-        // FIXME: later
         const keys = resources.keys;
 
         // get main key, which will have its own counts in both languages

@@ -64,7 +64,7 @@ export class GaTracking {
         if (GaTracking.IsGaEnabled) {
             // register a view
 
-            dataLayer.push({ event: 'vaes_pageview' });
+            dataLayer.push({ event: 'cricket_pageview' });
             // push gadims {clientId: 'value'} ... etc
             dims.forEach(n => {
                 dataLayer.push(n);
@@ -87,7 +87,7 @@ export class GaTracking {
         action: EnumGaAction,
         label?: string,
         value?: string,
-        event: string = 'vaes_event'
+        event: string = 'cricket_event'
     ): void {
         _debug({ category, action, label, value }, 'register event', 'ga');
 
@@ -107,7 +107,7 @@ export class GaTracking {
         action: EnumGaAction,
         label?: string,
         value?: string) {
-            this.RegisterEvent(category, action, label, value, 'vaes_error');
+            this.RegisterEvent(category, action, label, value, 'cricket_error');
 
     }
 
