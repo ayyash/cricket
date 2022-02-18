@@ -23,7 +23,7 @@ export class ScrollDirective implements AfterViewInit, OnDestroy {
                 .pipe(auditTime(1000))
                 .subscribe(v => {
                     const _diff = window.pageYOffset - this._savevalue;
-                   
+
 
                     if (_diff > 50) {
                         // scrolling down
@@ -37,8 +37,8 @@ export class ScrollDirective implements AfterViewInit, OnDestroy {
                     this._savevalue = window.pageYOffset;
                      // Fix a mobile vh problem when address bar disappares
                 });
-                window.addEventListener('resize', this._setValue);
-        
+                window.addEventListener('resize', this._setValue, true);
+
     }
     ngOnDestroy() {
         if (this._scrolledSubscription) {

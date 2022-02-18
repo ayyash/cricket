@@ -3,12 +3,6 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { clone } from '../core/common';
 import { IState } from '../core/services';
 
-// export interface IStateService<T> {
-//     stateList$: Observable<T[]>;
-//     stateItem$: Observable<T | null>;
-// }
-
-
 export class StateService<T extends IState>  {
 
     protected stateList: BehaviorSubject<T[]> = new BehaviorSubject([]);

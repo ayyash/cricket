@@ -3,11 +3,11 @@ import { EnumGaAction, EnumGaCategory, GaTracking, IGaOptions } from '../../core
 
 
 @Directive({
-    selector: '[edTrack]',
-    exportAs: 'edGa'
+    selector: '[crTrack]',
+    exportAs: 'crGa'
 })
 export class GaDirective {
-    @Input() edTrack: Partial<IGaOptions> = { category: EnumGaCategory.General, action: EnumGaAction.Click };
+    @Input() crTrack: Partial<IGaOptions> = { category: EnumGaCategory.General, action: EnumGaAction.Click };
 
     constructor(private el: ElementRef) {
 
@@ -17,10 +17,10 @@ export class GaDirective {
     onClick(target: HTMLElement): void {
 
         GaTracking.RegisterEvent(
-            this.edTrack.category || EnumGaCategory.General,
-            this.edTrack.action || EnumGaAction.Click,
-            this.edTrack.label,
-            this.edTrack.value
+            this.crTrack.category || EnumGaCategory.General,
+            this.crTrack.action || EnumGaAction.Click,
+            this.crTrack.label,
+            this.crTrack.value
         );
     }
 }

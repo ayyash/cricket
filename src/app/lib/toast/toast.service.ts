@@ -24,23 +24,8 @@ export class Toast {
         isHiding: false // is in the state of hiding, to animate properly
     };
 
-    // VER_NEXT: allow this
-    // constructor(){
-    //     this.router.events.subscribe(event => {
-    //         if (event instanceof NavigationStart) {
-    //             if (this.keepAfterRouteChange) {
-    //                 // only keep for a single route change
-    //                 this.keepAfterRouteChange = false;
-    //             } else {
-    //                 // clear alert message
-    //                 this.clear();
-    //             }
-    //         }
-    //     });
-    // }
 
-    // VER_NEXT: note to self, all ways to control animation through css has gone awry
-    // the best way is to add and remove classes within delay,  never rely on css animation delay
+
     Show(key: string, options?: IToast, fallback?: string): void {
         // clone optons and never override
 
