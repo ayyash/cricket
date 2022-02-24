@@ -14,7 +14,6 @@ export * from '../models/data.model';
 export * from '../models/error.model';
 export * from '../models/list.model';
 export * from '../models/loaderstate.model';
-export * from '../models/state.model';
 export * from '../models/status.model';
 export * from '../models/user.model';
 export * from '../models/viewmode.model';

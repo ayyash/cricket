@@ -1,11 +1,14 @@
 import { Config } from '../config';
 
-
-export interface IList<T> {
-    total: number;
-    matches: T[];
-
+export interface IListItem {
+    id: string;
 }
+
+export interface IList<T extends IListItem> {
+    matches: T[];
+    total: number;
+}
+
 
 
 export interface IListOptions {
@@ -13,6 +16,8 @@ export interface IListOptions {
     keyword?: string;
     country?: string;
     size?: number;
+    total?: number;
+    hasMore?: boolean;
 
 }
 

@@ -43,12 +43,10 @@ export class ConfigService {
         @Optional() @Inject('localConfig') protected localConfig: IConfig,
         private injector: Injector) {
         this._http = this.injector.get(HttpClient);
-        _seqlog('config construct');
     }
 
     loadAppConfig(): Observable<boolean> {
         // too much typing
-        _seqlog('config load');
         // WATCH: on server, retrieve from local file injected from server
         if (this.localConfig) {
 
@@ -66,7 +64,6 @@ export class ConfigService {
                     const config = ConfigService.NewInstance(<any>response);
                     config.isServed = true;
                     this.config.next(config);
-                    _seqlog('config next');
                     return true;
                 }),
                 catchError(error => {
