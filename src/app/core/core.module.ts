@@ -4,9 +4,9 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CricketInterceptor } from './http';
-import { ConfigService } from './services';
 import { LocalInterceptor } from './local.interceptor';
 import { CricketErrorHandler } from './error.service';
+import { configFactory, ConfigService } from '../services/config.service';
 
 
 
@@ -17,7 +17,7 @@ import { CricketErrorHandler } from './error.service';
 
         {
             provide: APP_INITIALIZER,
-            useFactory: ConfigService.configFactory,
+            useFactory: configFactory,
             multi: true,
             deps: [ConfigService]
         },

@@ -36,6 +36,8 @@ export class ScrollDirective implements AfterViewInit, OnDestroy {
                     }
                     this._savevalue = window.pageYOffset;
                      // Fix a mobile vh problem when address bar disappares
+                     document.documentElement.style.setProperty('--pageYOffset', `${this._savevalue}px`);
+
                 });
                 window.addEventListener('resize', this._setValue, true);
 

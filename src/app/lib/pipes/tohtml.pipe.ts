@@ -6,7 +6,7 @@ export class ToHtmlPipe implements PipeTransform {
 
     transform(tohtml: string): string {
         // search for \r\n and replace with <br>
-        let content = tohtml.replace('\r\n', '<br>');
+        const content = tohtml.replace('\r\n', '<br>');
 
         // what else
         return content;

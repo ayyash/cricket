@@ -39,7 +39,7 @@ export class ListOptions {
 
 }
 
-export class DataList<T>  {
+export class DataList<T extends IListItem>  {
     public mapper?: (dataitem: any) => T;
 
 
