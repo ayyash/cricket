@@ -14,6 +14,14 @@ if (environment.production) {
 
 document.addEventListener('DOMContentLoaded', () => {
     platformBrowserDynamic()
+    // or
+    // platformBrowserDynamic([
+    //     {
+    //         provide: PLATFORM_INITIALIZER,
+    //         useFactory: platformFactory,
+    //         multi: true,
+    //     }
+    // ])
     .bootstrapModule(AppBrowserModule)
     .catch(err => console.log(err));
 });
