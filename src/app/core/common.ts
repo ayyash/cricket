@@ -50,6 +50,33 @@ export const GetParamsAsString = (urlParams: any, joinArray = false): string => 
     return s.toString();
 
 };
+export const toFormat = (s:string, ...args: any) => {
+    const regExp = /\$(\d+)/gi;
+    // match $1 $2 ...
+    return s.replace(regExp, (match, index) => {
+        return args[index] ?? match;
+    });
+
+}
+export const GetMatrixParamsAsString = (urlParams: any): string => {
+    // for each urlparam, join with ';'
+    let s = '';
+    Object.keys(urlParams).forEach(n => {
+        const v = urlParams[n];
+        if (v) {
+            if (v instanceof Array) {
+                if (v.length) {
+                    // filter out empty strings
+                    v.filter(x => !!x).forEach(f => s +=`;${n}=${f}`);
+                }
+            } else {
+                // append key and value
+               s += `;${n}=${v}`;
+            }
+        }
+    });
+    return s;
+}
 export const CleanParams = (params: any): any => {
     // remove empty arrays, unidentified, nulls
     const s = {};

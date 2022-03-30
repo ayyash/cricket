@@ -30,7 +30,7 @@ export class AppComponent {
                 }
                 // return route.data;
                 if (route.data && route.data.title) {
-                    this.seoService.setPageTitle(route.data.title);
+                    this.seoService.setPage(route.data.title);
                 }
 
                 if (event instanceof NavigationEnd) {
