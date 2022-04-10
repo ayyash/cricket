@@ -36,6 +36,13 @@ export class ListOptions {
 
     }
 
+    public static MapSeoOptions(options: IListOptions): any {
+        return {
+            page: options.page || 1
+            // add other options here
+        };
+    }
+
 
 }
 

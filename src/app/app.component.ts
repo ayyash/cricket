@@ -28,10 +28,7 @@ export class AppComponent {
                 while (route.firstChild) {
                     route = route.firstChild;
                 }
-                // return route.data;
-                if (route.data && route.data.title) {
-                    this.seoService.setPage(route.data.title);
-                }
+
 
                 if (event instanceof NavigationEnd) {
                     if (event.urlAfterRedirects === '/404') {
@@ -42,6 +39,7 @@ export class AppComponent {
                         }
                     } else {
                         this.LoaderService.emitUrl(event.urlAfterRedirects);
+                        this.seoService.setPage(route.data?.title);
                     }
                 } else if (event instanceof NavigationCancel) {
                     this.LoaderService.emitUrl(event.url);

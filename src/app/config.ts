@@ -32,17 +32,12 @@ export const Config = {
         ],
         baseUrl: 'https://$0.cricket.com/$1/$2', // for multiregional multilingual
         defaultImage: 'cricket-image-url',
+        logoUrl: 'logo-url',
         defaultLanguage: 'en',
         defaultRegion: 'www',
         hrefLangs: [
-            { region: 'ES', language: 'es' },
-            { region: 'ES', language: 'en' },
-            { region: 'MX', language: 'es' },
-            { region: 'MX', language: 'en' },
-            { language: 'de' },
-            { language: 'fr' },
-            { language: 'es' },
-            { language: 'en' },
+            { region: 'COUNTRY_CODE', language: 'LANGUAGE' },
+            { language: 'LANGUAGE' },
             { language: 'x-default' }
           ]
     },
