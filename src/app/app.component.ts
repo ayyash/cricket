@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router, NavigationCancel, ActivatedRoute } from '@angular/router';
 import { LoaderService, SeoService } from './core/services';
-import { GaTracking } from './core/ga';
 import { filter } from 'rxjs/operators';
 @Component({
     selector: 'app-root',
@@ -35,7 +34,6 @@ export class AppComponent {
                         // if 404 is the url, do nothing, the 404 has already been handled
                         if (event.url !== '/404') {
                             this.LoaderService.emitUrl(event.url);
-                            GaTracking.RegisterError('404: ' + event.url, false);
                         }
                     } else {
                         this.LoaderService.emitUrl(event.urlAfterRedirects);
