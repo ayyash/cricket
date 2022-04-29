@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 // inject:importlibs
 import { BgDirective } from './directives/bg.directive';
 import { ExpandsDirective } from './directives/expands.directive';
-import { GaDirective } from './directives/ga.directive';
 import { LazyDirective } from './directives/lazy.directive';
 import { LetDirective } from './directives/let.directive';
 import { ModalDirective } from './directives/modal.directive';
@@ -16,6 +15,7 @@ import { RelativeTimePipe } from './pipes/relativetime.pipe';
 import { ResPipe } from './pipes/res.pipe';
 import { ToHtmlPipe } from './pipes/tohtml.pipe';
 import { TranslatePipe } from './pipes/translate.pipe';
+import { GtmDirective } from './directives/gtm.directive';
 // endinject
 
 
@@ -25,9 +25,9 @@ import { TranslatePipe } from './pipes/translate.pipe';
          // inject:libs
         BgDirective,
         ExpandsDirective,
-        GaDirective,
         LazyDirective,
         LetDirective,
+        GtmDirective,
         ModalDirective,
         AppShellRenderDirective,
         DayNamePipe,
@@ -43,10 +43,10 @@ import { TranslatePipe } from './pipes/translate.pipe';
          // inject:libs
         BgDirective,
         ExpandsDirective,
-        GaDirective,
         LazyDirective,
         LetDirective,
         ModalDirective,
+        GtmDirective,
         AppShellRenderDirective,
         DayNamePipe,
         PrettyPricePipe,

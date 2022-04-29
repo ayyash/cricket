@@ -5,11 +5,14 @@ declare let dataLayer: any[]; // Declare google tag
 export enum EnumGtmSource {
     // sources of events
     ListName = 'name of list',
+    Anywhere = 'anywhere'
 }
 export enum EnumGtmEvent {
     // events
     Click = 'cr_click',
-    PageView = 'cr_page_view'
+    PageView = 'cr_page_view',
+    GroupClick = 'cr_group_click',
+    Error = 'cr_error'
 }
 export enum EnumGtmMethod {
     Google = 'google',
@@ -24,6 +27,11 @@ export enum EnumGtmAction {
     Click = 'click',
     Drag = 'drag'
 }
+export enum EnumGtmGroup {
+    General = 'general',
+    Navigation = 'navigation'
+    // other click groups
+}
 export interface IGtmTrack {
     event: EnumGtmEvent;  // to control events site-wise
     source?: EnumGtmSource; // to control where the event is coming from
@@ -32,12 +40,13 @@ export interface IGtmTrack {
 
 export class GtmTracking {
 
-
-    public static get IsEnabled(): boolean {
-        return typeof window !== 'undefined' && window['dataLayer'];
+    private static _values = {};
+    public static get Values(): any {
+        return this._values;
     }
-
-
+    public static set Values(value: any) {
+        this._values = {...this._values,...value};
+    }
 
     public static RegisterEvent(track: IGtmTrack, extra?: any): void {
 
@@ -47,51 +56,75 @@ export class GtmTracking {
                 ...extra
             }
         };
-        _debug(data, 'register event');
-        if (GtmTracking.IsEnabled) {
-            dataLayer.push(data);
-        }
+        _debug(data, 'register event', 'ga');
+		dataLayer.push(data);
 
+    }
+
+    public static SetValues(values: any): void {
+
+        let data = {
+            gr_values: {...values}
+        };
+        _debug(data, 'Set GA value', 'ga');
+        dataLayer.push(data);
+    }
+    public static Reset() {
+
+        // dataLayer.splice(1);
+
+        dataLayer.push(function () {
+            this.reset();
+        });
+        GtmTracking.SetValues(GtmTracking.Values);
+
+    }
+
+
+
+    public static MapGroup(group: EnumGtmGroup, label?: string) {
+        return { group, label };
     }
 
     public static MapPath(path: string): any {
         return { page_location: path };
+
     }
 
-    // create mapper for every model
-    public static MapLists(list: any[], position?: number) {
-        const items = list.map(GtmTracking.MapItem);
+
+    public static MapProducts(products: any[], position?: number) {
+        const items = products.map(GtmTracking.MapProduct);
         // calculate value
         const value = items.reduce((acc, item) => acc + parseFloat(item.price), 0);
+
         if (position) {
             items[0].index = position;
         }
-        return {items, value, currency: 'ABC'};
+        return { items, value };
+
     }
 
-    public static MapItem(item: any, index: number) {
+    public static MapProduct(product: any, index: number) {
         return {
-            item_name: item.title,
-            item_id: item.id,
-            item_category: item.category.key,
-            index: index,
-            price: item.price
+            item_name: product.name,
+            item_id: product.id,
+            price: product.price,
+            currency: 'AUD',
+            index
         };
     }
 
-
     public static MapSearch(keyword: string) {
-        return { 'search_term': keyword };
+        return { search_term: keyword };
     }
 
     public static MapLogin(method: EnumGtmMethod) {
         return { method };
     }
 
-
-
     public static MapAction(action: EnumGtmAction) {
-        return {action: action}
+        return { action: action };
     }
+
     // then all other mappers for employee, and project
 }
