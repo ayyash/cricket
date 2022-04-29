@@ -48,6 +48,12 @@ export class GtmTracking {
         this._values = {...this._values,...value};
     }
 
+	private static Push(data: any) {
+        if (window && window['dataLayer']) {
+            dataLayer.push(data);
+        }
+    }
+
     public static RegisterEvent(track: IGtmTrack, extra?: any): void {
 
         let data = {
@@ -57,7 +63,7 @@ export class GtmTracking {
             }
         };
         _debug(data, 'register event', 'ga');
-		dataLayer.push(data);
+		this.Push(data);
 
     }
 
@@ -67,13 +73,13 @@ export class GtmTracking {
             gr_values: {...values}
         };
         _debug(data, 'Set GA value', 'ga');
-        dataLayer.push(data);
+        this.Push(data);
     }
     public static Reset() {
 
         // dataLayer.splice(1);
 
-        dataLayer.push(function () {
+        this.Push(function () {
             this.reset();
         });
         GtmTracking.SetValues(GtmTracking.Values);
