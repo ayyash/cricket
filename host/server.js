@@ -28,14 +28,14 @@ if (config.ssr){
         }
     };
     global._debug = function (o, message, type) {
-        if (type === 'e' || type === 'f' || type === 'ssr') {
+        if (config.env === 'local') {
             console.log(message, o);
-
         }
     };
     global._attn = function (o, message) {
-        // do nothing
-        // console.log(message, o);
+        if (config.env === 'local') {
+            console.log(message, o);
+        }
     }
 
     // to make language change on ssr, use globals

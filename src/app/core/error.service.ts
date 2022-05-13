@@ -7,7 +7,7 @@ export class CricketErrorHandler implements ErrorHandler {
     handleError(error: any) {
         // TODO: log
 
-        _debug(error, 'Unhandled Error', 'f');
+        _debug(error, 'Unhandled Error', 'e');
         GtmTracking.RegisterEvent({event: EnumGtmEvent.Error}, {error: error});
 
     }

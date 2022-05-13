@@ -1,7 +1,5 @@
 
 // import './app/core/common';
-import './app/core/logger.service';
-
 import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 

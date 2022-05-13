@@ -3,6 +3,7 @@ import { IUiError } from '../core/services';
 import { HttpResponse, HttpErrorResponse, HttpEventType } from '@angular/common/http';
 import { tap, catchError } from 'rxjs/operators';
 
+// OBSOLETE
 //  upgrade to rxjs by implementing a custom pipe
 declare module 'rxjs/internal/Observable' {
     interface Observable<T> {

@@ -5,9 +5,7 @@
     },
     "files": [
         "src/main.ts",
-        "src/polyfills.ts"
-    ],
-    "include": [
+        "src/polyfills.ts",
         "src/typings.d.ts"
     ]
 }

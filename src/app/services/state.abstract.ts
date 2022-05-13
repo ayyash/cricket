@@ -1,6 +1,7 @@
 // for page state
 import { BehaviorSubject, Observable } from 'rxjs';
 import { clone } from '../core/common';
+import { debug } from '../core/rxjs.operators';
 import { IListItem } from '../models/list.model';
 
 
@@ -13,7 +14,9 @@ export class ListStateService<T extends IListItem>  {
 
         if (level === 'DEBUG') {
             // default dont debug
-            this.stateList$ = this.stateList$.debug('List', 'State');
+            this.stateList$ = this.stateList$.pipe(
+                debug(this.constructor.name)
+            );
 
         }
 
@@ -69,7 +72,9 @@ export class StateService<T>  {
 
         if (!level) {
             // default debug
-            this.stateItem$ = this.stateItem$.debug('Item', 'State');
+            this.stateItem$ = this.stateItem$.pipe(
+                debug(this.constructor.name)
+               );
         }
 
     }

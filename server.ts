@@ -1,5 +1,4 @@
 import 'zone.js/dist/zone-node';
-import './src/app/core/logger.service';
 import { ngExpressEngine } from '@nguniversal/express-engine';
 import { enableProdMode, PLATFORM_INITIALIZER } from '@angular/core';
 // optional import { platformFactory } from './src/app/services/config.service';

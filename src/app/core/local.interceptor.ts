@@ -24,8 +24,9 @@ export class LocalInterceptor implements HttpInterceptor {
 
         const adjustedReq = req.clone({ url: url });
         return next
-            .handle(adjustedReq)
-            .catchProjectError(req.urlWithParams, req.method)
-            .debug(req.urlWithParams, req.method, 'p');
+            .handle(adjustedReq).pipe(
+                debug(`${req.method} ${req.urlWithParams}`, 'p'),
+            )
+
     }
 }

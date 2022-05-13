@@ -10,6 +10,7 @@ import {
     HttpHeaders
 } from '@angular/common/http';
 import { ConfigService, LoaderService } from './services';
+import { debug } from './rxjs.operators';
 
 
 @Injectable()
@@ -17,17 +18,21 @@ export class CricketInterceptor implements HttpInterceptor {
     private isRefreshingToken = false;
     // tokenSubject: BehaviorSubject<string> = new BehaviorSubject<string>(null);
 
-    constructor(private loaderService: LoaderService) {}
+    constructor(private loaderService: LoaderService) { }
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        if (req.url.indexOf('localdata') > -1 ) {
+        if (req.url.indexOf('localdata') > -1) {
             // pass through
-           return next.handle(req);
+            return next.handle(req);
         }
         const url = ConfigService.Config.API.apiRoot + req.url;
 
 
         const adjustedReq = req.clone({ url: url, setHeaders: this.getHeaders(req.headers) });
         this.loaderService.show();
+
+        if (req.body) {
+            _debug(req.body, `Request ${req.method} ${req.urlWithParams}`, 'p');
+        }
 
         return next
             .handle(adjustedReq)
@@ -36,10 +41,10 @@ export class CricketInterceptor implements HttpInterceptor {
                 map(response => this.mapData(response)),
                 finalize(() => {
                     this.loaderService.hide();
-                })
-            )
-            .catchProjectError(req.urlWithParams, req.method)
-            .debug(req.urlWithParams, req.method, 'p');
+                }),
+                debug(`${req.method} ${req.urlWithParams}`, 'p'),
+            );
+
         // do catch 401 here
     }
 
@@ -51,8 +56,8 @@ export class CricketInterceptor implements HttpInterceptor {
         return headers;
     }
 
-     // if response wrapped with "data"
-     private mapData(response: any) {
+    // if response wrapped with "data"
+    private mapData(response: any) {
         if (response instanceof HttpResponse) {
 
             // clone body and modify so that "data" is removed as a wrapper
