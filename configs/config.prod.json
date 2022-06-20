@@ -4,12 +4,12 @@
         "apiRoot": "http://localhost:50007/api"
     },
     "Auth": {
-        "userAccessKey": "cricket.user"
+        "userAccessKey": "user"
     },
-    "Cache": {
-        "Timeout": 1,
-        "Key": "cricket.cache",
-        "ResetKey": "cricket.20190208"
+    "Storage": {
+        "Timeout": 168,
+        "Key": "cricket",
+        "ResetKey": "20220606"
     },
     "Seo": {
         "gaEnabled": true

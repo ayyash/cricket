@@ -10,15 +10,16 @@ export const Config = {
         defaultSize: 25,
         defaultDateFormt: 'DD-MM-YYYY',
         defaultUploadSize: 1048576,
-        defaultUploadFormat: ['gif', 'jpg', 'jpeg', 'png']
+        defaultUploadFormat: ['gif', 'jpg', 'jpeg', 'png'],
+        defaultToastTimeout: 5000
     },
     Auth: {
         userAccessKey: 'cricket.user'
     },
-    Cache: {
+    Storage: {
         Timeout: 1,
-        Key: 'cricket.cache.' + resources.language,
-        ResetKey: 'cricket.20190208'
+        Key: 'localkey',
+        ResetKey: '20180220'
     },
     Seo: {
         gaEnabled: true,

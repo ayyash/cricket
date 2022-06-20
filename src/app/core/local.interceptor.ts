@@ -5,6 +5,7 @@ import { Request } from 'express';
 import { REQUEST } from '@nguniversal/express-engine/tokens';
 
 import { Config } from '../config';
+import { catchAppError, debug } from './rxjs.operators';
 
 @Injectable()
 export class LocalInterceptor implements HttpInterceptor {
@@ -26,6 +27,7 @@ export class LocalInterceptor implements HttpInterceptor {
         return next
             .handle(adjustedReq).pipe(
                 debug(`${req.method} ${req.urlWithParams}`, 'p'),
+                catchAppError(`${req.method} ${req.urlWithParams}`)
             )
 
     }

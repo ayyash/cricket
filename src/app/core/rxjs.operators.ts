@@ -1,6 +1,7 @@
-import { HttpErrorResponse, HttpEventType, HttpResponse } from '@angular/common/http';
-import { MonoTypeOperatorFunction, Observable, of, pipe, throwError } from 'rxjs';
+import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { MonoTypeOperatorFunction, pipe, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+import { UiError } from './services';
 
 
 export const debug = (message: string, type?: string): MonoTypeOperatorFunction<any> => {
@@ -18,24 +19,18 @@ export const debug = (message: string, type?: string): MonoTypeOperatorFunction<
                     _debug(value, message, type);
                 }
 
-            },
-            error: (error) => {
-                let value = error;
-                if (error instanceof HttpErrorResponse) {
-                    value = `${error.status} ${error.message}`;
-                }
-                _debug(value, message, 'e');
-
             }
+
         })
     );
 };
 
-export const debugError = (message: string): MonoTypeOperatorFunction<any> => {
+export const catchAppError = (message: string): MonoTypeOperatorFunction<any> => {
     return pipe(
         catchError(error => {
-            _debug(error, message, 'e');
-            return throwError(() => error);
+            const e = UiError(error);
+            _debug(e, message, 'e');
+            return throwError(() => e);
         })
     );
 };

@@ -7,7 +7,7 @@ export interface IConfig {
     Auth: {
         userAccessKey: string;
     };
-    Cache: {
+    Storage: {
         Timeout: number;
         Key: string;
         ResetKey: string;

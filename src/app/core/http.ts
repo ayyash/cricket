@@ -10,7 +10,7 @@ import {
     HttpHeaders
 } from '@angular/common/http';
 import { ConfigService, LoaderService } from './services';
-import { debug } from './rxjs.operators';
+import { catchAppError, debug } from './rxjs.operators';
 
 
 @Injectable()
@@ -43,6 +43,7 @@ export class CricketInterceptor implements HttpInterceptor {
                     this.loaderService.hide();
                 }),
                 debug(`${req.method} ${req.urlWithParams}`, 'p'),
+                catchAppError(`${req.method} ${req.urlWithParams}`)
             );
 
         // do catch 401 here
