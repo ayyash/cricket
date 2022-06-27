@@ -1,7 +1,6 @@
 {
     "version": 1,
     "newProjectRoot": "projects",
-    "defaultProject": "cricketweb",
     "projects": {
         "cricketweb": {
             "root": "",
