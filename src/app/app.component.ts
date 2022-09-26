@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { NavigationEnd, Router, NavigationCancel, ActivatedRoute } from '@angular/router';
-import { LoaderService, SeoService } from './core/services';
+import { NavigationEnd, Router, NavigationCancel } from '@angular/router';
+import { LoaderService } from './core/services';
 import { filter } from 'rxjs/operators';
 import { EnumGtmEvent, GtmTracking } from './core/gtm';
 @Component({
@@ -10,25 +10,14 @@ import { EnumGtmEvent, GtmTracking } from './core/gtm';
 export class AppComponent {
     constructor(
         private router: Router,
-        private activatedRoute: ActivatedRoute,
-        private seoService: SeoService,
-        private LoaderService: LoaderService // @Inject(LOCALE_ID) protected localeId: string
+        private LoaderService: LoaderService
     ) {
 
-
         // this.router.initialNavigation();
-
 
         this.router.events
             .pipe(filter(e => e instanceof NavigationEnd || e instanceof NavigationCancel))
             .subscribe(event => {
-                // use snapshot to get title, instead of data subscribe?
-                // note to self: this is okay because the main trigger is the event change
-                let route = this.activatedRoute.snapshot;
-                while (route.firstChild) {
-                    route = route.firstChild;
-                }
-
 
                 if (event instanceof NavigationEnd) {
                     GtmTracking.Reset();
@@ -40,7 +29,6 @@ export class AppComponent {
                         }
                     } else {
                         this.LoaderService.emitUrl(event.urlAfterRedirects);
-                        this.seoService.setPage(route.data?.title);
                     }
                 } else if (event instanceof NavigationCancel) {
                     this.LoaderService.emitUrl(event.url);

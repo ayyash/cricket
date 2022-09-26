@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
-import { RouteReuseStrategy, RouterModule, Routes } from '@angular/router';
+import { RouteReuseStrategy, RouterModule, Routes, TitleStrategy } from '@angular/router';
 import { NotFoundComponent } from './components/layouts/404.component';
 import { ErrorComponent } from './components/layouts/error.component';
 import { MainLayoutComponent } from './components/layouts/main.component';
 import { SingleLayoutComponent } from './components/layouts/single.component';
 import { PreloadService } from './core/preload.service';
 import {  RouteReuseService  } from './core/routereuse.service';
+import { CricketTitleStrategy } from './services/title.service';
 
 const routes: Routes = [
     {
@@ -77,7 +78,8 @@ const routes: Routes = [
         })
     ],
     exports: [RouterModule],
-    providers: [{provide: RouteReuseStrategy, useClass: RouteReuseService}]
+    providers: [{provide: RouteReuseStrategy, useClass: RouteReuseService},
+      { provide: TitleStrategy, useClass: CricketTitleStrategy }]
 
 })
 export class AppRoutingModule {}

@@ -157,21 +157,6 @@
                         }
                      ]
                   },
-                  "serveProduction": {
-                     "namedChunks": true,
-                     "vendorChunk": false,
-                     "commonChunk": true,
-                     "optimization": false,
-                     "aot": true,
-                     "sourceMap": true,
-                     "index": "src/index.dev.prod.html",
-                     "fileReplacements": [
-                        {
-                           "replace": "src/environments/environment.ts",
-                           "with": "src/environments/environment.prod.ts"
-                        }
-                     ]
-                  },
                   "serveRtl": {
                      "buildOptimizer": false,
                      "optimization": false,
@@ -264,7 +249,7 @@
             "server": {
                "builder": "@angular-devkit/build-angular:server",
                "options": {
-                  "outputPath": "./host/server",
+                  "outputPath": "./host/server/ng",
                   "main": "server.ts",
                   "tsConfig": "tsconfig.server.json",
                   "stylePreprocessorOptions": {

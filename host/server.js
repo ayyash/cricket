@@ -66,15 +66,8 @@ app.use(function (req, res, next) {
 });
 
 // serve the right router
-const _routes = (config.ssr ? '-ssr' : '') + (config.urlBased ? '-url' : '') + (config.prepared ? '-pre' : '');
-if (config.withAppBaseHref) {
-    // special case with appbase href used in client
-
-    require('./server/routes-base' + (config.ssr ? '-ssr' : ''))(app, config);
-} else {
-
-    require('./server/routes' + _routes)(app, config);
-}
+const _routes = (config.ssr ? '-ssr' : '');
+require('./server/routes' + _routes)(app, config);
 
 
 // catch 404 and forward to error handler
