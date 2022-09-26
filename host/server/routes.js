@@ -1,5 +1,6 @@
 const express = require('express');
 
+// TODO: redo all route urls
 // multilingual, non url driven, client side only
 
 module.exports = function (app, config) {

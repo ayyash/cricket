@@ -5,12 +5,12 @@
 /tmp
 /out-tsc
 /fontfiles
-/_gulpfile.js
-/gulpfiles.js
+/.angular
 
 # dependencies
 /node_modules
 /host/node_modules
+/gulpbin.js
 
 # IDEs and editors
 /.idea

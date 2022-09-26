@@ -1,0 +1,38 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "type": "object",
+    "properties": {
+        "source": {
+            "type": "string"
+        },
+        "destination": {
+            "type": "string"
+        },
+        "isUrlBased": {
+          "type": "boolean"
+        },
+        "withFolders": {
+          "type": "boolean"
+        },
+        "fileName": {
+            "type": "string"
+        },
+        "prefix": {
+          "type": "string"
+        },
+        "languages": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "isRtl": {
+                        "type": "boolean"
+                    }
+                }
+            }
+        }
+    }
+}

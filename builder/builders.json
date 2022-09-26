@@ -1,0 +1,15 @@
+{
+    "builders": {
+      "localizeIndex": {
+        "implementation": "./dist/locales/index.js",
+        "schema": "./locales/schema.json",
+        "description": "Generate locales index files"
+      },
+      "extract": {
+        "implementation": "./dist/extract/index.js",
+        "schema": "./extract/schema.json",
+        "description": "Extract translation terms"
+      }
+    }
+
+  }

@@ -1,5 +1,5 @@
 // example file, not used in cricket
-
+// OBSOLETE
 export const keys = {
     SITE_NAME: 'Cricket',
     Required: 'Required',

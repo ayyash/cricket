@@ -4,26 +4,20 @@ var rootPath = path.normalize(__dirname + '/../');
 // use this for different keys on server if any
 // ssr and urlbased used to switch between different flavors of cricket server
 
-const languages = ['en', 'ar', 'tr']; // populate languages supported, for ssr and urlbased
 module.exports = {
-    local: {
-        name: 'local',
-        rootPath: rootPath,
-        ssr: true,
-        urlBased: true,
-        languages
-    }
-    , production: {
-        name: 'production',
-        rootPath: rootPath,
-        ssr: true,
-        urlBased: true,
-        languages
-    },
-    getConfig: function () {
-        var env = process.env.NODE_ENV || 'local';
-
-
-        return this[env];
-    }
+   languages: ['en', 'ar'],
+   env: process.env.Node_ENV || 'local',
+   rootPath,
+   ssr: true,
+   urlBased: true,
+   prepared: true,
+   withAppBaseHref: false, // for hosts like netlify, express wont run for that
+   langCookieName: 'cr-lang',
+   projectPrefix: 'cr-',
+   getLangPath: function (lang) {
+       return `${rootPath}client/locale/${this.projectPrefix}${lang}.js`;
+   },
+   saveLangCookie: function(res, lang) {
+       res.cookie(this.langCookieName, lang, { expires: new Date(Date.now() + 31622444360) });
+   }
 };

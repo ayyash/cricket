@@ -6,23 +6,14 @@ Angular Cricket
 
 Download nodejs (10+) and npm (6.5+), download this project (it's a boilerplate, it is designed to be decoupled from original), and in the root, run 
 
-`npm install -g @angular/cli typescript gulp`
+`npm install -g @angular/cli typescript`
 
-> Keep an eye on https://github.com/gulp-community/gulp-less/issues/312, if not yet resolved, update node_modules/gulp-less/index file with the content of the pull request https://github.com/gulp-community/gulp-less/pull/313
-
-You need gulp to run the gulp tasks to prepare css out of LESS and RTL files, in addition to post build for ssr. Always check what typescript is supported by angular and install a local version of it.
+Optionally you can create an ignored sub folder and install [sekrab-gulpbin](https://www.npmjs.com/package/sekrab-gulpbin) to use gulp tasks to prepare css files, from LESS files, and RTL files, in addition to commands to generate angular components, multilingual index files and locales.
 
 Run
 
 `npm run install` and `npm run install:dev`: will get you started with packages needed for this seed
 
-Then (these gulp tasks are part of [sekrab-gulpbin](https://www.npmjs.com/package/sekrab-gulpbin) package)
-
-`gulp inject` to inject all components and services in barrel files
-
-Finally
-
-`gulp critical` to generate the css files from .less files
 
 ## Renaming
 
@@ -55,7 +46,7 @@ The main branch contains everything, different combinations are added in differe
 3. client-only
 4. client-only-rtl
 
-// being url based does not need a lot of work -->
+being url based does not need a lot of work -->
 
 ## NPM commands
 
@@ -69,13 +60,11 @@ The following commands in npm to help you get going:
 <!-- - `npm run network`: starts with 192.168.0.100:5200 as host to test localhost on mobile devices (change host in package.json)
 - `npm run network:secure`: starts with normal english angular development, under https (then browse to https://192.168.0.100:5200) This option might need a local certificate to be created. This option needs https for iis to run mockup api. This option never works on Safari. -->
 
-- `npm run build` generates a client-side angular app in /host/client + /host/index/index.lang.html to be served
-> this rewrites the baseHref to / or /lang/ depending on gulp configuration: isUrlBased, 
-> if true, the project will appear under hosturl/en or hosturl/ar ... etc
+- `npm run build` generates a client-side angular app in /host/client
 
-> This also injects the right rtl css in header for rtl supported languages.
+- `npm run build:ssr`:  builds the client-side and server-side full version under /host/client 
 
-- `npm run build:ssr`:  builds the client-side and server-side full version under /host/client, also copies resources to host/server/locale and make them ready to be used in SSR. 
+> Note: for multilingual apps, TODO: add docs for Angular builder
 
 Notes:
 

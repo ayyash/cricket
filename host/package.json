@@ -5,6 +5,6 @@
     "scripts": {
       "test": "echo \"Error: no test specified\" && exit 1",
       "start": "node server.js",
-      "install": "npm install express ws xhr2 cookie-parser"
+      "install": "npm install express"
     }
   }
