@@ -35,6 +35,9 @@ if (config.ssr) {
          console.log(message, o);
       }
    }
+   global._seqlog = function (message) {
+      // console.log(message);
+  }
 }
 
 /******* EXPRESS *******/
@@ -89,10 +92,21 @@ app.use(function (err, req, res, next) {
 
 var port = process.env.PORT || 1212;
 
-app.listen(port, function (err) {
+const server =  app.listen(port, async function (err) {
    // console.log('started to listen to port: ' + port);
+
    if (err) {
-      console.log(err);
-      return;
+       console.log(err);
+       return;
    }
+   // if proces.env.PRERENDER, then run this and close
+
+   if (process.env.PRERENDER) {
+     const prerender = require('./prerender/fetch');
+     await prerender(port, config);
+     console.log('Done prerendering');
+     server.close();
+
+   }
+
 });

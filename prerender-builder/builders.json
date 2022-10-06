@@ -1,0 +1,15 @@
+{
+    "builders": {
+      "prerender": {
+        "implementation": "./dist/single/index.js",
+        "schema": "./single/schema.json",
+        "description": "Create prerendered routes"
+      },
+      "prerender-multi": {
+        "implementation": "./dist/multi/index.js",
+        "schema": "./multi/schema.json",
+        "description": "Create prerendered routes for multilingual app"
+      }
+    }
+
+  }

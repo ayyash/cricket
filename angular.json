@@ -275,7 +275,29 @@
                      "deleteOutputPath": false
                   }
                }
-            }
+            },
+            "prerender": {
+               "builder": "./prerender-builder:single",
+               "options": {
+                 "browserTarget": "cricketweb:build:production",
+                 "serverTarget": "cricketweb:server:production",
+                 "routes": [
+                   "/routes/here"
+                 ]
+               }
+             },
+             "prerender-multi": {
+               "builder": "./prerender-builder:multi",
+               "options": {
+                 "browserTarget": "cricketweb:build:production",
+                 "serverTarget": "cricketweb:server:production",
+                 "indexTarget": "cricketweb:writeindex",
+                 "localePath": "locale",
+                 "routes": [
+                   "/routes/here"
+                 ]
+               }
+             }
          }
       }
    }
