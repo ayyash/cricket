@@ -38,8 +38,12 @@ module.exports = function (app, config) {
 
 
     app.use('/:lang/localdata/', express.static(config.rootPath + 'localdata'));
+
+   // to prerender en and ar, open up client on root, wont work with slash
+   app.use(express.static(config.rootPath + 'client', {extensions: ['html'], redirect: false}));
+
     // use static files in client, but skip index file
-    app.use('/:lang', express.static(config.rootPath + 'client', { index: false }));
+    app.use('/:lang', express.static(config.rootPath + 'client', {index: false, redirect: false}));
 
 
     app.get(config.languages.map(n => `/${n}/*`), (req, res) => {

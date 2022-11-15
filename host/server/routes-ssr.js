@@ -54,8 +54,9 @@ module.exports = function (app, config) {
     // ignore index file from client folder
     app.use('/:lang', express.static(config.rootPath + 'client', {index: false}));
 
-    // lets add static, cannot afford this
-    app.use('/', express.static(config.rootPath + 'client/static'));
+      // there is a redirect with slash problem with this
+    app.use(express.static(config.rootPath + 'client', {extensions: ['html']}));
+
 
     app.get(config.languages.map(n => `/${n}/*`), (req, res) => {
 

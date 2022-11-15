@@ -11,7 +11,7 @@ module.exports = {
    ssr: true,
    langCookieName: 'cr-lang',
    projectPrefix: 'cr-',
-   prerenderOut: './client/static/',
+   prerenderOut: './client/',
    getLangPath: function (lang) {
        return `${rootPath}client/locale/${this.projectPrefix}${lang}.js`;
    },
