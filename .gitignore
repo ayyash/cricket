@@ -10,7 +10,7 @@
 # dependencies
 /node_modules
 /host/node_modules
-/gulpbin.js
+/gulpbin
 
 # IDEs and editors
 /.idea

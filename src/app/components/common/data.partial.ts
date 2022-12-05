@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 @Component({
     selector: 'cr-data',
-    template: `{{ (data$ | async)?.name}}`,
+    template: `{{ (data$ | async)?.key}}`,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DataPartialComponent {

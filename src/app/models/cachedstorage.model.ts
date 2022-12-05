@@ -1,6 +1,7 @@
 
 export interface ICachedStorage {
-    value: any;
-    expiresin: number;
-    timestamp: number;
+   key?: string;
+   value: any;
+   expiresin: number;
+   timestamp: number;
 }

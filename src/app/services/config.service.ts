@@ -6,16 +6,26 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { IConfig } from '../core/services';
 
 
-export const configFactory = (config: ConfigService): (() => Observable<boolean>) => {
-    return () => config.loadAppConfig();
-};
+export const configFactory = (config: ConfigService) => () =>
+    {
+      _seqlog('configFactory');
+      return config.loadAppConfig();}
+
 @Injectable({
     providedIn: 'root'
 })
 export class ConfigService {
-    private _getUrl: string = Config.API.config.local;
 
-    // WATCH: keep an eye, it should accept null
+    constructor(
+        private http: HttpClient,
+        @Optional() @Inject('localConfig') protected localConfig: IConfig
+    ) {
+      _seqlog('ConfigService');
+    }
+
+    private _getUrl = Config.API.config.local;
+
+    // keep track of config
     private config = new BehaviorSubject<IConfig>(Config as IConfig);
     config$: Observable<IConfig> = this.config.asObservable();
 
@@ -25,58 +35,45 @@ export class ConfigService {
         return this._config || Config;
     }
 
-    private NewInstance(config: any): IConfig {
-        // clone first, because in ssr the object is transfered in state to client, which adds the key again, unless u clone
-        const _config = {...Config, ...<IConfig>config };
-
-        _config.Cache = { ..._config.Cache };
-        // adjust cache key to have language in it
-        _config.Cache.Key += '.' + Config.Basic.language;
+    private NewInstance(config: any, withError: boolean): IConfig {
+        // cast all keys as are
+        const _config = { ...Config, ...<IConfig>config };
+        _config.Storage = { ..._config.Storage };
+        _config.isServed = true;
+        _config.withErrors = withError; // so now we can distinguish where the config really came from
 
         // populate static element
         ConfigService._config = _config;
 
+        this.config.next(_config);
         return _config;
     }
 
-    constructor(
-        @Optional() @Inject('localConfig') protected localConfig: IConfig,
-        private http: HttpClient) {
-        _seqlog('config construct');
-    }
-
-
     loadAppConfig(): Observable<boolean> {
-        // too much typing
-        // WATCH: on server, retrieve from local file injected from server
+        _seqlog('LoadAppConfig');
         if (this.localConfig) {
-
-            const localconfig = this.NewInstance(this.localConfig);
-            this.config.next(localconfig);
-
+            this.NewInstance(this.localConfig, true);
             return of(true);
         }
 
 
-        return this.http
-        .get(this._getUrl)
-        .pipe(
-            map(response => {
+        return this.http.get(this._getUrl).pipe(
+            map((response) => {
+                this.NewInstance(response, false);
+                // also state that it has been isServed
 
-                const config = this.NewInstance(<any>response);
+                _seqlog('config next');
 
-                this.config.next(config);
+                // here next
                 return true;
             }),
-            catchError((error: any) => {
-                // if in error, return default fall back from environment
+            catchError((error) => {
+                // if in error, return set fall back from environment
+                // make it served, if you want to distinguish error, create another flag
+                this.NewInstance(Config, true);
                 _debug(error, 'Error in resolve', 'e');
-                this.config.next(Config);
-                return of(false);
+                return of(true);
             })
         );
-
     }
-
-
 }
