@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({ name: 'tohtml' })
+@Pipe({ name: 'tohtml', standalone: true })
 export class ToHtmlPipe implements PipeTransform {
 
 

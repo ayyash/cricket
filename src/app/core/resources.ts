@@ -3,60 +3,87 @@
 * from internal resources import from locale/resources.ts
 * when importing, generate multiple builds for each language with the proper file replacement
 * This file can be replaced during build by using the `fileReplacements` array. */
-// import { keys } from '../../locale/resources';
+// import { keys, plural } from '../../locale/resources';
 
-// from en.js (add typing entry for it)
+import { Config } from '../config';
+import { _global } from './common';
+
+declare const cr: {
+  resources: {
+    keys: any;
+    language: string;
+    localeId: string;
+  };
+
+};
+
+export class LocaleId extends String {
+  toString() {
+    return _global.cr?.resources.localeId || Config.Res.defaultLanguage;
+  }
+}
+export class RootHref extends String {
+  // for browser platform needs to be in constructor
+  // this for netlify like, not recomended for expressjs
+  constructor() {
+    super('/' + (_global.cr?.resources.language || Config.Res.defaultLanguage));
+  }
+
+}
 
 
 export class Res {
 
-    public static Get(key: string, fallback?: string): string {
-        // if found return else generic
-        const keys = resources.keys;
 
+  private static get keys(): any {
+    return _global.cr?.resources.keys || {NoRes: ''};
+  }
 
-        if (keys[key]) {
-            return keys[key];
-        }
+  public static get language(): string {
+    return _global.cr?.resources.language || Config.Res.defaultLanguage;
+  }
 
-        return fallback || keys.NoRes;
+  public static Get(key: string, fallback?: string): string {
+    // if found return else generic
+    const keys = Res.keys;
+
+    if (keys[key]) {
+      return keys[key];
     }
 
+    return fallback || keys.NoRes;
+  }
 
+  public static Plural(key: string, count: number, fallback?: string): string {
 
-    public static RelativeTime(key: string, value: number): string {
+    const keys = Res.keys;
 
-        const keys = resources.keys;
-
-        // no more const ret = keys.RELATIVE_TIME.AGO; // {0} ago
-        let factor = 11;
-        if (value <= 1) {
-            factor = 1;
-        } else if (value <= 2) {
-            factor = 2;
-        } else if (value < 11) {
-            factor = 3;
-        }
-        return keys.RELATIVE_TIME[key][factor].replace('$0', value);
+    const _key = keys[key];
+    if (!_key) {
+      return fallback || keys.NoRes;
     }
-    public static Plural(key: string, count: number): string {
+    // sort keys desc
+    const _pluralCats = Object.keys(_key).sort((a, b) => parseFloat(b) - parseFloat(a));
+    // for every key, check if count is larger or equal, if so, break
 
-        const keys = resources.keys;
+    // default is first element (the largest)
+    let factor = _key[_pluralCats[0]];
 
-        // get main key, which will have its own counts in both languages
-        // 0: none, 1: singlular, 2: dual, 3: plural, 10: singular
-        // or 1: single, 2: plural
-        let factor = 11;
-        if (count <= 0) {
-            factor = 0;
-        } else if (count <= 1) {
-            factor = 1;
-        } else if (count <= 2) {
-            factor = 2;
-        } else if (count < 11) {
-            factor = 3;
-        }
-
-        return keys[key][factor].replace('$0', count);
+    for (let i = 0; i < _pluralCats.length; i++) {
+      if (count >= parseFloat(_pluralCats[i])) {
+        factor = _key[_pluralCats[i]];
+        break;
+      }
     }
+    // replace and return;
+    return factor.replace('$0', count);;
+
+  }
+
+  public static Select(key: string, select: any, fallback?: string): string {
+    // find the match in resources
+    const keys = Res.keys;
+
+    return (keys[key] && keys[key][select]) || fallback || keys.NoRes;
+  }
 }

@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { Res } from '../../core/resources';
 
-@Pipe({ name: 'prettytime' })
+@Pipe({ name: 'prettytime', standalone: true })
 export class PrettyTimePipe implements PipeTransform {
     // transform 210 to 3:30 AM
     transform(prettytime: number): string {

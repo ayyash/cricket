@@ -4,7 +4,8 @@ import { Platform } from '../platform.service';
 @Directive({
     // tslint:disable-next-line:directive-selector
     selector: '[shBg]',
-    exportAs: 'shBg'
+    exportAs: 'shBg',
+    standalone: true
 })
 export class BgDirective implements OnChanges {
     @Input() shBg: string;

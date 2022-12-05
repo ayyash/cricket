@@ -3,7 +3,8 @@ import { Platform } from '../platform.service';
 
 @Directive({
     selector: '[shLazy]',
-    exportAs: 'shLazy'
+    exportAs: 'shLazy',
+    standalone: true
 })
 export class LazyDirective implements AfterViewInit {
     @Input() shLazy: string;

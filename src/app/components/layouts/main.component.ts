@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SeoService } from '../../core/services';
+import { SeoService } from '../../services/seo.service';
 
 @Component({
     templateUrl: './main.component.html'
@@ -11,7 +11,7 @@ export class MainLayoutComponent implements OnInit {
 
     ngOnInit() {
     }
- 
+
 
 
 }

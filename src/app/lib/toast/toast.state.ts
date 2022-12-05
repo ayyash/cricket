@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, Subscription, throwError, timer } from 'rxjs';
 import { Res } from '../../core/resources';
-import { IUiError } from '../../core/services
+import { IUiError } from '../../models/error.model';
 import { StateService } from '../../services/state.abstract';
 import { IToastButton, IToast, EnumTimeout } from './toast.model';
 
@@ -9,9 +9,6 @@ import { IToastButton, IToast, EnumTimeout } from './toast.model';
 @Injectable({ providedIn: 'root' })
 export class Toast extends StateService<IToast> {
     //
-    // private toast: BehaviorSubject<IToast | null> = new BehaviorSubject(null);
-    // toast$: Observable<IToast | null> = this.toast.asObservable();
-
     // keep track of timeout
     private isCanceled: Subscription;
 

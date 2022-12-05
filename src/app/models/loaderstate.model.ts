@@ -9,5 +9,6 @@ export interface ILoaderState {
     show: boolean;
     source?: EnumLoaderSource;
     url?: string;
+    context?: string;
 }
 

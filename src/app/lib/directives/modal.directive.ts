@@ -14,7 +14,8 @@ import { Platform } from '../platform.service';
 @Directive({
     // tslint:disable-next-line:directive-selector
     selector: '[modal]',
-    exportAs: 'modal'
+    exportAs: 'modal',
+    standalone: true
 })
 export class ModalDirective implements OnDestroy, AfterViewInit {
     // connect opener to a trigger by css selector

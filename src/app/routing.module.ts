@@ -16,9 +16,7 @@ const routes: Routes = [
             {
                 path: '',
                 component: ErrorComponent,
-                data: {
-                    title: 'ERROR'
-                }
+                title: 'ERROR'
             }
         ]
     },
@@ -29,9 +27,7 @@ const routes: Routes = [
             {
                 path: '',
                 component: NotFoundComponent,
-                data: {
-                    title: 'NOT_FOUND'
-                }
+                title: 'NOT_FOUND'
             }
         ]
     },
@@ -43,12 +39,16 @@ const routes: Routes = [
     //         {
     //             path: '',
     //             component: PublicHomeComponent,
-    //             data: {
-    //                 title: 'SITE_NAME'
-    //             }
+    //             title: 'SITE_NAME'
     //         }
     //     ]
     // },
+   //  {
+   //    path: '',
+   //    component: MainLayoutComponent,
+   //    loadComponent: () => import('./routes/public.route').then(m => m.PublicRoutes),
+   //    data: { preload: true }
+   //  },
     // lazy loading? remove declration from app.module
     {
         path: '',

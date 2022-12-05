@@ -1,6 +1,5 @@
 import { NgModule, APP_INITIALIZER, ErrorHandler } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CricketInterceptor } from './http';
@@ -12,7 +11,7 @@ import { configFactory, ConfigService } from '../services/config.service';
 
 // services singletons here
 @NgModule({
-    imports: [CommonModule, HttpClientModule],
+    imports: [HttpClientModule],
     providers: [Title,
 
         {

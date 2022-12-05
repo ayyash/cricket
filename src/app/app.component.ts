@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router, NavigationCancel } from '@angular/router';
-import { LoaderService } from './core/services';
+import { LoaderService } from './services/loader.service';
 import { filter } from 'rxjs/operators';
 import { EnumGtmEvent, GtmTracking } from './core/gtm';
 @Component({

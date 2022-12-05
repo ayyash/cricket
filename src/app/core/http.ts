@@ -9,8 +9,9 @@ import {
     HttpResponse,
     HttpHeaders
 } from '@angular/common/http';
-import { ConfigService, LoaderService } from './services';
 import { catchAppError, debug } from './rxjs.operators';
+import { ConfigService } from '../services/config.service';
+import { LoaderService } from '../services/loader.service';
 
 
 @Injectable()

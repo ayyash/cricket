@@ -4,7 +4,8 @@ import { auditTime } from 'rxjs/operators';
 
 @Directive({
     selector: '[shScroll]',
-    exportAs: 'shScroll'
+    exportAs: 'shScroll',
+    standalone: true
 })
 export class ScrollDirective implements AfterViewInit, OnDestroy {
     // the heading of the app, keep somethign showing on scroll events

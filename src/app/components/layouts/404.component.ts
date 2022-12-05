@@ -1,9 +1,10 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { LoaderService } from '../../core/services';
+import { LoaderService } from '../../services/loader.service';
 
 @Component({
     templateUrl: './404.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true
 })
 export class NotFoundComponent implements OnInit {
 

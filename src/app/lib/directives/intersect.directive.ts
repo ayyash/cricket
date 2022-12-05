@@ -5,7 +5,8 @@ import { Platform } from '../platform.service';
 
 @Directive({
     selector: '[shIntersect]',
-    exportAs: 'shIntersect'
+    exportAs: 'shIntersect',
+    standalone: true
 })
 export class IntersectDirective implements AfterViewInit {
     @Input() shIntersect: string;

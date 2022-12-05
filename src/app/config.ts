@@ -13,6 +13,11 @@ export const Config = {
         defaultUploadFormat: ['gif', 'jpg', 'jpeg', 'png'],
         defaultToastTimeout: 5000
     },
+    Res: {
+      cookieName: 'cr-lang', // for netlify it's nf_lang
+      languages: [{name: 'en', display: 'English'}, {name: 'ar', display: 'عربي'}],
+      defaultLanguage: 'en' // not maintained
+  },
     Auth: {
         userAccessKey: 'cricket.user'
     },

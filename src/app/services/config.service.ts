@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Config } from '../config';
 import { map, catchError } from 'rxjs/operators';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { IConfig } from '../core/services';
+import { IConfig } from '../models/config.model';
 
 
 export const configFactory = (config: ConfigService) => () =>

@@ -4,8 +4,9 @@ import { map } from 'rxjs/operators';
 import { Config } from '../config';
 import { HttpClient } from '@angular/common/http';
 
-import { IData, DataClass, EnumDataType, StorageService } from '../core/services';
 import { debug } from '../core/rxjs.operators';
+import { DataClass, EnumDataType, IData } from '../models/data.model';
+import { StorageService } from './storage.service';
 
 @Injectable({
     providedIn: 'root'
