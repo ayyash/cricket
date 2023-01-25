@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
-import { EnumDataType, DataService, IData } from '../../core/services';
+import { EnumDataType, IData } from '../../models/data.model';
+import { DataService } from '../../services/data.service';
 import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 
