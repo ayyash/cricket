@@ -38,7 +38,7 @@ export class PagerPartialComponent implements OnInit {
    ngOnInit(): void {
       //
       this.loading$ = this.loaderService.stateItem$.pipe(
-         filter(state => state.src === this.source),
+         filter(state => state?.source === this.source),
          map(state => state ? state.show : false)
       );
       this.mimicHref = this.getMimicHref();

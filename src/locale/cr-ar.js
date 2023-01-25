@@ -37,7 +37,6 @@ function getCountry() {
       Error: 'An error occurred',
       Dismiss: 'Dismiss',
       Unknown: 'Oops! We could not perform the required action for some reason. We are looking into it right now.',
-      NoRes: 'Oops! We could not perform the required action for some reason. We are looking into it right now.',
       DONE: 'Done',
       UNAUTHORIZED: 'You are not authorised to view this page.',
       SAVED: 'Saved successfully',

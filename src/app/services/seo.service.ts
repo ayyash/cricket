@@ -192,7 +192,7 @@ export class SeoService {
         // set generic page title (brought from data)
         const pageKey = Res.Get('PAGE_TITLES') || {};
         const _title = pageKey[key] || Res.Get('DEFAULT_PAGE_TITLE');
-        this.setTitle(_title);        this.setTitle(_title);
+        this.setTitle(_title);
 
         this.setUrl();
 

@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PublicHomeComponent } from '../components/public/home.component';
+import { ResPipe } from '../lib/pipes/res.pipe';
+import { TranslatePipe } from '../lib/pipes/translate.pipe';
 
 
 
@@ -15,7 +17,9 @@ const routes: Routes = [
 
 @NgModule({
     imports: [
-        RouterModule.forChild(routes)
+        RouterModule.forChild(routes),
+        TranslatePipe,
+        ResPipe
     ],
     declarations: [
         PublicHomeComponent

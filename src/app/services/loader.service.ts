@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { share } from 'rxjs';
-import { EnumLoaderSource } from '../models/loaderstate.model';
+import { EnumLoaderSource, ILoaderState } from '../models/loaderstate.model';
 import { StateService } from './state.abstract';
 
 

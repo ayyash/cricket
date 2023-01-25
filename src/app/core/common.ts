@@ -4,6 +4,9 @@ export const toSentenceCase = (s: string) => {
     return s.substring(0, 1).toUpperCase() + s.substring(1);
 };
 
+export const _global: any = typeof globalThis !== 'undefined' && globalThis || typeof global !== 'undefined' && global || typeof window !== 'undefined' && window;
+
+
 
 export const toPrettyPrice = (s: string) => {
     const ret = Number(s.replace(/,/gi, ''));
