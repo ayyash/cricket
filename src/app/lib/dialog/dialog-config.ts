@@ -1,4 +1,3 @@
-import { Observable } from 'rxjs';
 
 export class DialogConfig<D = any> {
     data?: D;

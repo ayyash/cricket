@@ -1,14 +1,9 @@
 
-export enum EnumLoaderSource {
-    HTTP,
-    PAGER
-}
-
 
 export interface ILoaderState {
-    show: boolean;
-    source?: EnumLoaderSource | null;
-    url?: string | null;
-    context?: string;
+   show: boolean;
+   url?: string | null;
+   source?: string | null;
+   context?: string;
 }
 

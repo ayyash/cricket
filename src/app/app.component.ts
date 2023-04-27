@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router, NavigationCancel } from '@angular/router';
-import { LoaderService } from './services/loader.service';
+import { LoaderState } from './services/loader.state';
 import { filter } from 'rxjs/operators';
 import { EnumGtmEvent, GtmTracking } from './core/gtm';
 @Component({
@@ -10,7 +10,7 @@ import { EnumGtmEvent, GtmTracking } from './core/gtm';
 export class AppComponent {
     constructor(
         private router: Router,
-        private LoaderService: LoaderService
+        private LoaderService: LoaderState
     ) {
 
         // this.router.initialNavigation();

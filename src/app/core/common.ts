@@ -172,3 +172,17 @@ export const clone = (obj: any) => {
     return result;
   };
 
+
+  export const hasMore = (total: number, size: number, currentPage: number): boolean => {
+
+   if (total === 0) { return false; }
+
+   const pages = Math.ceil(total / size);
+   if (currentPage === pages) {
+      // no more pages
+      return false;
+   } else {
+      // yes more
+      return true;
+   }
+};

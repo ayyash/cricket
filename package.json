@@ -7,10 +7,10 @@
         "start:rtl": "ng serve  --configuration=rtl --port 5100 --watch  --live-reload false",
         "start:prod": "ng serve --configuration=production --port 5100 --watch  --live-reload false",
         "build": "ng build --configuration=production",
-        "build:server": "ng run cricketweb:server --configuration=production",
+        "build:server": "ng run cricketweb:server:production",
         "build:ssr": "npm run build && npm run build:server",
         "install": "npm install --save  @angular/common @angular/compiler @angular/core @angular/forms @angular/platform-browser @angular/platform-browser-dynamic @angular/platform-server @angular/router @nguniversal/common @nguniversal/express-engine rxjs shut zone.js",
-        "install:dev": "npm install --save-dev @angular/animation @angular-devkit/build-angular @angular/cli @angular/compiler-cli @types/express  @types/node rxjs-tslint tslib",
+        "install:dev": "npm install --save-dev @angular/animations @angular-devkit/build-angular @angular/cli @angular/compiler-cli @types/express  @types/node rxjs-tslint tslib",
         "install:all": "npm run install && npm run install:dev",
         "network": "ng serve --configuration=network --port 5200 --watch  --live-reload false --host 192.168.0.100 --disableHostCheck ",
         "network:secure": "ng serve --ssl --ssl-key c:\\d\\zjunk\\cricket\\localhost.key  --ssl-cert c:\\d\\zjunk\\cricket\\localhost.crt --configuration=network --port 5200 --watch  --live-reload false --host 192.168.0.100 --disableHostCheck "

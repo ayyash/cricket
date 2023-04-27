@@ -13,7 +13,7 @@ import {
 } from '@angular/common/http';
 import { catchAppError, debug } from './rxjs.operators';
 import { ConfigService } from '../services/config.service';
-import { LoaderService } from '../services/loader.service';
+import { LoaderState } from '../services/loader.state';
 
 
 
@@ -30,7 +30,7 @@ export class CricketInterceptor implements HttpInterceptor {
     private isRefreshingToken = false;
     // tokenSubject: BehaviorSubject<string> = new BehaviorSubject<string>(null);
 
-    constructor(private loaderService: LoaderService) { }
+    constructor(private loaderService: LoaderState) { }
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         if (req.url.indexOf('localdata') > -1) {
             // pass through

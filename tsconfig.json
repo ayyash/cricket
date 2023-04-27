@@ -6,8 +6,8 @@
       "forceConsistentCasingInFileNames": true,
       "strict": false,
       // "strictPropertyInitialization": false,
-      "strictNullChecks": true,
-      "noImplicitReturns": true,
+      "strictNullChecks": false,
+      "noImplicitReturns": false,
       "noFallthroughCasesInSwitch": true,
       "sourceMap": true,
       "declaration": false,
@@ -19,7 +19,7 @@
       "resolveJsonModule": true,
       // "esModuleInterop": true,
       "noImplicitAny": true,
-      "suppressImplicitAnyIndexErrors": true,
+      // "suppressImplicitAnyIndexErrors": true,
       "allowSyntheticDefaultImports": true,
       "typeRoots": [
          "node_modules/@types"

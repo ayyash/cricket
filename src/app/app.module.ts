@@ -7,6 +7,7 @@ import { CoreModule } from './core/core.module';
 import { MainLayoutComponent } from './components/layouts/main.component';
 import { SingleLayoutComponent } from './components/layouts/single.component';
 import { SHARED_COMPONENTS } from './core/shared.components';
+import { CoreProviders } from './core/core.providers';
 
 @NgModule({
    declarations: [AppComponent,
@@ -16,8 +17,13 @@ import { SHARED_COMPONENTS } from './core/shared.components';
       BrowserModule.withServerTransition({ appId: 'cricketServer' }),
       TransferHttpCacheModule,
       AppRoutingModule,
+      ...SHARED_COMPONENTS,
+      // if using modules:
       CoreModule,
-      ...SHARED_COMPONENTS
-   ]
+   ],
+   // if using standalone
+   // providers: [
+   //    ...CoreProviders
+   // ]
 })
 export class AppModule { }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
-import { LoaderService } from '../../services/loader.service';
+import { LoaderState } from '../../services/loader.state';
 
 @Component({
     selector: 'http-loader',
@@ -19,7 +19,7 @@ export class LoaderComponent implements OnInit {
     show$: Observable<boolean>;
 
     constructor(
-        private loaderService: LoaderService
+        private loaderService: LoaderState
     ) { }
 
     ngOnInit() {

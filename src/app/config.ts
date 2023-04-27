@@ -4,8 +4,7 @@ import { environment } from '../environments/environment';
 export const Config = {
     isServed: false,
     Basic: {
-        language: resources.language,
-        country: resources.country,
+        country: 'jo',
         defaultRoute: '/',
         defaultSize: 25,
         defaultDateFormt: 'DD-MM-YYYY',

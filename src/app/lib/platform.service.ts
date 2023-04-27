@@ -8,8 +8,11 @@ export class Platform {
 
     isBrowser: boolean = this._platformId ? isPlatformBrowser(this._platformId) : typeof document === 'object' && !!document;
 
-    doc: Document = this._doc;
+
+    doc: Document;
 
     constructor(@Inject(PLATFORM_ID) private _platformId: Object,
-     @Inject(DOCUMENT) private _doc: Document) {}
+     @Inject(DOCUMENT) private _doc: Document) {
+      this.doc = this._doc;
+     }
 }

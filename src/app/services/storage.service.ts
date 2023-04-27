@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { first } from 'rxjs/operators';
 import { Platform } from '../lib/platform.service';
-import { Config } from '../config';
 import { debug } from '../core/rxjs.operators';
 import { ConfigService } from './config.service';
 import { ICachedStorage } from '../models/cachedstorage.model';
+import { Res } from '../core/resources';
 
 @Injectable({ providedIn: 'root' })
 export class StorageService {
@@ -19,7 +19,7 @@ export class StorageService {
     }
 
     private getKey(key: string, withLanguage = false): string {
-        return `${ConfigService.Config.Storage.Key}${withLanguage ? '.' + Config.Basic.language : ''}.${key}`;
+        return `${ConfigService.Config.Storage.Key}${withLanguage ? '.' +  Res.language : ''}.${key}`;
     }
 
 
@@ -76,7 +76,7 @@ export class StorageService {
         return null;
     }
 
-    removeItem(key: string, withLanguage = true) {
+    removeItem(key: string, withLanguage = false) {
 
         this.ourStorage.removeItem(this.getKey(key, withLanguage));
     }

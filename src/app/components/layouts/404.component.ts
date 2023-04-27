@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { LoaderService } from '../../services/loader.service';
+import { LoaderState } from '../../services/loader.state';
 
 @Component({
     templateUrl: './404.component.html',
@@ -8,7 +8,7 @@ import { LoaderService } from '../../services/loader.service';
 })
 export class NotFoundComponent implements OnInit {
 
-    constructor(private loaderService: LoaderService) { }
+    constructor(private loaderService: LoaderState) { }
 
     ngOnInit() {
         _debug(this.loaderService.currentItem.url, '404ed url');

@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { share } from 'rxjs';
-import { EnumLoaderSource, ILoaderState } from '../models/loaderstate.model';
+import { ILoaderState } from '../models/loaderstate.model';
 import { StateService } from './state.abstract';
 
 
 @Injectable({
     providedIn: 'root'
 })
-export class LoaderService extends StateService<ILoaderState> {
+export class LoaderState extends StateService<ILoaderState> {
 
     constructor() {
         super('NONE');
@@ -18,11 +18,11 @@ export class LoaderService extends StateService<ILoaderState> {
         // this does make the state fired shared amongst all listeners
         this.stateItem$ = this.stateItem$.pipe(share());
     }
-    show(context: string, source: EnumLoaderSource = EnumLoaderSource.HTTP) {
-        this.UpdateState({show: true, source, context});
+    show(source: string) {
+        this.UpdateState({show: true, source});
     }
-    hide(context: string, source: EnumLoaderSource = EnumLoaderSource.HTTP) {
-        this.UpdateState({show: false, source, context});
+    hide(source: string) {
+        this.UpdateState({show: false, source});
     }
     emitUrl(url: string) {
         this.UpdateState({url});

@@ -96,7 +96,7 @@
                   ],
                   "stylePreprocessorOptions": {
                      "includePaths": [
-                        "./mockup/less",
+                        "./raw/less",
                         "./node_modules/shut/src/less"
                      ]
                   },
@@ -254,7 +254,7 @@
                   "tsConfig": "tsconfig.server.json",
                   "stylePreprocessorOptions": {
                      "includePaths": [
-                        "./mockup/less",
+                        "./raw/less",
                         "./node_modules/shut/src/less"
                      ]
                   }
