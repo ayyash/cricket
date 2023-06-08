@@ -127,11 +127,7 @@
                         "input": "configs",
                         "output": "/localdata"
                      },
-                     {
-                        "glob": "*.json",
-                        "input": "localdata",
-                        "output": "/localdata"
-                     },
+
                      {
                         "glob": "*(ar-JO|en).js",
                         "input": "node_modules/@angular/common/locales/global",
