@@ -9,10 +9,10 @@ import { SHARED_COMPONENTS } from './utils/shared.components';
 import { CoreProviders } from './utils/core.providers';
 
 @NgModule({
+    declarations: [
+        AppComponent
+    ],
     imports: [
-        SingleLayoutComponent,
-        AppComponent,
-        MainLayoutComponent,
         BrowserModule,
         AppRoutingModule,
         ...SHARED_COMPONENTS,
