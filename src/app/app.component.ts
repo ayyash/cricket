@@ -5,7 +5,9 @@ import { LoaderState } from './lib/loader/loader.state';
 import { GtmTracking, EnumGtmEvent } from './utils/gtm';
 @Component({
     selector: 'app-root',
-    template: '<http-loader></http-loader><sh-toast *shServerRender="false"></sh-toast><router-outlet></router-outlet>'
+    template: '<http-loader></http-loader><router-outlet></router-outlet>',
+    standalone: true,
+    imports: [LoaderComponent, RouterModule]
 })
 export class AppComponent {
     constructor(
