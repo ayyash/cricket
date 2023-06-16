@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { share } from 'rxjs';
-import { ILoaderState } from '../models/loaderstate.model';
-import { StateService } from './state.abstract';
+import { ILoaderState } from './loaderstate.model';
+import { StateService } from '../../utils/state.abstract';
 
 
 @Injectable({

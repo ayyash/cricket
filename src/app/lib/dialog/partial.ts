@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input, EventEmitter, Output, ViewChild, ElementRef, ViewEncapsulation, HostListener } from '@angular/core';
+import { Component, ChangeDetectionStrategy, EventEmitter, Output, ViewEncapsulation, HostListener } from '@angular/core';
 
 @Component({
    selector: 'nv-dialog-partial',
@@ -13,7 +13,7 @@ export class DialogPartialComponent {
 
 
    title: string = '';
-   css: string = '';
+   // remove css, where are my fields
 
    public close(data?: any): void {
       this.onClose.emit(data);

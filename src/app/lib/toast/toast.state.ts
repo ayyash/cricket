@@ -1,16 +1,28 @@
-import { Injectable } from '@angular/core';
+import { ApplicationRef, createComponent, EmbeddedViewRef, inject, Injectable } from '@angular/core';
 import { Observable, of, Subscription, throwError, timer } from 'rxjs';
-import { Res } from '../../core/resources';
-import { IUiError } from '../../models/error.model';
-import { StateService } from '../../services/state.abstract';
 import { IToastButton, IToast, EnumTimeout } from './toast.model';
-
+import { ToastPartialComponent } from './toast.partial';
+import { StateService } from '../../utils/state.abstract';
 
 @Injectable({ providedIn: 'root' })
 export class Toast extends StateService<IToast> {
    //
    // keep track of timeout
    private isCanceled: Subscription;
+   private created: boolean;
+
+   private addComponent() {
+      const componentRef = createComponent(ToastPartialComponent, {
+         environmentInjector: this.appRef.injector
+      });
+
+      this.appRef.attachView(componentRef.hostView);
+      // FIXME: platform
+      document.body.append((<EmbeddedViewRef<any>>componentRef.hostView).rootNodes[0]);
+
+      this.created = true;
+
+   }
 
 
    public dismissButton: IToastButton = {
@@ -30,13 +42,17 @@ export class Toast extends StateService<IToast> {
       visible: false
    };
 
-   constructor() {
+   constructor(private appRef: ApplicationRef) {
       super();
       this.SetState({ ...this.defaultOptions });
    }
 
 
    Show(code: string, options?: IToast): void {
+      if (!this.created) {
+         this.addComponent();
+      }
+
 
       this.Hide();
 
@@ -74,7 +90,6 @@ export class Toast extends StateService<IToast> {
       }
       this.UpdateState({ visible: false });
    }
-
 
 
    HandleUiError(error: IUiError, options?: IToast): Observable<any> {

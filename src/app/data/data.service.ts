@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Config } from '../config';
 import { HttpClient } from '@angular/common/http';
 
-import { debug } from '../core/rxjs.operators';
-import { DataClass, EnumDataType, IData } from '../models/data.model';
+import { Config } from '../utils/config';
+import { debug } from '../utils/rxjs.operators';
+import { DataClass, EnumDataType, IData } from './data.model';
 import { StorageService } from './storage.service';
 
 @Injectable({

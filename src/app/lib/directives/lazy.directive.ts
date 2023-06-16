@@ -1,5 +1,5 @@
 import { Directive, ElementRef, Input, Renderer2, AfterViewInit } from '@angular/core';
-import { Platform } from '../platform.service';
+import { Platform } from '../../utils/platform.service';
 
 @Directive({
     selector: '[shLazy]',

@@ -1,4 +1,4 @@
-import { ApplicationRef, EmbeddedViewRef, Inject, Injectable, Injector, OnDestroy, StaticProvider, Type, createComponent } from '@angular/core';
+import { ApplicationRef, EmbeddedViewRef, Inject, Injectable, Injector, StaticProvider, Type, createComponent } from '@angular/core';
 import { DialogPartialComponent } from './partial';
 import { DOCUMENT } from '@angular/common';
 
@@ -15,7 +15,7 @@ export interface IDialogOptions {
 export class DialogService  {
 
 
-   public dialogs: { [key: string]: DialogPartialComponent; } = {};
+   dialogs: { [key: string]: DialogPartialComponent; } = {};
 
    constructor(
       // bring in the application ref
@@ -57,6 +57,10 @@ export class DialogService  {
          this.dialogs[options.id] = componentRef.instance;
       }
 
+      if (options?.css){
+
+         dialogElement.classList.add(...options.css.split(' '));
+      }
       this.doc.body.append(dialogElement);
 
       // attach view
@@ -65,7 +69,7 @@ export class DialogService  {
 
       // assign title
       componentRef.instance.title = options?.title || '';
-      componentRef.instance.css = options?.css || '';
+      // componentRef.instance.css = options?.css || '';
 
       childRef.instance.data = options?.data;
       childRef.instance.dialog = componentRef.instance;

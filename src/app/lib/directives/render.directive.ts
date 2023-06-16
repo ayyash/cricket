@@ -1,26 +1,26 @@
-import { Directive, OnInit, ViewContainerRef, TemplateRef, Inject, PLATFORM_ID, Input } from '@angular/core';
-import { isPlatformServer } from '@angular/common';
+import { Directive, OnInit, PLATFORM_ID, Input, inject } from '@angular/core';
+import { NgIf, isPlatformServer } from '@angular/common';
 
 @Directive({
-    selector: '[shServerRender]',
-    standalone: true
+  selector: '[shServerRender]',
+  standalone: true,
+  hostDirectives: [{
+    directive: NgIf,
+    inputs: ['ngIfElse: shServerRenderElse']
+  }]
 })
-export class AppShellRenderDirective implements OnInit {
-    @Input() shServerRender: boolean;
+export class RenderDirective implements OnInit {
+  @Input() shServerRender: boolean;
 
-    constructor(
-        private viewContainer: ViewContainerRef,
-        private templateRef: TemplateRef<any>,
-        // instead of the cdk for some reason
-        @Inject(PLATFORM_ID) private platformId: any
-    ) {}
+  private ngIfDirective = inject(NgIf);
+  private platformId = inject(PLATFORM_ID);
 
-    ngOnInit() {
-        // if sherverrender is false, do not render on server, if true, serve only on server
-        if (isPlatformServer(this.platformId) === this.shServerRender) {
-            this.viewContainer.createEmbeddedView(this.templateRef);
-        } else {
-            this.viewContainer.clear();
-        }
+  ngOnInit() {
+    // if sherverrender is false, do not render on server, if true, serve only on server
+    if (isPlatformServer(this.platformId) === this.shServerRender) {
+      this.ngIfDirective.ngIf = true
+    } else {
+      this.ngIfDirective.ngIf = false;
     }
+  }
 }

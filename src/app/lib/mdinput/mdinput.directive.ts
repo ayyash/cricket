@@ -1,6 +1,6 @@
 import { Directive, Input, OnInit, ElementRef, forwardRef, HostListener } from '@angular/core';
 import { Validator, UntypedFormControl, NG_VALIDATORS, Validators } from '@angular/forms';
-import { Res } from '../../core/resources';
+import { Res } from '../../utils/resources';
 import { MdPatterns } from './validators';
 import { Subject, Observable } from 'rxjs';
 

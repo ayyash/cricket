@@ -1,16 +1,14 @@
 
-import { LoaderComponent } from '../components/common/loader.partial';
 import { GtmDirective } from '../lib/directives/gtm.directive';
-import { AppShellRenderDirective } from '../lib/directives/render.directive';
+import { RenderDirective } from '../lib/directives/render.directive';
+import { LoaderComponent } from '../lib/loader/loader.partial';
 import { ResPipe } from '../lib/pipes/res.pipe';
 import { TranslatePipe } from '../lib/pipes/translate.pipe';
-import { ToastPartialComponent } from '../lib/toast/toast.partial';
 
 export const SHARED_COMPONENTS = [
   // add common standalone components
   LoaderComponent,
-  ToastPartialComponent,
-  AppShellRenderDirective,
+  RenderDirective,
   TranslatePipe,
   GtmDirective,
   ResPipe

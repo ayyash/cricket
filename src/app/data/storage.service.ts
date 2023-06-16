@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { first } from 'rxjs/operators';
-import { Platform } from '../lib/platform.service';
-import { debug } from '../core/rxjs.operators';
-import { ConfigService } from './config.service';
-import { ICachedStorage } from '../models/cachedstorage.model';
-import { Res } from '../core/resources';
+import { Platform } from '../utils/platform.service';
+import { debug } from '../utils/rxjs.operators';
+import { ConfigService } from '../utils/config.service';
+import { ICachedStorage } from './cachedstorage.model';
+import { Res } from '../utils/resources';
 
 @Injectable({ providedIn: 'root' })
 export class StorageService {

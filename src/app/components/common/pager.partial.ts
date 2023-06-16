@@ -10,8 +10,8 @@ import {
  import { Observable } from 'rxjs';
  import { CommonModule } from '@angular/common';
  import { TranslatePipe } from '../../lib/pipes/translate.pipe';
- import { LoaderState } from '../../services/loader.state';
- import { SeoService } from '../../services/seo.service';
+import { SeoService } from '../../utils/seo.service';
+import { LoaderState } from '../../lib/loader/loader.state';
 
  @Component({
    selector: 'cr-pager',

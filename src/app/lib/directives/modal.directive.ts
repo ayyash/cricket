@@ -9,7 +9,7 @@ import {
     ElementRef,
     AfterViewInit
 } from '@angular/core';
-import { Platform } from '../platform.service';
+import { Platform } from '../../utils/platform.service';
 
 @Directive({
     // tslint:disable-next-line:directive-selector

@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { LoaderState } from '../../services/loader.state';
+import { LoaderState } from '../../lib/loader/loader.state';
 
 @Component({
     templateUrl: './404.component.html',

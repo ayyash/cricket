@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, Output, EventEmitter, Input, Inject, ViewEncapsulation } from '@angular/core';
 import { IClientFile, IClientFileError, IClientFileConfig } from './clientfile.model';
-import { Res } from '../../core/resources';
+import { Res } from '../../utils/resources';
 import { Toast } from '../toast';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -52,7 +52,7 @@ export class UploadPartialComponent implements OnInit {
 
         if (file) {
             // file types like "image/png"
-           
+
             if (this.format.findIndex(n => file.type.indexOf(n) > -1) < 0) {
                 valid.format = false;
                 _isvalid = false;

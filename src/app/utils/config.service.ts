@@ -1,9 +1,9 @@
 import { Inject, Injectable, Optional } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Config } from '../config';
+import { Config } from '../utils/config';
 import { map, catchError } from 'rxjs/operators';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { IConfig } from '../models/config.model';
+import { IConfig } from './config.model';
 
 
 export const configFactory = (config: ConfigService) => () =>

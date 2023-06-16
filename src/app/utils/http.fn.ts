@@ -2,8 +2,8 @@ import { HttpHeaders, HttpResponse, HttpInterceptorFn, HttpRequest, HttpHandlerF
 import { inject } from '@angular/core';
 import { shareReplay, map, finalize } from 'rxjs';
 import { debug, catchAppError } from './rxjs.operators';
-import { LoaderState } from '../services/loader.state';
-import { ConfigService } from '../services/config.service';
+import { ConfigService } from '../utils/config.service';
+import { LoaderState } from '../lib/loader/loader.state';
 
 // if standalone use this instead of http.ts
 

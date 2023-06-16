@@ -12,10 +12,8 @@ import {
     HttpContext
 } from '@angular/common/http';
 import { catchAppError, debug } from './rxjs.operators';
-import { ConfigService } from '../services/config.service';
-import { LoaderState } from '../services/loader.state';
-
-
+import { ConfigService } from '../utils/config.service';
+import { LoaderState } from '../lib/loader/loader.state';
 
 // create a context token
 const LOADING_SOURCE = new HttpContextToken<string>(() => '');

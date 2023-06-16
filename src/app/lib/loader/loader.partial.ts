@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
-import { LoaderState } from '../../services/loader.state';
+import { LoaderState } from './loader.state';
 
 @Component({
     selector: 'http-loader',
@@ -12,7 +12,8 @@ import { LoaderState } from '../../services/loader.state';
     <div class="subline dec"></div></div>`,
     styleUrls: ['./loader.less'],
     standalone: true,
-    imports: [CommonModule]
+    imports: [CommonModule],
+    encapsulation: ViewEncapsulation.None
 })
 export class LoaderComponent implements OnInit {
 

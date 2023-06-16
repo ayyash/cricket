@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router, NavigationCancel } from '@angular/router';
-import { LoaderState } from './services/loader.state';
 import { filter } from 'rxjs/operators';
-import { EnumGtmEvent, GtmTracking } from './core/gtm';
+import { LoaderState } from './lib/loader/loader.state';
+import { GtmTracking, EnumGtmEvent } from './utils/gtm';
 @Component({
     selector: 'app-root',
     template: '<http-loader></http-loader><sh-toast *shServerRender="false"></sh-toast><router-outlet></router-outlet>'

@@ -4,8 +4,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CricketInterceptor } from './http';
 import { LocalInterceptor } from './local.interceptor';
-import { CricketErrorHandler } from './error.service';
-import { configFactory, ConfigService } from '../services/config.service';
+import { CricketErrorHandler } from '../utils/error.service';
+import { configFactory, ConfigService } from '../utils/config.service';
 
 
 

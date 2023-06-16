@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Res } from '../../core/resources';
-import { SeoService } from '../../services/seo.service';
+import { TranslatePipe } from '../../lib/pipes/translate.pipe';
+import { Res } from '../../utils/resources';
+import { SeoService } from '../../utils/seo.service';
 @Component({
 
-    templateUrl: './home.html'
+    templateUrl: './home.html',
+    standalone: true,
+    imports: [TranslatePipe]
 })
 export class PublicHomeComponent implements OnInit {
 

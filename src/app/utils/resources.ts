@@ -1,21 +1,6 @@
-/*
-* keys can come from two places, resources global async file (from script in html header /locale/en.js)
-* from internal resources import from locale/resources.ts
-* when importing, generate multiple builds for each language with the proper file replacement
-* This file can be replaced during build by using the `fileReplacements` array. */
-// import { keys, plural } from '../../locale/resources';
-
-import { Config } from '../config';
 import { _global } from './common';
+import { Config } from './config';
 
-declare const cr: {
-  resources: {
-    keys: any;
-    language: string;
-    localeId: string;
-  };
-
-};
 
 export class LocaleId extends String {
   toString() {

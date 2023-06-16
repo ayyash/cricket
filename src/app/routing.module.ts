@@ -4,9 +4,9 @@ import { NotFoundComponent } from './components/layouts/404.component';
 import { ErrorComponent } from './components/layouts/error.component';
 import { MainLayoutComponent } from './components/layouts/main.component';
 import { SingleLayoutComponent } from './components/layouts/single.component';
-import { PreloadService } from './core/preload.service';
-import { RouteReuseService } from './core/routereuse.service';
-import { CricketTitleStrategy } from './services/title.service';
+import { PreloadService } from './utils/preload.service';
+import { RouteReuseService } from './utils/routereuse.service';
+import { CricketTitleStrategy } from './utils/title.service';
 
 const routes: Routes = [
    {
@@ -53,7 +53,7 @@ const routes: Routes = [
    {
       path: '',
       component: MainLayoutComponent,
-      loadChildren: () => import('./routes/public.route').then(m => m.PublicRoutingModule),
+      loadChildren: () => import('./routes/public.route').then(m => m.PublicRoutes),
       data: { preload: true }
 
    },

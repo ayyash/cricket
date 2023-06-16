@@ -1,5 +1,5 @@
 import { Directive, ElementRef, Input, AfterViewInit } from '@angular/core';
-import { Platform } from '../platform.service';
+import { Platform } from '../../utils/platform.service';
 
 
 

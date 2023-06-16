@@ -1,4 +1,4 @@
-import { Config } from '../../config';
+import { Config } from '../../utils/config';
 
 export enum EnumTimeout{
     Short = Config.Basic.defaultToastTimeout,
