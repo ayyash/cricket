@@ -47,7 +47,7 @@ export const CricketInterceptorFn: HttpInterceptorFn = (req: HttpRequest<any>, n
    const url = ConfigService.Config.API.apiRoot + req.url;
 
 
-   const adjustedReq = req.clone({ url: url, setHeaders: getHeaders(req.headers), responseType: 'text' });
+   const adjustedReq = req.clone({ url: url, setHeaders: getHeaders(req.headers)});
    loaderService.show(req.context.get(LOADING_SOURCE));
 
    if (req.body) {

@@ -1,46 +1,144 @@
-import { Directive, ElementRef, Input, Renderer2, AfterViewInit } from '@angular/core';
-import { Platform } from '../../utils/platform.service';
+// classes directive, mostly upon intersection
+import {
+    Directive,
+    ElementRef,
+    Input,
+    AfterViewInit,
+    Renderer2,
+    Optional,
+    Inject,
+    OnChanges,
+    SimpleChanges,
+  } from '@angular/core';
+  import { Platform } from '../../services/core/platform.service';
+  import { REQUEST } from '@nguniversal/express-engine/tokens';
+  import { Request } from 'express';
 
-@Directive({
-    selector: '[shLazy]',
-    exportAs: 'shLazy',
-    standalone: true
-})
-export class LazyDirective implements AfterViewInit {
-    @Input() shLazy: string;
+  interface IOptions {
+    threshold?: number;
+    fallBack?: string;
+    initial?: string;
+    nullCss?: string;
+    id?: string;
+  }
 
-    constructor(private el: ElementRef, private renderer: Renderer2, private platform: Platform) {
-        //
+  @Directive({
+    selector: '[crLazy]',
+    exportAs: 'crLazy',
+    standalone: true,
+  })
+  export class LazyDirective implements AfterViewInit, OnChanges {
+
+    @Input() crLazy: string = '';
+
+    @Input() options: IOptions = { threshold: 0, fallBack: null };
+
+    private io: IntersectionObserver;
+
+    constructor(
+      private el: ElementRef,
+      private platform: Platform,
+      private renderer: Renderer2,
+      @Optional() @Inject(REQUEST) private request: Request
+    ) { }
+
+    private setImage(src: string) {
+      if (this.el.nativeElement.tagName === 'IMG') {
+        this.renderer.setAttribute(this.el.nativeElement, 'src', src);
+      } else {
+        // change background image (add the style)
+        this.renderer.setAttribute(this.el.nativeElement, 'style', `background-image: url(${src})`);
+      }
+    }
+    private lazyLoad(entry: IntersectionObserverEntry) {
+
+      // when intersecting,
+      if (entry.isIntersecting) {
+        // if IMG, change src
+        const img = new Image();
+
+        img.addEventListener('load', () => {
+          // set attributes here ...
+          this.setImage(img.src);
+          // success, remove extra css
+          this.renderer.removeClass(this.el.nativeElement, this.options.nullCss);
+          // disconnect
+          this.io.unobserve(entry.target);
+        });
+        if (this.options.fallBack) {
+          img.addEventListener('error', () => {
+            this.setImage(this.options.fallBack);
+            // disconnect
+            this.io.unobserve(entry.target);
+          });
+        }
+
+        img.src = this.crLazy;
+
+      }
+    }
+
+    // show default before loading
+
+    private isBot(agent: string): boolean {
+      return /bot|googlebot|crawler|spider|robot|crawling|facebook|twitter|bing|linkedin|duckduck/i.test(agent);
     }
 
     ngAfterViewInit() {
-        // if on server, do not show image
-        if (!this.platform.isBrowser) {
-            return;
+
+      if (!this.crLazy && this.options.fallBack) {
+        this.crLazy = this.options.fallBack;
+      }
+
+      if (!this.platform.isBrowser && this.request) {
+
+        // check if its a bot
+        if (this.isBot(this.request.get('user-agent'))) {
+          // load image and return
+          this.setImage(this.crLazy);
+          return;
+        };
+
+        return;
+      }
+
+      if (this.options.initial) {
+        this.setImage(this.options.initial);
+      }
+      if (this.options.nullCss) {
+        this.renderer.addClass(this.el.nativeElement, this.options.nullCss);
+      }
+
+      this.io = new IntersectionObserver((entries, observer) => {
+        // _attn(_entry.intersectionRatio, this.crLazy);
+        const _entry = entries.find((entry) => entry.isIntersecting);
+        if (entries.length > 1) {
+          _attn(entries, 'entries');
+          _attn(entries.find((entry) => entry.intersectionRatio > 0), 'which one is intersecint');
         }
-
-        // on intersection lazy load it // TODO: test on safari
-        // give it a minimum height so that it always gets caught
-        // https://github.com/verlok/lazyload/issues/350#issuecomment-499974362
-        this.renderer.setStyle(this.el.nativeElement, 'minHeight', '5px');
-
-        if (!IntersectionObserver) {
-            this.renderer.setProperty(this.el.nativeElement, 'src', this.shLazy);
-            return;
+        if (_entry) {
+          this.lazyLoad(_entry);
         }
-
-        const io = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    // load image from data-img
-                    const img = entry.target;
-                    img.setAttribute('src', this.shLazy);
-
-                    observer.disconnect();
-                }
-            });
+      },
+        {
+          threshold: this.options.threshold
         });
 
-        io.observe(this.el.nativeElement);
+
+      this.io.observe(this.el.nativeElement);
     }
-}
+
+
+    ngOnChanges(c: SimpleChanges) {
+      // _attn(c, 'onchanges');
+      if (c.crLazy.firstChange) {
+        // act normally
+        return;
+      }
+      if (c.crLazy.currentValue !== c.crLazy.previousValue) {
+        // observe element
+        this.io.observe(this.el.nativeElement);
+      }
+    }
+
+  }

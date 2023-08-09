@@ -1,8 +1,10 @@
-import { ApplicationRef, createComponent, EmbeddedViewRef, inject, Injectable } from '@angular/core';
+import { ApplicationRef, createComponent, EmbeddedViewRef, Injectable } from '@angular/core';
 import { Observable, of, Subscription, throwError, timer } from 'rxjs';
 import { IToastButton, IToast, EnumTimeout } from './toast.model';
 import { ToastPartialComponent } from './toast.partial';
 import { StateService } from '../../utils/state.abstract';
+import { Res } from '../../utils/resources';
+import { IUiError } from '../../utils/error.model';
 
 @Injectable({ providedIn: 'root' })
 export class Toast extends StateService<IToast> {

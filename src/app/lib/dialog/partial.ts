@@ -1,7 +1,6 @@
 import { Component, ChangeDetectionStrategy, EventEmitter, Output, ViewEncapsulation, HostListener } from '@angular/core';
 
 @Component({
-   selector: 'nv-dialog-partial',
    templateUrl: './partial.html',
    styleUrls: ['./styles.less'],
    changeDetection: ChangeDetectionStrategy.OnPush,
