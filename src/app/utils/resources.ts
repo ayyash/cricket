@@ -3,7 +3,7 @@ import { Config } from './config';
 
 
 export class LocaleId extends String {
-  toString() {
+  override toString() {
     return _global.cr?.resources.localeId || Config.Res.defaultLanguage;
   }
 }

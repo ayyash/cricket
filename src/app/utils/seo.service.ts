@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 
-import { Title, Meta } from '@angular/platform-browser';
-import { Res } from '../utils/resources';
-import { Platform } from './platform.service';
-import { Config } from '../utils/config';
-import { GetMatrixParamsAsString, toFormat } from '../utils/common';
+import { Meta, Title } from '@angular/platform-browser';
 import { environment } from '../../environments/environment';
 import { IListOptions, ListOptions } from '../models/list.model';
+import { GetMatrixParamsAsString, toFormat } from '../utils/common';
+import { Config } from '../utils/config';
+import { Res } from '../utils/resources';
+import { Platform } from './platform.service';
 
 
 @Injectable({
@@ -190,7 +190,7 @@ export class SeoService {
 
    setPage(key: string) {
       // set generic page title (brought from data)
-      const pageKey = Res.Get('PAGE_TITLES') || {};
+      const pageKey: any = Res.Get('PAGE_TITLES') || {};
       const _title = pageKey[key] || Res.Get('DEFAULT_PAGE_TITLE');
       this.setTitle(_title);
 

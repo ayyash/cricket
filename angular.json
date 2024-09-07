@@ -39,7 +39,7 @@
               }
             ],
             "stylePreprocessorOptions": {
-              "includePaths": ["./mockup/less", "./node_modules/shut/src/less"]
+              "includePaths": ["./rawless/less", "./node_modules/shut/src/less"]
             },
             "scripts": [
               {

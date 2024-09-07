@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { RouteReuseStrategy, ActivatedRouteSnapshot, DetachedRouteHandle } from '@angular/router';
+import { ActivatedRouteSnapshot, DetachedRouteHandle, RouteReuseStrategy } from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
 
@@ -19,10 +19,10 @@ export class RouteReuseService extends RouteReuseStrategy {
       // if data contains "resuse: never" make a check on id values, if changed, return false
 
       if (future.routeConfig === curr.routeConfig) {
-         if (future.data && future.data.reuse === 'never') {
+         if (future.data && future.data['reuse'] === 'never') {
             // check all params
             let reuse = true;
-            curr.data.params.forEach((n: string) => {
+            curr.data['params'].forEach((n: string) => {
                // check each one at a time, return the first one that fails?
                reuse = reuse && curr.paramMap.get(n) === future.paramMap.get(n);
             });
