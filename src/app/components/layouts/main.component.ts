@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { SeoService } from '../../core/services';
+import { SeoService } from '../../utils/seo.service';
+import { TranslatePipe } from '../../lib/pipes/translate.pipe';
+import { RouterModule } from '@angular/router';
 
 @Component({
     templateUrl: './main.component.html',
     standalone: true,
-    imports: [RouterOutlet],
+    imports: [TranslatePipe, RouterModule]
+    // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MainLayoutComponent implements OnInit {
 

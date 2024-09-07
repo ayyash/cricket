@@ -1,9 +1,8 @@
 
-
 declare const resources: {
-    keys: any;
-    language: string;
-    country: string;
+  keys: any;
+  language: string;
+  country: string;
 };
 
 declare function _debug(o: any, message?: string, type?: string): void;

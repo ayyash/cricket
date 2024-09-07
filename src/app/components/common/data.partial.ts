@@ -1,13 +1,15 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import { EnumDataType, IData } from '../../data/data.model';
+import { DataService } from '../../data/data.service';
 import { Observable } from 'rxjs';
-import { DataService, EnumDataType, IData } from '../../core/services';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'cr-data',
-    template: `{{ (data$ | async)?.name}}`,
+    template: `{{ (data$ | async)?.value}}`,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
-    imports: []
+    imports: [CommonModule]
 })
 export class DataPartialComponent {
     data$: Observable<IData | undefined>;

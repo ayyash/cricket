@@ -1,15 +1,13 @@
 import { Routes } from '@angular/router';
 import { PublicHomeComponent } from '../components/public/home.component';
+// **gulpimport**
 
 
-
-export const PublicRoutes : Routes = [
+export const PublicRoutes: Routes = [
     {
         path: '',
         component: PublicHomeComponent,
-        data: {
-            title: 'SITE_NAME'
-        }
+        title: 'SITE_NAME'
     }
     // **gulproute**
 ];

@@ -16,7 +16,8 @@ export interface IExpandsOptions {
 @Directive({
     // tslint:disable-next-line:directive-selector
     selector: '[shExpands]',
-    exportAs: 'expands'
+    exportAs: 'expands',
+    standalone: true
 })
 export class ExpandsDirective implements OnDestroy, AfterViewInit {
 

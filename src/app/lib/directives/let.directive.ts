@@ -5,7 +5,8 @@ interface LetContext<T> {
 }
 
 @Directive({
-    selector: '[shLet]'
+    selector: '[shLet]',
+    standalone: true
 })
 export class LetDirective<T> {
     private _context: LetContext<T> = {shLet: null};

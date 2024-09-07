@@ -1,11 +1,14 @@
-import { Config } from '../config';
+import { Config } from '../utils/config';
 
-
-export interface IList<T> {
-    total: number;
-    matches: T[];
-
+export interface IListItem {
+    id: string;
 }
+
+export interface IList<T extends IListItem> {
+    matches: T[];
+    total: number;
+}
+
 
 
 export interface IListOptions {
@@ -13,6 +16,8 @@ export interface IListOptions {
     keyword?: string;
     country?: string;
     size?: number;
+    total?: number;
+    hasMore?: boolean;
 
 }
 
@@ -31,10 +36,17 @@ export class ListOptions {
 
     }
 
+    public static MapSeoOptions(options: IListOptions): any {
+        return {
+            page: options.page || 1
+            // add other options here
+        };
+    }
+
 
 }
 
-export class DataList<T>  {
+export class DataList<T extends IListItem>  {
     public mapper?: (dataitem: any) => T;
 
 

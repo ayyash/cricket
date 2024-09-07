@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Res } from '../../core/resources';
-import { SeoService } from '../../core/services';
+import { TranslatePipe } from '../../lib/pipes/translate.pipe';
+import { Res } from '../../utils/resources';
+import { SeoService } from '../../utils/seo.service';
 @Component({
 
     templateUrl: './home.html',
     standalone: true,
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: []
+    imports: [TranslatePipe]
 })
 export class PublicHomeComponent implements OnInit {
 
@@ -17,7 +17,6 @@ export class PublicHomeComponent implements OnInit {
     }
     ngOnInit(): void {
         //
-        this.seoService.setPageSeo();
     }
 
 }
