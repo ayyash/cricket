@@ -1,8 +1,10 @@
-import { Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   templateUrl: './single.component.html',
-  // changeDetection: ChangeDetectionStrategy.OnPush
+  standalone: true,
+  imports: [RouterOutlet],
 })
 export class SingleLayoutComponent implements OnInit {
 

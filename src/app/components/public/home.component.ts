@@ -3,7 +3,10 @@ import { Res } from '../../core/resources';
 import { SeoService } from '../../core/services';
 @Component({
 
-    templateUrl: './home.html'
+    templateUrl: './home.html',
+    standalone: true,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: []
 })
 export class PublicHomeComponent implements OnInit {
 
@@ -14,7 +17,6 @@ export class PublicHomeComponent implements OnInit {
     }
     ngOnInit(): void {
         //
-        // this.seoService.SetHomeSeo();
         this.seoService.setPageSeo();
     }
 

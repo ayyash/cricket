@@ -1,11 +1,13 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
-import { EnumDataType, DataService, IData } from '../../core/services';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Observable } from 'rxjs';
+import { DataService, EnumDataType, IData } from '../../core/services';
 
 @Component({
     selector: 'cr-data',
     template: `{{ (data$ | async)?.name}}`,
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: []
 })
 export class DataPartialComponent {
     data$: Observable<IData | undefined>;

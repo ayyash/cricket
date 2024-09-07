@@ -1,7 +1,7 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
 @Component({
-
+  standalone: true,
     templateUrl: './error.html',
     changeDetection: ChangeDetectionStrategy.OnPush
 })

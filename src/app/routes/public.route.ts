@@ -1,11 +1,9 @@
-import { NgModule } from '@angular/core';
-import { SharedModule } from '../core/shared.module';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes } from '@angular/router';
 import { PublicHomeComponent } from '../components/public/home.component';
 
 
 
-const routes: Routes = [
+export const PublicRoutes : Routes = [
     {
         path: '',
         component: PublicHomeComponent,
@@ -16,15 +14,4 @@ const routes: Routes = [
     // **gulproute**
 ];
 
-@NgModule({
-    imports: [
-        SharedModule,
-        RouterModule.forChild(routes)
-    ],
-    declarations: [
-        PublicHomeComponent
-        // **gulpcomponent**
-    ]
-})
-export class PublicRoutingModule { }
 

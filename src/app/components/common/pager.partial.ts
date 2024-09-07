@@ -1,22 +1,24 @@
 import {
-    Component,
-    OnInit,
-    Input,
-    Output,
-    EventEmitter,
-    ViewEncapsulation,
-    OnDestroy
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewEncapsulation
 } from '@angular/core';
-import { LoaderService, ILoaderState, SeoService } from '../../core/services';
-import { share } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
+import { share } from 'rxjs/operators';
+import { ILoaderState, LoaderService, SeoService } from '../../core/services';
 
 @Component({
     selector: 'cr-pager',
     templateUrl: './pager.partial.html',
     styleUrls: ['./pager.less'],
     encapsulation: ViewEncapsulation.None,
-   // changeDetection: ChangeDetectionStrategy.OnPush // note to self, very little changes here so its okay
+    standalone: true,
+    imports: [],
+   changeDetection: ChangeDetectionStrategy.OnPush // note to self, very little changes here so its okay
 })
 export class PagerPartialComponent implements OnInit, OnDestroy {
     @Input() isLoadMore = false;

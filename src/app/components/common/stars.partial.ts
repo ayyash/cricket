@@ -1,5 +1,9 @@
 import {
-    Component, OnInit, ChangeDetectionStrategy, Input, ViewEncapsulation
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit,
+  ViewEncapsulation
 } from '@angular/core';
 
 @Component({
@@ -7,7 +11,9 @@ import {
     template: `<span class="stars-outer"><span class="stars-inner {{starCss}}" [style.width]="raterounded"></span></span>`,
     styleUrls: ['./stars.less'],
     encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: []
 
 })
 export class StarsPartialComponent implements OnInit {
