@@ -1,7 +1,7 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { CommonModule } from '@angular/common';
 import { LoaderState } from './loader.state';
 
 @Component({
@@ -15,7 +15,7 @@ import { LoaderState } from './loader.state';
     imports: [CommonModule],
     encapsulation: ViewEncapsulation.None
 })
-export class LoaderComponent implements OnInit {
+export class LoaderPartial implements OnInit {
 
     show$: Observable<boolean>;
 

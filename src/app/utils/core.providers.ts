@@ -1,10 +1,9 @@
-import { ErrorHandler, APP_INITIALIZER } from '@angular/core';
-import { Title } from '@angular/platform-browser';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { CricketErrorHandler } from '../utils/error.service';
+import { APP_INITIALIZER, ErrorHandler } from '@angular/core';
 import { configFactory, ConfigService } from '../utils/config.service';
-import { LocalInterceptorFn } from './local.fn';
+import { CricketErrorHandler } from '../utils/error.service';
 import { CricketInterceptorFn } from './http.fn';
+import { LocalInterceptorFn } from './local.fn';
 
 // if standalone providers use this instead of core.module.ts
 
@@ -16,7 +15,6 @@ export const CoreProviders = [
          CricketInterceptorFn
       ])
    ),
-   Title,
    {
       provide: APP_INITIALIZER,
       useFactory: configFactory,
