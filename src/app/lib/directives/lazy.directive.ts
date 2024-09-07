@@ -9,8 +9,8 @@ import {
     Inject,
     OnChanges,
     SimpleChanges,
+    OnDestroy,
   } from '@angular/core';
-  import { Platform } from '../../services/core/platform.service';
   import { REQUEST } from '@nguniversal/express-engine/tokens';
   import { Request } from 'express';
 
@@ -19,7 +19,6 @@ import {
     fallBack?: string;
     initial?: string;
     nullCss?: string;
-    id?: string;
   }
 
   @Directive({
@@ -27,7 +26,7 @@ import {
     exportAs: 'crLazy',
     standalone: true,
   })
-  export class LazyDirective implements AfterViewInit, OnChanges {
+  export class LazyDirective implements AfterViewInit, OnChanges, OnDestroy {
 
     @Input() crLazy: string = '';
 
@@ -61,7 +60,7 @@ import {
           // set attributes here ...
           this.setImage(img.src);
           // success, remove extra css
-          this.renderer.removeClass(this.el.nativeElement, this.options.nullCss);
+          this.renderer.removeClass(entry.target, this.options.nullCss);
           // disconnect
           this.io.unobserve(entry.target);
         });
@@ -141,4 +140,8 @@ import {
       }
     }
 
+    ngOnDestroy(): void {
+      this.io?.disconnect();
+      this.io = null;
+    }
   }

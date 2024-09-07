@@ -5,7 +5,8 @@ import {
   Input,
   AfterViewInit,
   EventEmitter,
-  Output
+  Output,
+  OnDestroy
 } from '@angular/core';
 import { Platform } from '../../services/core/platform.service';
 
@@ -26,10 +27,10 @@ const clean = (str: string) => str ? str.split(' ') : [];
 
 @Directive({
   selector: '[crInview]',
-  exportAs: 'crInview',
+  // exportAs: 'crInview',
   standalone: true,
 })
-export class InviewDirective implements AfterViewInit {
+export class InviewDirective implements AfterViewInit, OnDestroy {
   @Input() crInview: string = '';
 
   @Input() options: IInview = {
@@ -40,9 +41,11 @@ export class InviewDirective implements AfterViewInit {
     once: false
   };
 
+
   @Output() onInview = new EventEmitter<void>();
   @Output() onOutofview = new EventEmitter<void>();
 
+  private io: IntersectionObserver;
   private viewClasses!: IViewClasses;
 
   private prepClasses(): IViewClasses {
@@ -78,7 +81,7 @@ export class InviewDirective implements AfterViewInit {
       this.onInview.emit();
 
       if (this.options.once) {
-        observer.disconnect();
+        this.unobserve();
       }
 
     } else {
@@ -90,8 +93,16 @@ export class InviewDirective implements AfterViewInit {
       entry.target.classList.add(...c.outofView);
 
       this.onOutofview.emit();
-      
+
     }
+  }
+
+  observe() {
+    this.io.observe(this.el.nativeElement);
+  }
+
+  unobserve() {
+    this.io.unobserve(this.el.nativeElement);
   }
 
   ngAfterViewInit() {
@@ -103,12 +114,16 @@ export class InviewDirective implements AfterViewInit {
     // prep classes
     this.viewClasses = this.prepClasses();
 
-    const io = new IntersectionObserver((entries, observer) => {
+    this.io = new IntersectionObserver((entries, observer) => {
       this.classChange(entries[0], observer);
     },
       {
         threshold: this.options.threshold
       });
-    io.observe(this.el.nativeElement);
+    this.observe();
+  }
+  ngOnDestroy() {
+    this.io.disconnect();
+    this.io = null;
   }
 }
