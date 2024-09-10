@@ -1,3 +1,4 @@
+import { _global } from "./common";
 
 declare let dataLayer: any[]; // Declare google tag
 
@@ -37,7 +38,6 @@ export interface IGtmTrack {
     source?: EnumGtmSource; // to control where the event is coming from
 }
 
-
 export class GtmTracking {
 
     private static _values = {};
@@ -49,7 +49,7 @@ export class GtmTracking {
     }
 
 	private static Push(data: any) {
-        if (window && window['dataLayer']) {
+        if (window && _global.dataLayer) {
             dataLayer.push(data);
         }
     }

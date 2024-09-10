@@ -1,36 +1,28 @@
-# Cricket
+# Dmart
 
-Angular Cricket
+Angular Dmart
 
 ## Get started
 
 Download nodejs (10+) and npm (6.5+), download this project (it's a boilerplate, it is designed to be decoupled from original), and in the root, run 
 
-`npm install -g @angular/cli typescript gulp`
+`npm install -g @angular/cli typescript`
 
 You need gulp to run the gulp tasks to prepare css out of LESS and RTL files, in addition to post build for ssr. Always check what typescript is supported by angular and install a local version of it.
 
 Run
 
-`npm run install` and `npm run install:dev`: will get you started with packages needed for this seed
-
-Then (these gulp tasks are part of [sekrab-gulpbin](https://www.npmjs.com/package/sekrab-gulpbin) package)
-
-`gulp inject` to inject all components and services in barrel files
-
-Finally
-
-`gulp critical` to generate the css files from .less files
+`npm run install:all` will get you started with packages needed for this seed
 
 ## Renaming
 
-To rename every instance of "cricket" to a new name, find and replace the following
-- "cricket" -> "newname"
-- "Cricket" -> "Newname"
+To rename every instance of "dmart" to a new name, find and replace the following
+- "dmart" -> "newname"
+- "Dmart" -> "Newname"
 - "cr" -> "nn" (angular selector prefix, and in gulfiles/config.json)
-- rename assets/js/cricket.js to `newname.js`
+- rename assets/js/dmart.js to `newname.js`
 
-## Cricket flavors
+## Dmart flavors
 
 The main branch contains everything, different combinations are added in different branches. 
 
@@ -109,11 +101,3 @@ You can optionally use these instead of the angular cli packaged commands (or yo
 [GulpBin Readme](https://github.com/ayyash/gulpbin)
 
 
-TODO:
-
-- [✅] Add reuse strategy
-- [⬜]] Add default components examples
-- [✅] Make a lazy loaded module
-- [⬜] Seperate Sever-only service
-- [⬜] Add PWA
-- [✅] Get rid of clonedeep in state

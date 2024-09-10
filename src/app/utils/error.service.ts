@@ -1,5 +1,5 @@
 import { ErrorHandler, Injectable } from '@angular/core';
-import { EnumGtmEvent, GtmTracking } from '../utils/gtm';
+import { EnumGtmEvent, GtmTracking } from './gtm';
 
 @Injectable()
 export class CricketErrorHandler implements ErrorHandler {

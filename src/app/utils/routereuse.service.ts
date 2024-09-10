@@ -4,14 +4,14 @@ import { ActivatedRouteSnapshot, DetachedRouteHandle, RouteReuseStrategy } from 
 @Injectable({ providedIn: 'root' })
 
 export class RouteReuseService extends RouteReuseStrategy {
-   shouldDetach(route: ActivatedRouteSnapshot): boolean {
+   shouldDetach(): boolean {
       return false;
    }
-   store(route: ActivatedRouteSnapshot, detachedTree: DetachedRouteHandle): void { }
-   shouldAttach(route: ActivatedRouteSnapshot): boolean {
+   store(): void { }
+   shouldAttach(): boolean {
       return false;
    }
-   retrieve(route: ActivatedRouteSnapshot): DetachedRouteHandle | null {
+   retrieve(): DetachedRouteHandle | null {
       return null;
    }
    shouldReuseRoute(curr: ActivatedRouteSnapshot, future: ActivatedRouteSnapshot): boolean {

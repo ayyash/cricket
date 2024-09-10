@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 
 import { Meta, Title } from '@angular/platform-browser';
 import { environment } from '../../environments/environment';
-import { IListOptions, ListOptions } from '../models/list.model';
-import { GetMatrixParamsAsString, toFormat } from '../utils/common';
-import { Config } from '../utils/config';
-import { Res } from '../utils/resources';
+import { IListOptions, ListOptions } from '../services/list.model';
+import { GetMatrixParamsAsString, toFormat } from './common';
+import { Config } from './config';
 import { Platform } from './platform.service';
+import { Res } from './resources';
 
 
 @Injectable({

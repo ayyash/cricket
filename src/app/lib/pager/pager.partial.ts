@@ -1,17 +1,17 @@
+import { CommonModule } from '@angular/common';
 import {
-   Component,
-   OnInit,
-   Input,
-   Output,
-   EventEmitter,
-   ViewEncapsulation,
- } from '@angular/core';
- import { filter, map } from 'rxjs/operators';
- import { Observable } from 'rxjs';
- import { CommonModule } from '@angular/common';
- import { TranslatePipe } from '../../lib/pipes/translate.pipe';
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewEncapsulation,
+} from '@angular/core';
+import { Observable } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
 import { SeoService } from '../../utils/seo.service';
-import { LoaderState } from '../../lib/loader/loader.state';
+import { LoaderState } from '../loader/loader.state';
+import { TranslatePipe } from '../pipes/translate.pipe';
 
  @Component({
    selector: 'cr-pager',

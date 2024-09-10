@@ -186,3 +186,31 @@ export const hasMore = (total: number, size: number, currentPage: number): boole
     return true;
  }
 };
+
+
+
+export const uuid = (): string => {
+
+  if (window?.crypto) {
+
+      var buf = new Uint32Array(4);
+      window.crypto.getRandomValues(buf);
+      var idx = -1;
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+          idx++;
+          var r = (buf[idx >> 3] >> ((idx % 8) * 4)) & 15;
+          var v = c == 'x' ? r : (r & 0x3 | 0x8);
+          return v.toString(16);
+      });
+
+  } else {
+
+      var dt = new Date().getTime();
+      var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+          var r = (dt + Math.random() * 16) % 16 | 0;
+          dt = Math.floor(dt / 16);
+          return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+      });
+      return uuid;
+  }
+};

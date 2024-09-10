@@ -1,7 +1,7 @@
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { APP_INITIALIZER, ErrorHandler } from '@angular/core';
-import { configFactory, ConfigService } from '../utils/config.service';
-import { CricketErrorHandler } from '../utils/error.service';
+import { configFactory, ConfigService } from './config.service';
+import { CricketErrorHandler } from './error.service';
 import { CricketInterceptorFn } from './http.fn';
 import { LocalInterceptorFn } from './local.fn';
 
