@@ -157,8 +157,7 @@
             "development": {
               "buildTarget": "cricketweb:build:serve"
             }
-          },
-          "defaultConfiguration": "development"
+          }
         }
       }
     }
