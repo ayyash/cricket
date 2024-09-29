@@ -1,14 +1,4 @@
 
-// TODO: make use of this
-function getCountry() {
-   if (window) {
-      const _country = document.cookie.split(';').find(n => n.indexOf('country') > -1);
-      if (_country) {
-         return _country.split('=')[1];
-      }
-   }
-   return 'JO';
-}
 
 // make it run on both platforms
 (function (global) {

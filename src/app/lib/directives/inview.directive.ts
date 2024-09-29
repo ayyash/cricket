@@ -1,14 +1,14 @@
 // classes directive, mostly upon intersection
 import {
-  AfterViewInit,
-  Directive,
-  ElementRef,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  Output
+    AfterViewInit,
+    Directive,
+    ElementRef,
+    EventEmitter,
+    Input,
+    OnDestroy,
+    Output
 } from '@angular/core';
-import { Platform } from '../../services/core/platform.service';
+import { Platform } from '../../models/core/platform.service';
 
 export interface IInview {
   outofview?: string,

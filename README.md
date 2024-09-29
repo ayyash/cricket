@@ -1,6 +1,6 @@
-# Dmart
+# Cricket
 
-Angular Dmart
+Angular Cricket
 
 ## Get started
 
@@ -16,13 +16,13 @@ Run
 
 ## Renaming
 
-To rename every instance of "dmart" to a new name, find and replace the following
-- "dmart" -> "newname"
-- "Dmart" -> "Newname"
+To rename every instance of "cricket" to a new name, find and replace the following
+- "cricket" -> "newname"
+- "Cricket" -> "Newname"
 - "cr" -> "nn" (angular selector prefix, and in gulfiles/config.json)
-- rename assets/js/dmart.js to `newname.js`
+- rename assets/js/cricket.js to `newname.js`
 
-## Dmart flavors
+## Cricket flavors
 
 The main branch contains everything, different combinations are added in different branches. 
 

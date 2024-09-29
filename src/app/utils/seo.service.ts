@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Meta, Title } from '@angular/platform-browser';
 import { environment } from '../../environments/environment';
-import { IListOptions, ListOptions } from '../services/list.model';
+import { IListOptions, ListOptions } from '../models/list.model';
 import { GetMatrixParamsAsString, toFormat } from './common';
 import { Config } from './config';
 import { Platform } from './platform.service';

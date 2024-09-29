@@ -10,7 +10,7 @@ import { IDialogOptions } from './service';
    standalone: true,
    imports: [CommonModule]
 })
-export class DialogPartialComponent {
+export class DialogPartial {
 
    @Output() onClose: EventEmitter<any> = new EventEmitter<any>();
 

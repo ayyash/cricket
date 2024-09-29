@@ -7,7 +7,7 @@
         "start:rtl": "ng serve  --configuration rtl --port 5100 --watch  --live-reload false",
         "start:prod": "ng serve --configuration production --port 5100 --watch  --live-reload false",
         "build": "ng build --configuration production",
-        "install": "npm install --save  @angular/common @angular/compiler @angular/core @angular/forms  @angular/platform-browser @angular/platform-browser-dynamic @angular/router rxjs shut zone.js tslib",
+        "install": "npm install --save  @angular/common @angular/compiler @angular/core @angular/forms  @angular/platform-browser @angular/platform-browser-dynamic @angular/router rxjs shut tslib",
         "install:dev": "npm install --save-dev @angular-devkit/build-angular @angular/cli @angular/compiler-cli typescript --force",
         "install:all": "npm run install && npm run install:dev"
     }

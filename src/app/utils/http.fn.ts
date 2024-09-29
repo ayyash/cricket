@@ -1,4 +1,4 @@
-import { HttpContext, HttpContextToken, HttpHandlerFn, HttpHeaders, HttpInterceptorFn, HttpRequest, HttpResponse } from '@angular/common/http';
+import { HttpContext, HttpContextToken, HttpHandlerFn, HttpInterceptorFn, HttpRequest, HttpResponse } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { finalize, map, shareReplay } from 'rxjs';
 import { LoaderState } from '../lib/loader/loader.state';
@@ -16,9 +16,9 @@ export const applyContext = (src: string) => {
 };
 
 
-const getHeaders = (reqheaders: HttpHeaders): any => {
+const getHeaders = (): any => {
    //  authorization here
-   let headers: any = {...reqheaders};
+   let headers: any = { };
 
 
    return headers;
@@ -36,18 +36,18 @@ const mapData = (response: any) => {
    return response;
 };
 
-export const DmartInterceptorFn: HttpInterceptorFn = (req: HttpRequest<any>, next: HttpHandlerFn) => {
+export const CricketInterceptorFn: HttpInterceptorFn = (req: HttpRequest<any>, next: HttpHandlerFn) => {
 
    const loaderService = inject(LoaderState);
 
-   if (req.url.indexOf('localdata') > -1 || req.url.indexOf('http') > -1) {
+   if (req.url.indexOf('localdata') > -1) {
       // pass through
       return next(req);
    }
    const url = ConfigService.Config.API.apiRoot + req.url;
 
 
-   const adjustedReq = req.clone({ url: url, setHeaders: getHeaders(req.headers)});
+   const adjustedReq = req.clone({ url: url, setHeaders: getHeaders()});
    loaderService.show(req.context.get(LOADING_SOURCE));
 
    if (req.body) {

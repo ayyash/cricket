@@ -1,12 +1,11 @@
 import {
-    HttpContext,
-    HttpContextToken,
-    HttpEvent,
-    HttpHandler,
-    HttpHeaders,
-    HttpInterceptor,
-    HttpRequest,
-    HttpResponse
+  HttpContext,
+  HttpContextToken,
+  HttpEvent,
+  HttpHandler,
+  HttpInterceptor,
+  HttpRequest,
+  HttpResponse
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -37,7 +36,7 @@ export class CricketInterceptor implements HttpInterceptor {
         const url = ConfigService.Config.API.apiRoot + req.url;
 
 
-        const adjustedReq = req.clone({ url: url, setHeaders: this.getHeaders(req.headers) });
+        const adjustedReq = req.clone({ url: url, setHeaders: this.getHeaders() });
         this.loaderService.show(req.context.get(LOADING_SOURCE));
 
         if (req.body) {
@@ -59,7 +58,7 @@ export class CricketInterceptor implements HttpInterceptor {
         // do catch 401 here
     }
 
-    private getHeaders(reqheaders: HttpHeaders): any {
+    private getHeaders(): any {
         //  authorization here
         let headers: any = {};
 

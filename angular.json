@@ -143,21 +143,17 @@
                   "inject": false
                 }
               ]
-            },
-            "defaultConfiguration": "production"
+            }
           }
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
-
           "configurations": {
-            "production": {
-              "buildTarget": "cricketweb:build:serveProduction"
-            },
             "development": {
               "buildTarget": "cricketweb:build:serve"
             }
-          }
+          },
+          "defaultConfiguration": "production"
         }
       }
     }
