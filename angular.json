@@ -18,7 +18,7 @@
       "prefix": "cr",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:application",
+          "builder": "@angular/build:application",
           "options": {
             "browser": "src/main.ts",
             "polyfills": ["zone.js"],
@@ -36,7 +36,11 @@
           },
           "configurations": {
             "serve": {
-              "outputPath": "dist",
+              "outputPath": {
+                "base": "dist",
+                "media": "assets",
+                "browser": ""
+              },
               "index": "src/index.dev.html",
               "optimization": false,
               "extractLicenses": false,
@@ -78,7 +82,11 @@
               ]
             },
             "production": {
-              "outputPath": "./host/client/",
+              "outputPath": {
+                "base": "./host/client/",
+                "media": "assets",
+                "browser": ""
+              },
               "index": "src/placeholder.html",
               "fileReplacements": [
                 {
@@ -136,24 +144,21 @@
                   "input": "src/assets/css/cricket.css",
                   "bundleName": "styles",
                   "inject": false
-                },
-                {
-                  "input": "src/assets/css/cricket.rtl.css",
-                  "bundleName": "styles.rtl",
-                  "inject": false
                 }
               ]
             }
           }
         },
         "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "configurations": {
-            "development": {
-              "buildTarget": "cricketweb:build:serve"
-            }
+          "builder": "@angular/build:dev-server",
+          "options": {
+            "buildTarget": "cricketweb:build:serve"
           },
-          "defaultConfiguration": "production"
+          "configurations": {
+            "production": {
+              "buildTarget": "cricketweb:build:production"
+            }
+          }
         }
       }
     }

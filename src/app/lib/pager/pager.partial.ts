@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  ViewEncapsulation,
+    Component,
+    EventEmitter,
+    Input,
+    OnInit,
+    Output,
+    ViewEncapsulation,
 } from '@angular/core';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
@@ -24,7 +24,7 @@ import { TranslatePipe } from '../pipes/translate.pipe';
    `,
    styleUrls: ['./pager.less'],
    encapsulation: ViewEncapsulation.None,
-   standalone: true,
+
    imports: [CommonModule, TranslatePipe]
  })
  export class PagerPartialComponent implements OnInit {

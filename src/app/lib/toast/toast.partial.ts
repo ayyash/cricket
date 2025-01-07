@@ -4,7 +4,7 @@ import { Toast } from './toast.state';
 
 @Component({
    selector: 'sh-toast',
-   standalone: true,
+
    imports: [CommonModule],
    template: `
     <ng-container *ngIf="toastState.stateItem$ | async as toast">

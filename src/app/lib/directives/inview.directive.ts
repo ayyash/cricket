@@ -28,7 +28,7 @@ const clean = (str: string) => str ? str.split(' ') : [];
 @Directive({
   selector: '[crInview]',
   // exportAs: 'crInview',
-  standalone: true,
+
 })
 export class InviewDirective implements AfterViewInit, OnDestroy {
   @Input() crInview: string = '';

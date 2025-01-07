@@ -6,7 +6,7 @@ import { SeoService } from '../../utils/seo.service';
 @Component({
 
     templateUrl: './home.html',
-    standalone: true,
+
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [TranslatePipe, ResPipe]
 })

@@ -1,6 +1,6 @@
 import {
-  ENVIRONMENT_INITIALIZER,
-  inject
+  inject,
+  provideEnvironmentInitializer
 } from '@angular/core';
 import {
   NavigationCancel,
@@ -70,7 +70,8 @@ const AppRoutes: Routes = [
 ];
 
 
-const routerFunc = (router: Router) => () => {
+const appFactory = () => {
+  const router: Router = inject(Router);
   const loaderState = inject(LoaderState);
 
   router.events
@@ -121,12 +122,7 @@ export const AppRouteProviders = [
   ),
   { provide: RouteReuseStrategy, useClass: RouteReuseService },
   { provide: TitleStrategy, useClass: CricketTitleStrategy },
-  {
-    provide: ENVIRONMENT_INITIALIZER,
-    multi: true,
-    useFactory: routerFunc,
-    deps: [Router],
-  }
+  provideEnvironmentInitializer(appFactory)
 ];
 
 

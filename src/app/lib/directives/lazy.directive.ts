@@ -1,15 +1,15 @@
 // classes directive, mostly upon intersection
 import {
-  AfterViewInit,
-  Directive,
-  ElementRef,
-  Inject,
-  Input,
-  OnChanges,
-  OnDestroy,
-  Optional,
-  Renderer2,
-  SimpleChanges,
+    AfterViewInit,
+    Directive,
+    ElementRef,
+    Inject,
+    Input,
+    OnChanges,
+    OnDestroy,
+    Optional,
+    Renderer2,
+    SimpleChanges,
 } from '@angular/core';
 import { REQUEST } from '@nguniversal/express-engine/tokens';
 import { Request } from 'express';
@@ -25,7 +25,7 @@ interface IOptions {
 @Directive({
   selector: '[crLazy]',
   exportAs: 'crLazy',
-  standalone: true,
+
 })
 export class LazyDirective implements AfterViewInit, OnChanges, OnDestroy {
 

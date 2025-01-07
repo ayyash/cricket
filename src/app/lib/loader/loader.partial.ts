@@ -11,7 +11,7 @@ import { LoaderState } from './loader.state';
     <div class="subline inc"></div>
     <div class="subline dec"></div></div>`,
     styleUrls: ['./loader.less'],
-    standalone: true,
+
     imports: [CommonModule],
     encapsulation: ViewEncapsulation.None
 })

@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { SeoService } from '../../utils/seo.service';
-import { TranslatePipe } from '../../lib/pipes/translate.pipe';
 import { RouterModule } from '@angular/router';
+import { TranslatePipe } from '../../lib/pipes/translate.pipe';
+import { SeoService } from '../../utils/seo.service';
 
 @Component({
     templateUrl: './main.component.html',
-    standalone: true,
+
     imports: [TranslatePipe, RouterModule]
     // changeDetection: ChangeDetectionStrategy.OnPush
 })

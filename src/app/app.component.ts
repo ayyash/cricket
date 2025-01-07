@@ -4,7 +4,6 @@ import { LoaderPartial } from './lib/loader/loader.partial';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
   imports: [RouterOutlet, LoaderPartial],
   template: '<http-loader></http-loader><router-outlet></router-outlet>'
 })

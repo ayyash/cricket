@@ -5,7 +5,7 @@ import { EnumGtmEvent, EnumGtmGroup, EnumGtmSource, GtmTracking } from '../../ut
 @Directive({
   selector: '[shGtm]',
   exportAs: 'shGtm',
-  standalone: true
+
 })
 export class GtmDirective implements AfterViewInit {
   @Input() shGtm: { source: EnumGtmSource, group: EnumGtmGroup; };

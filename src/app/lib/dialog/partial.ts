@@ -7,7 +7,7 @@ import { IDialogOptions } from './service';
    templateUrl: './partial.html',
    changeDetection: ChangeDetectionStrategy.OnPush,
    encapsulation: ViewEncapsulation.None,
-   standalone: true,
+
    imports: [CommonModule]
 })
 export class DialogPartial {

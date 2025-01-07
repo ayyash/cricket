@@ -14,14 +14,14 @@ export const toPrettyPrice = (s: string) => {
   // read number, tofixed of 2 digits, insert "," in every three digits, if its already fixed, unfix first
 
   const _ret = ret.toFixed(2),
-      x = _ret.toString().split('.'),
-      x2 = x.length > 1 ? '.' + x[1] : '',
-      rgx = /(\d+)(\d{3})/;
+    x = _ret.toString().split('.'),
+    x2 = x.length > 1 ? '.' + x[1] : '',
+    rgx = /(\d+)(\d{3})/;
 
   let x1 = x[0];
 
   while (rgx.test(x1)) {
-      x1 = x1.replace(rgx, '$1' + ',' + '$2');
+    x1 = x1.replace(rgx, '$1' + ',' + '$2');
   }
   return x1 + x2;
 };
@@ -30,73 +30,73 @@ export const GetParamsAsString = (urlParams: any, joinArray = false): string => 
 
   // for every key, if value is undefined, or null, or false, exclude
   Object.keys(urlParams).forEach(n => {
-      const v = urlParams[n];
-      if (v) {
-          if (v instanceof Array) {
-              if (v.length) {
-                  // filter out empty strings
-                  if (joinArray) {
-                      const _v = v.filter(x => x && x !== '').join(',');
-                      if (_v) { s.append(n, _v); }
-                  } else {
-                      // lookout for this, it might need an [] in the key
-                      // append multiple if joinArray is false
-                      v.filter(x => x !== '').forEach(f => s.append(n, f));
-                  }
-              }
+    const v = urlParams[n];
+    if (v) {
+      if (v instanceof Array) {
+        if (v.length) {
+          // filter out empty strings
+          if (joinArray) {
+            const _v = v.filter(x => x && x !== '').join(',');
+            if (_v) { s.append(n, _v); }
           } else {
-              // append key and value
-              s.append(n, v);
+            // lookout for this, it might need an [] in the key
+            // append multiple if joinArray is false
+            v.filter(x => x !== '').forEach(f => s.append(n, f));
           }
+        }
+      } else {
+        // append key and value
+        s.append(n, v);
       }
+    }
   });
   return s.toString();
 
 };
-export const toFormat = (s:string, ...args: any) => {
+export const toFormat = (s: string, ...args: any) => {
   const regExp = /\$(\d+)/gi;
   // match $1 $2 ...
   return s?.replace(regExp, (match, index) => {
-      return args[index] ?? match;
+    return args[index] ?? match;
   });
 
-}
+};
 export const GetMatrixParamsAsString = (urlParams: any): string => {
   // for each urlparam, join with ';'
   let s = '';
   Object.keys(urlParams).forEach(n => {
-      const v = urlParams[n];
-      if (v) {
-          if (v instanceof Array) {
-              if (v.length) {
-                  // filter out empty strings
-                  v.filter(x => !!x).forEach(f => s +=`;${n}=${f}`);
-              }
-          } else {
-              // append key and value
-             s += `;${n}=${v}`;
-          }
+    const v = urlParams[n];
+    if (v) {
+      if (v instanceof Array) {
+        if (v.length) {
+          // filter out empty strings
+          v.filter(x => !!x).forEach(f => s += `;${n}=${f}`);
+        }
+      } else {
+        // append key and value
+        s += `;${n}=${v}`;
       }
+    }
   });
   return s;
-}
+};
 export const CleanParams = (params: any): any => {
   // remove empty arrays, unidentified, nulls
   const s: any = {};
   Object.keys(params).forEach(n => {
-      const v: any = params[n];
-      if (v) {
-          if (v instanceof Array) {
-              if (v.length) {
-                  // filter out empty strings and join
-                  const _v: any = v.filter(x => x && x !== '').join(',');
-                  if (_v) { s[n] = _v; }
-              }
-          } else {
-              // append key and value
-              s[n] = v;
-          }
+    const v: any = params[n];
+    if (v) {
+      if (v instanceof Array) {
+        if (v.length) {
+          // filter out empty strings and join
+          const _v: any = v.filter(x => x && x !== '').join(',');
+          if (_v) { s[n] = _v; }
+        }
+      } else {
+        // append key and value
+        s[n] = v;
       }
+    }
   });
 
   return s;
@@ -106,11 +106,11 @@ export const CleanParams = (params: any): any => {
 
 export const makeDate = (dateString: string): Date | null => {
   if (dateString) {
-      // do check to make sure it is valid date
+    // do check to make sure it is valid date
 
-      if (isNaN(Date.parse(dateString))) { return null; }
+    if (isNaN(Date.parse(dateString))) { return null; }
 
-      return new Date(dateString);
+    return new Date(dateString);
   }
   return null;
 };
@@ -120,7 +120,7 @@ export const fixAngularBug = (params: string[]): string[] => {
   // WATCH: https://github.com/angular/angular/issues/19179
   // get an array like this ["a,b"] and create an array ["a", "b"]
   if (params.length < 1) {
-      return params;
+    return params;
   }
   return params[0].split(',');
 };
@@ -175,16 +175,16 @@ export const clone = (obj: any) => {
 
 export const hasMore = (total: number, size: number, currentPage: number): boolean => {
 
- if (total === 0) { return false; }
+  if (total === 0) { return false; }
 
- const pages = Math.ceil(total / size);
- if (currentPage === pages) {
+  const pages = Math.ceil(total / size);
+  if (currentPage === pages) {
     // no more pages
     return false;
- } else {
+  } else {
     // yes more
     return true;
- }
+  }
 };
 
 
@@ -193,24 +193,24 @@ export const uuid = (): string => {
 
   if (window?.crypto) {
 
-      var buf = new Uint32Array(4);
-      window.crypto.getRandomValues(buf);
-      var idx = -1;
-      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-          idx++;
-          var r = (buf[idx >> 3] >> ((idx % 8) * 4)) & 15;
-          var v = c == 'x' ? r : (r & 0x3 | 0x8);
-          return v.toString(16);
-      });
+    var buf = new Uint32Array(4);
+    window.crypto.getRandomValues(buf);
+    var idx = -1;
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+      idx++;
+      var r = (buf[idx >> 3] >> ((idx % 8) * 4)) & 15;
+      var v = c == 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
 
   } else {
 
-      var dt = new Date().getTime();
-      var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-          var r = (dt + Math.random() * 16) % 16 | 0;
-          dt = Math.floor(dt / 16);
-          return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
-      });
-      return uuid;
+    var dt = new Date().getTime();
+    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+      var r = (dt + Math.random() * 16) % 16 | 0;
+      dt = Math.floor(dt / 16);
+      return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+    return uuid;
   }
 };

@@ -1,8 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Res } from '../../utils/resources';
 import { toSentenceCase } from '../../utils/common';
+import { Res } from '../../utils/resources';
 
-@Pipe({ name: 'res', standalone: true })
+@Pipe({ name: 'res' })
 export class ResPipe implements PipeTransform {
 
 
