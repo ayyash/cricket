@@ -6,7 +6,7 @@
     "Auth": {
         "userAccessKey": "cricket.user"
     },
-    "Cache": {
+    "Storage": {
         "Timeout": 1,
         "Key": "cricket.cache",
         "ResetKey": "cricket.20190208"

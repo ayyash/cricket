@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Inject, Injectable, Optional } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { Config } from './config';
+import { Config } from '../config';
 import { IConfig } from './config.model';
 
 
